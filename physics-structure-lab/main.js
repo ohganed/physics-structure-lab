@@ -82,12 +82,12 @@ function phenomenon() {
   return `<div class="page">${pageHeader('CHAPTER 01 · DEFINITION LAB','「動いている」を物理にする','見たことをそのまま式にすることはできません。まず何が変わっているのか、何を測ればよいのかを問い直します。','現象 → 定義')}
     <div class="concept-flow"><span class="flow-step">観察する</span><span class="flow-arrow">→</span><span class="flow-step">対象を決める</span><span class="flow-arrow">→</span><span class="flow-step">測る量を選ぶ</span><span class="flow-arrow">→</span><span class="flow-step">定義する</span><span class="flow-arrow">→</span><span class="flow-step">法則を探す</span></div>
     <div class="grid two"><section class="card"><div class="eyebrow">OBSERVE</div><h2>車が右へ進んでいる</h2><p>何をもって「動いている」と言えるのでしょうか？ 道路上の目印に対する車の<strong>位置</strong>が、時間とともに変化しています。</p><div class="callout"><strong>観察からの問い</strong><p>位置を測るには基準点と正方向が必要です。進む距離だけでなく「どちらへ」を表すには、符号や方向が必要になります。</p></div><p>「車が速く進む」とは何が大きいことなのでしょう。5 m進むのに1秒かかった場合と10秒かかった場合を比較しましょう。</p></section>
-    <section class="card"><div class="eyebrow">WHY THIS DEFINITION?</div><h2>平均速度を定義する</h2><span class="formula tex-display" data-tex="\bar{v}=\dfrac{\Delta x}{\Delta t}">v̄ = Δx / Δt</span><p>変位 Δx を、経過時間 Δt で割ります。時間の長さが違う観察を、単位時間あたりの変化として比較できるからです。</p><div class="callout warm"><strong>定義と法則を区別する</strong><p>「平均速度＝変位÷時間」は定義です。「加速度が一定なら速度が時間に比例して変化する」は、定義と<strong>等加速度という仮定</strong>から導く関係です。</p></div></section></div>
+    <section class="card"><div class="eyebrow">WHY THIS DEFINITION?</div><h2>平均速度を定義する</h2><span class="formula tex-display" data-tex="\\bar{v}=\\dfrac{\\Delta x}{\\Delta t}">v̄ = Δx / Δt</span><p>変位 Δx を、経過時間 Δt で割ります。時間の長さが違う観察を、単位時間あたりの変化として比較できるからです。</p><div class="callout warm"><strong>定義と法則を区別する</strong><p>「平均速度＝変位÷時間」は定義です。「加速度が一定なら速度が時間に比例して変化する」は、定義と<strong>等加速度という仮定</strong>から導く関係です。</p></div></section></div>
     <div class="section-head"><h2>似ている概念を区別する</h2></div>
     <div class="definition-list"><div class="definition"><strong>道のり（distance）と変位（displacement）</strong><p>道のりは進んだ経路の長さです。変位は出発点と到着点の位置の差です。出発点へ戻ると、道のりは正でも変位は0になります。</p></div>
     <div class="definition"><strong>速さ（speed）と速度（velocity）</strong><p>速さは向きを持たない量で、平均の速さは道のり÷時間です。1次元の速度は向きを正負で表し、平均速度は変位÷時間です。</p></div>
-    <div class="definition"><strong>平均速度と瞬間速度</strong><p>平均速度だけでは、途中で速くなったか遅くなったかを示せません。観測時間を小さくしていった極限が瞬間速度です。微分を用いれば <span class="tex-inline" data-tex="v=\frac{\mathrm{d}x}{\mathrm{d}t}">v = dx/dt</span> です。</p></div>
-    <div class="definition"><strong>加速度（acceleration）</strong><p>速度の時間あたりの変化です。1次元の平均加速度は <span class="tex-inline" data-tex="\frac{\Delta v}{\Delta t}">Δv/Δt</span>。速さが一定でも向きが変われば加速度が生じるため、大学ではベクトルとして扱います。</p></div></div>
+    <div class="definition"><strong>平均速度と瞬間速度</strong><p>平均速度だけでは、途中で速くなったか遅くなったかを示せません。観測時間を小さくしていった極限が瞬間速度です。微分を用いれば <span class="tex-inline" data-tex="v=\\frac{\\mathrm{d}x}{\\mathrm{d}t}">v = dx/dt</span> です。</p></div>
+    <div class="definition"><strong>加速度（acceleration）</strong><p>速度の時間あたりの変化です。1次元の平均加速度は <span class="tex-inline" data-tex="\\frac{\\Delta v}{\\Delta t}">Δv/Δt</span>。速さが一定でも向きが変われば加速度が生じるため、大学ではベクトルとして扱います。</p></div></div>
     <div class="section-head"><h2>定義を自分で吟味する</h2></div>
     <section class="card"><h3>出発点から東へ10 m進み、同じ道を10 m戻った。所要時間は20秒。</h3><p>このとき、平均の速さと平均速度（東向きを正）は一致するでしょうか？</p><div class="button-row"><button class="secondary-btn" data-reveal="def-answer">考え方を表示</button>${button('derivation','次へ：数式を組み立てる →')}</div><div id="def-answer" class="callout hide"><strong>平均の速さ = 20 m ÷ 20 s = 1 m/s</strong><p>変位は0 mなので、平均速度は0 m/sです。「何を測りたいか」に応じて量の定義が異なります。</p></div></section>
     <div class="callout"><strong>思考のモニター</strong><p>今、あなたは何を測るべきか選びましたか？ その物理量で説明できないことは何ですか？</p></div>
@@ -101,8 +101,8 @@ function derivation() {
     <div id="math-depth"></div>
     <div class="section-head"><h2>3つの関係を導く</h2><p>1次元、加速度 a が一定、時刻 0 で x=x₀・v=v₀</p></div>
     <section class="card">
-      <div class="step"><span class="step-index">1</span><h3>加速度の定義から速度を得る</h3><p>加速度が一定なら、平均加速度も a。したがって <span class="tex-inline" data-tex="a=\frac{v-v_0}{t}">a = (v − v₀) / t</span>（t &gt; 0）。これを変形します。</p><span class="formula tex-display" data-tex="v=v_0+at">v = v₀ + at</span></div>
-      <div class="step"><span class="step-index">2</span><h3>速度の変化が一直線なら平均速度を求められる</h3><p>v–t グラフは直線。変位はグラフと時間軸で囲まれる符号付き面積です。台形の面積より <span class="tex-inline" data-tex="\Delta x=\frac{(v_0+v)t}{2}">Δx = (v₀ + v)t / 2</span>。</p><span class="formula tex-display" data-tex="x-x_0=v_0t+\frac{1}{2}at^2">x − x₀ = v₀t + ½at²</span><p>①で求めた v = v₀ + at を代入しました。</p></div>
+      <div class="step"><span class="step-index">1</span><h3>加速度の定義から速度を得る</h3><p>加速度が一定なら、平均加速度も a。したがって <span class="tex-inline" data-tex="a=\\frac{v-v_0}{t}">a = (v − v₀) / t</span>（t &gt; 0）。これを変形します。</p><span class="formula tex-display" data-tex="v=v_0+at">v = v₀ + at</span></div>
+      <div class="step"><span class="step-index">2</span><h3>速度の変化が一直線なら平均速度を求められる</h3><p>v–t グラフは直線。変位はグラフと時間軸で囲まれる符号付き面積です。台形の面積より <span class="tex-inline" data-tex="\\Delta x=\\frac{(v_0+v)t}{2}">Δx = (v₀ + v)t / 2</span>。</p><span class="formula tex-display" data-tex="x-x_0=v_0t+\\frac{1}{2}at^2">x − x₀ = v₀t + ½at²</span><p>①で求めた v = v₀ + at を代入しました。</p></div>
       <div class="step"><span class="step-index">3</span><h3>時間 t を消去する</h3><p>①より v − v₀ = at。②の台形式から <span class="tex-inline" data-tex="2a(x-x_0)=a(v_0+v)t=(v_0+v)(v-v_0)">2a(x − x₀) = a(v₀+v)t = (v₀+v)(v−v₀)</span>。この変形は a=0 の場合も成り立ちます。</p><span class="formula tex-display" data-tex="v^2-v_0^2=2a(x-x_0)">v² − v₀² = 2a(x − x₀)</span></div>
     </section>
     <div class="callout warm"><strong>成立条件を必ず確認</strong><p>この3式は、同じ慣性座標系で1次元の位置・速度を記述し、区間全体で加速度が一定の場合に使えます。加速度が途中で変わるなら、そのまま全区間へ適用できません。</p></div>
@@ -113,7 +113,7 @@ function derivation() {
 const mathDepth = {
   intuition: `<section class="card"><h3>式の前に、形をイメージする</h3><p>同じ時間で速度が同じだけ増えるなら、v–t グラフは直線です。面積（時間×平均速度）を読むと、変位が時間の2乗に関係することが見えてきます。</p><p class="muted">「時間が2倍なら変位も2倍」とは限りません。初速度0・一定加速度なら変位は4倍になります。</p></section>`,
   algebra: `<section class="card"><h3>仮定 → 関係式 → 代入</h3><p>加速度が一定、という仮定を最初に置きます。まず加速度の定義から速度を求め、次に v–t の台形の面積で変位を求めます。</p><p>公式は「覚える順序」より「導いた依存関係」で整理します。</p></section>`,
-  calculus: `<section class="card"><h3>微分・積分では一つの構造になる</h3><span class="formula tex-display" data-tex="a=\frac{\mathrm{d}v}{\mathrm{d}t},\qquad v=\frac{\mathrm{d}x}{\mathrm{d}t}">a = dv/dt,　<span class="tex-inline" data-tex="v=\frac{\mathrm{d}x}{\mathrm{d}t}">v = dx/dt</span></span><p>a が一定なら dv/dt = a を積分して v(t) = v₀ + at。さらに dx/dt = v(t) を積分して x(t) = x₀ + v₀t + ½at² を得ます。</p><p>加速度が時間に依存するときは、a(t) を積分することで同じ考え方を拡張できます。</p></section>`
+  calculus: `<section class="card"><h3>微分・積分では一つの構造になる</h3><span class="formula tex-display" data-tex="a=\\frac{\\mathrm{d}v}{\\mathrm{d}t},\\qquad v=\\frac{\\mathrm{d}x}{\\mathrm{d}t}">a = dv/dt,　<span class="tex-inline" data-tex="v=\\frac{\\mathrm{d}x}{\\mathrm{d}t}">v = dx/dt</span></span><p>a が一定なら dv/dt = a を積分して v(t) = v₀ + at。さらに dx/dt = v(t) を積分して x(t) = x₀ + v₀t + ½at² を得ます。</p><p>加速度が時間に依存するときは、a(t) を積分することで同じ考え方を拡張できます。</p></section>`
 };
 
 function lab() {
