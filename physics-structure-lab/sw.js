@@ -1,0 +1,76 @@
+/* Physics Structure Lab v0.2 - offline reading and simulation.
+   Review the cache version whenever static files change. */
+const CACHE_NAME = 'physics-structure-lab-offline-v0.2-20261106';
+const APP_FILES = ['./','./index.html','./main.js','./physics.js','./styles.css','./icon.svg','./manifest.webmanifest'];
+const KATEX_ORIGIN = 'https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/';
+const KATEX_FILES = [
+  KATEX_ORIGIN + 'katex.min.css',
+  KATEX_ORIGIN + 'katex.min.js',
+  KATEX_ORIGIN + 'fonts/KaTeX_AMS-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Caligraphic-Bold.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Caligraphic-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Fraktur-Bold.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Fraktur-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Main-Bold.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Main-BoldItalic.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Main-Italic.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Main-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Math-BoldItalic.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Math-Italic.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_SansSerif-Bold.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_SansSerif-Italic.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_SansSerif-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Script-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Size1-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Size2-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Size3-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Size4-Regular.woff2',
+  KATEX_ORIGIN + 'fonts/KaTeX_Typewriter-Regular.woff2'
+];
+self.addEventListener('install', event => {
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    // Core application and math renderer must be available before offline is declared ready.
+    await cache.addAll([...APP_FILES, KATEX_FILES[0], KATEX_FILES[1]]);
+    // Store every KaTeX WOFF2 variant to cover later chapters as well.
+    const results = await Promise.allSettled(KATEX_FILES.slice(2).map(url => cache.add(url)));
+    if (results.some(r => r.status === 'rejected')) {
+      console.warn('Some math fonts are unavailable offline; retry when connected.');
+    }
+    await self.skipWaiting();
+  })());
+});
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(key => key.startsWith('physics-structure-lab-offline-') && key !== CACHE_NAME).map(key => caches.delete(key)));
+    await self.clients.claim();
+  })());
+});
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  const isLocal = url.origin === self.location.origin && url.pathname.startsWith(new URL(self.registration.scope).pathname);
+  const isMath = url.href.startsWith(KATEX_ORIGIN);
+  if (!isLocal && !isMath) return;
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const saved = await cache.match(request, {ignoreSearch: isLocal});
+    if (saved) return saved;
+    try {
+      const response = await fetch(request);
+      if (response.ok || response.type === 'opaque') {
+        // Avoid caching HTML from arbitrary paths that may be SPA fallbacks.
+        if (isMath || !request.mode.includes('navigate')) await cache.put(request, response.clone());
+      }
+      return response;
+    } catch (error) {
+      if (request.mode === 'navigate') {
+        const offlinePage = await cache.match(new URL('./index.html', self.registration.scope));
+        if (offlinePage) return offlinePage;
+      }
+      return Response.error();
+    }
+  })());
+});
