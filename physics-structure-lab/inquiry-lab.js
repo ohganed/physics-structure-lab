@@ -12,6 +12,8 @@ const dateText=d=>new Date(d).toLocaleString(lng()?'en-US':'ja-JP',{dateStyle:'m
 const number=n=>Number.isFinite(n)?(Math.abs(n)<.0001&&n!==0?n.toExponential(3):Number(n.toPrecision(5)).toString()):'—';
 const initialInputs=c=>Object.fromEntries(c.inputs.map(i=>[i.key,i.initial]));
 let scratch=null;
+let requestedScenario=null;
+export function focusInquiryScenario(id){if(scenarioById(id))requestedScenario=id;}
 
 function initialDraft(){
  return {scenario:'cart',mode:'guided',values:initialInputs(inquiryScenarios[0]),trials:[],question:'',hypothesis:'',interpretation:'',nextQuestion:''};
@@ -105,6 +107,10 @@ export function installInquiry(renderMath){
  let draft=normalizeDraft(scratch&&scenarioById(scratch.scenario)?scratch:readDraft());
  let spaces=readWorkspaces();
  spaces[draft.scenario]=draft;
+ if(requestedScenario){
+  const id=requestedScenario;requestedScenario=null;
+  draft=spaces[id]||{...initialDraft(),scenario:id,mode:draft.mode,values:initialInputs(scenarioById(id))};
+ }
  let records=readRecords();
  const $=id=>document.getElementById(id);
  const mode=$('inquiry-mode');mode.value=draft.mode;
