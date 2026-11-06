@@ -1,4 +1,6 @@
 import { mechanicsChapters } from './mechanics-data.js';
+import { mechanicsEnglish } from './mechanics-en.js';
+import { getLanguage } from './language.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite)||x<=0||y<=0)throw new RangeError('Parameters must be positive');
@@ -24,33 +26,39 @@ const f=n=>Math.abs(n)<0.00001?'0':n.toFixed(n>=100?1:3);
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const tex=expression=>'<div class="formula tex-display" data-tex="'+esc(expression)+'">'+esc(expression)+'</div>';
 export function mechanicsPage(){
- const cards=mechanicsChapters.map((c,i)=>'<button class="mechanics-chapter-button" data-mech-chapter="'+i+'"><span class="mechanics-index">'+String(i+1).padStart(2,'0')+'</span><span><strong>'+esc(c.name)+'</strong><small>'+esc(c.level)+'</small></span></button>').join('');
- return '<div class="page mechanics-page"><div class="eyebrow">PHYSICS STRUCTURE LAB · COMPLETE MECHANICS MAP</div><h1>力学の全体像を学ぶ</h1><p class="lead">高校物理から解析力学・ハミルトン力学まで。章を選び、現象・定義・導出・問題設計・自分の判断をつなげて理解します。現段階では学習の骨格と主要な導出を整備中です。</p><div class="mechanics-layout"><nav class="mechanics-chapter-list" aria-label="力学の章一覧">'+cards+'</nav><div id="mechanics-detail" class="mechanics-detail"></div></div></div>';
+ const en=getLanguage()==='en';
+ const chapters=en?mechanicsEnglish:mechanicsChapters;
+ const cards=chapters.map((c,i)=>'<button class="mechanics-chapter-button" data-mech-chapter="'+i+'"><span class="mechanics-index">'+String(i+1).padStart(2,'0')+'</span><span><strong>'+esc(c.name)+'</strong><small>'+esc(c.level)+'</small></span></button>').join('');
+ return '<div class="page mechanics-page"><div class="eyebrow">PHYSICS STRUCTURE LAB · COMPLETE MECHANICS MAP</div><h1>'+(en?'Explore Mechanics: 12 Chapters':'力学の全体像を学ぶ')+'</h1><p class="lead">'+(en?'From Newtonian mechanics to Lagrangian and Hamiltonian descriptions. Explore phenomena, definitions, derivations, problem design, and metacognition. A developing textbook; not yet a complete undergraduate treatment.':'高校物理から解析力学・ハミルトン力学まで。章を選び、現象・定義・導出・問題設計・自分の判断をつなげて理解します。現段階では学習の骨格と主要な導出を整備中です。')+'</p><div class="mechanics-layout"><nav class="mechanics-chapter-list" aria-label="力学の章一覧">'+cards+'</nav><div id="mechanics-detail" class="mechanics-detail"></div></div></div>';
 }
 function chapterHtml(c,index){
+ const en=getLanguage()==='en';
+ const word=(ja,english)=>en?english:ja;
  const steps=c.steps.map(([heading,equation,meaning],i)=>'<div class="mechanics-equation-step"><strong>'+String(i+1)+'. '+esc(heading)+'</strong>'+tex(equation)+'<p>'+esc(meaning)+'</p></div>').join('');
  const p=presets[c.model]||[2,50,.5,10,5,150];
  const xLabel=c.model==='gravity'?'地心距離 r（km）':null;
- const insights='<div class="mechanics-perspectives"><section><h3>出題者の思考</h3><p>'+esc(c.setter)+'</p></section><section><h3>解答者の思考</h3><p>'+esc(c.solver)+'</p></section><section><h3>自分の思考を観察する</h3><p>'+esc(c.self)+'</p></section></div>';
+ const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
-  +'<h3>① どんな現象を扱うのか</h3><p>'+esc(c.phenomenon)+'</p>'
-  +'<h3>② 定義と、その定義が必要な理由</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>なぜ定義するのか</strong><p>'+esc(c.why)+'</p></div>'
-  +'<h3>③ 実験法則と数学的な導出</h3><p>'+esc(c.law)+'</p>'+steps
-  +'<div class="callout warm"><strong>成立条件と注意</strong><p>'+esc(c.conditions)+'</p></div>'
-  +'<h3>④ 条件を変え、予測を検証する</h3><div class="mechanics-parameter-grid"><label id="mech-label-x" for="mech-x">パラメータ1</label><input id="mech-x" type="range" min="'+p[2]+'" max="'+p[3]+'" step="any" value="'+p[0]+'"><label id="mech-label-y" for="mech-y">パラメータ2</label><input id="mech-y" type="range" min="'+p[4]+'" max="'+p[5]+'" step="any" value="'+p[1]+'"></div>'
+  +'<h3>'+word("① どんな現象を扱うのか","① What phenomenon are we describing?")+'</h3><p>'+esc(c.phenomenon)+'</p>'
+  +'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>'
+  +'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+steps
+  +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
+  +'<h3>'+word("④ 条件を変え、予測を検証する","④ Change parameters and test predictions")+'</h3><div class="mechanics-parameter-grid"><label id="mech-label-x" for="mech-x">'+word("パラメータ1","Parameter 1")+'</label><input id="mech-x" type="range" min="'+p[2]+'" max="'+p[3]+'" step="any" value="'+p[0]+'"><label id="mech-label-y" for="mech-y">'+word("パラメータ2","Parameter 2")+'</label><input id="mech-y" type="range" min="'+p[4]+'" max="'+p[5]+'" step="any" value="'+p[1]+'"></div>'
   +'<div id="mech-output" class="mechanics-output" aria-live="polite"></div>'
-  +'<h3>⑤ 同じ問題を3つの視点から見る</h3>'+insights
-  +'<h3>⑥ 考えてから答えを見る</h3><p>'+esc(c.problem)+'</p><button class="secondary-btn" id="mech-reveal">解答・根拠を表示</button><div id="mech-answer" class="callout hide"><p>'+esc(c.answer)+'</p></div>'
-  +'<h3>⑦ 大学物理への接続</h3><p>'+esc(c.university)+'</p><p class="muted">この章の演習・証明の完全網羅や専門的な数値シミュレーションは継続整備対象です。</p>'
-  +'<button class="primary-btn" id="mech-complete">この章を学習済みに記録</button><p id="mech-feedback" class="muted" aria-live="polite"></p>'
+  +'<h3>'+word("⑤ 同じ問題を3つの視点から見る","⑤ Compare three reasoning perspectives")+'</h3>'+insights
+  +'<h3>'+word("⑥ 考えてから答えを見る","⑥ Predict before seeing the answer")+'</h3><p>'+esc(c.problem)+'</p><button class="secondary-btn" id="mech-reveal">'+word("解答・根拠を表示","Reveal answer and reasoning")+'</button><div id="mech-answer" class="callout hide"><p>'+esc(c.answer)+'</p></div>'
+  +'<h3>'+word("⑦ 大学物理への接続","⑦ University physics connections")+'</h3><p>'+esc(c.university)+'</p><p class="muted">'+word("この章の演習・証明の完全網羅や専門的な数値シミュレーションは継続整備対象です。","Complete proofs, extended exercises, and specialized simulations remain in development.")+'</p>'
+  +'<button class="primary-btn" id="mech-complete">'+word("この章を学習済みに記録","Mark this chapter studied")+'</button><p id="mech-feedback" class="muted" aria-live="polite"></p>'
   +'</div>';
 }
 export function installMechanics(remarkMath){
  const box=document.getElementById('mechanics-detail');if(!box)return()=>{};
  const key='physics-mechanics-v1-completed';
+ const english=getLanguage()==='en';
+ const chapters=english?mechanicsEnglish:mechanicsChapters;
  let completed=[];try{completed=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(completed))completed=[];}catch{}
  function show(index){
-  const c=mechanicsChapters[index];box.innerHTML=chapterHtml(c,index);
+  const c=chapters[index];box.innerHTML=chapterHtml(c,index);
   document.querySelectorAll('[data-mech-chapter]').forEach((b,i)=>{b.classList.toggle('active',i===index);b.classList.toggle('is-done',completed.includes(i));});
   if(typeof remarkMath==='function')remarkMath(box);
   const x=document.getElementById('mech-x'),y=document.getElementById('mech-y'),out=document.getElementById('mech-output');
@@ -67,7 +75,7 @@ export function installMechanics(remarkMath){
   document.getElementById('mech-reveal').addEventListener('click',()=>document.getElementById('mech-answer').classList.toggle('hide'));
   document.getElementById('mech-complete').addEventListener('click',()=>{
    if(!completed.includes(index)){completed.push(index);try{localStorage.setItem(key,JSON.stringify(completed));}catch{}}
-   document.getElementById('mech-feedback').textContent='この端末に学習記録を保存しました。理解を確認するため、別の条件でも試しましょう。';
+   document.getElementById('mech-feedback').textContent=english?'Progress saved on this device. Test another set of conditions to check your understanding.':'この端末に学習記録を保存しました。理解を確認するため、別の条件でも試しましょう。';
    document.querySelector('[data-mech-chapter="'+index+'"]')?.classList.add('is-done');
   });
  }
