@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.3
+# Physics Structure Lab — v3.3.1
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
