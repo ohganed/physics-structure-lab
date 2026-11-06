@@ -95,19 +95,24 @@ function phenomenon() {
   </div>`;
 }
 
+// Reviewed, authored derivations: no generative AI is required at study time.
+const derivationStages = [{"title":"1. 加速度の定義から速度を導く","intro":"時間の経過とともに速度が変化する程度を、単位時間あたりの速度変化として定義します。加速度が一定で、初期時刻を0とします。","rows":[["定義：平均加速度","\\bar a=\\dfrac{\\Delta v}{\\Delta t}","速度の変化を、それに要した時間で割ります。これは物理量の定義です。"],["仮定：加速度が一定","a=\\dfrac{v-v_0}{t}\\quad(t>0)","区間内で加速度が一定なら、平均加速度も同じ値になります。"],["両辺に時間を掛ける","at=v-v_0","分母の時間を消し、速度の変化量を取り出します。"],["初速度を移項する","v=v_0+at","現在の速度は「初速度＋その後の速度変化」です。"]]},{"title":"2. 速度から変位を導く","intro":"加速度が一定なら、速度―時間グラフは直線です。変位は、そのグラフと時間軸で囲まれる符号付き面積に等しくなります。","rows":[["変位は速度を時間で積み重ねた量","x-x_0=\\int_0^t v(\\tau)\\,\\mathrm{d}\\tau","積分を知らない場合は、時間を細かく分けた小さな「速度×時間」の和だと考えてください。"],["等加速度運動では台形の面積","x-x_0=\\dfrac{v_0+v}{2}\\,t","速度が直線的に変化するときだけ、始めと終わりの速度の平均を使えます。"],["第1式を代入する","x-x_0=\\dfrac{v_0+(v_0+at)}{2}\\,t","前の段階で得た v=v₀+at を使います。"],["整理する","x-x_0=v_0t+\\dfrac12 at^2","第1項は初速度による変位、第2項は加速度による追加分です。"]]},{"title":"3. 時間を消去し、速度と変位だけで表す","intro":"ある地点での速度を求めたいが、経過時間が与えられていない。そんな場合に使える式を導きます。","rows":[["速度の式を変形する","v-v_0=at","まず時間を含んだ形のまま整理します。"],["変位の台形式を2倍する","2(x-x_0)=(v_0+v)t","この段階では加速度が0でも成立します。"],["両辺に加速度を掛ける","2a(x-x_0)=(v_0+v)at","右辺の at を、先ほどの v−v₀ に置き換えるためです。ここで a で割らない点が重要です。"],["速度の関係式を代入","2a(x-x_0)=(v_0+v)(v-v_0)","右辺は和と差の積になります。"],["平方差の公式で整理","\\boxed{v^2-v_0^2=2a(x-x_0)}","経過時間を含まない式になりました。a=0の場合も導出の変形は成立します。"]]}];
+function derivationEquation(tex) {
+  return '<div class="formula tex-display derivation-math" data-tex="' + tex.replaceAll('"','&quot;') + '">' + tex + '</div>';
+}
 function derivation() {
-  return `<div class="page">${pageHeader('CHAPTER 01 · DERIVATION','公式はどこから生まれるのか','等加速度運動を例に、定義と仮定から高校物理の公式を一歩ずつ導きます。「証明できる式」と「経験的な法則」は区別します。','数学の深さを選択可能')}
-    <div class="select-tabs" role="tablist" aria-label="数式の説明レベル"><button data-depth="intuition">直感と図</button><button data-depth="algebra" class="active">高校数学</button><button data-depth="calculus">大学数学への接続</button></div>
-    <div id="math-depth"></div>
-    <div class="section-head"><h2>3つの関係を導く</h2><p>1次元、加速度 a が一定、時刻 0 で x=x₀・v=v₀</p></div>
-    <section class="card">
-      <div class="step"><span class="step-index">1</span><h3>加速度の定義から速度を得る</h3><p>加速度が一定なら、平均加速度も a。したがって <span class="tex-inline" data-tex="a=\\frac{v-v_0}{t}">a = (v − v₀) / t</span>（t &gt; 0）。これを変形します。</p><span class="formula tex-display" data-tex="v=v_0+at">v = v₀ + at</span></div>
-      <div class="step"><span class="step-index">2</span><h3>速度の変化が一直線なら平均速度を求められる</h3><p>v–t グラフは直線。変位はグラフと時間軸で囲まれる符号付き面積です。台形の面積より <span class="tex-inline" data-tex="\\Delta x=\\frac{(v_0+v)t}{2}">Δx = (v₀ + v)t / 2</span>。</p><span class="formula tex-display" data-tex="x-x_0=v_0t+\\frac{1}{2}at^2">x − x₀ = v₀t + ½at²</span><p>①で求めた v = v₀ + at を代入しました。</p></div>
-      <div class="step"><span class="step-index">3</span><h3>時間 t を消去する</h3><p>①より v − v₀ = at。②の台形式から <span class="tex-inline" data-tex="2a(x-x_0)=a(v_0+v)t=(v_0+v)(v-v_0)">2a(x − x₀) = a(v₀+v)t = (v₀+v)(v−v₀)</span>。この変形は a=0 の場合も成り立ちます。</p><span class="formula tex-display" data-tex="v^2-v_0^2=2a(x-x_0)">v² − v₀² = 2a(x − x₀)</span></div>
-    </section>
-    <div class="callout warm"><strong>成立条件を必ず確認</strong><p>この3式は、同じ慣性座標系で1次元の位置・速度を記述し、区間全体で加速度が一定の場合に使えます。加速度が途中で変わるなら、そのまま全区間へ適用できません。</p></div>
-    <div class="button-row"><button class="primary-btn" data-complete="derivation">導出を確認した ✓</button>${button('lab','実験で確かめる →','secondary-btn')}</div>
-  </div>`;
+  const stages = derivationStages.map((stage, index) => {
+    const steps = stage.rows.map(([heading, tex, explanation], i) =>
+      '<div class="derivation-line"><div class="derivation-line-head"><span class="derivation-line-number">'+(i+1)+'</span><strong>'+heading+'</strong></div>' +
+      derivationEquation(tex) + '<p class="derivation-reason">'+explanation+'</p></div>'
+    ).join('');
+    return '<section class="card derivation-stage"><div class="eyebrow">DERIVATION '+(index+1)+'/3</div><h2>'+stage.title+'</h2><p>'+stage.intro+'</p>'+steps+'</section>';
+  }).join('');
+  return '<div class="page">'+pageHeader('CHAPTER 01 · DERIVATION','公式はどこから生まれるのか','定義・仮定・数学的変形を分け、一行ずつ理由を確認します。式の省略をせず、高校物理から大学数学につなぎます。','各段階の理由を解説')+
+    '<div class="select-tabs" role="tablist" aria-label="数式の説明レベル"><button data-depth="intuition">直感と図</button><button data-depth="algebra" class="active">高校数学</button><button data-depth="calculus">大学数学への接続</button></div><div id="math-depth"></div>'+
+    '<div class="callout"><strong>最初に決めるモデル</strong><p>慣性座標系・1次元・初期時刻 t=0 で位置 x₀、速度 v₀、観測区間で加速度 a が一定。これらの前提を変えると、使える式も変わります。</p></div>'+stages+
+    '<div class="callout warm"><strong>成立条件・例外</strong><p>3公式は区間全体で加速度が一定のときに使えます。加速度が変化する場合は時間を区切るか、加速度を時間の関数として積分します。これらは自然法則そのものではなく、加速度の定義と等加速度の仮定から導く関係式です。</p></div>'+
+    '<div class="button-row"><button class="primary-btn" data-complete="derivation">導出を確認した ✓</button>'+button('lab','実験で確かめる →','secondary-btn')+'</div></div>';
 }
 
 const mathDepth = {
