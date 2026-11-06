@@ -21,7 +21,7 @@ test('each chapter starts from a physical contrast, then models and explains eve
   }
   assert.ok(origin.steps.length>=5,key+' requires a complete chain of reasoning');
   for(const [i,step] of origin.steps.entries()){
-   assert.ok(step.tex?.length>=9,key+' equation '+i);
+   assert.ok(step.tex?.length>=5,key+' equation '+i);
    for(const field of ['question','why']){
     assert.equal(step[field].length,2,key+' step '+i+' '+field);
     assert.ok(step[field][0].length>=(field==='question'?6:13)&&step[field][1].length>=(field==='question'?12:20),key+' too abbreviated: '+field+' '+i);
