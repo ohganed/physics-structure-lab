@@ -2,8 +2,8 @@
 export const mechanicsOriginsPart3={
   "lagrange": {
     "title": [
-      "振り子の運動を、力の成分だけでなくエネルギーから説明できるか",
-      "Can we describe a pendulum using energy and one natural coordinate?"
+      "振り子とラグランジアンについて",
+      "The pendulum and the Lagrangian"
     ],
     "observation": [
       "振り子は平面内を動くのでxとyの二つの位置が必要に見える。しかし糸の長さが変わらなければ、位置は角度θだけで決まる。使わなくてよい座標を減らすと運動の式も簡単になるだろうか。",
@@ -122,8 +122,8 @@ export const mechanicsOriginsPart3={
   },
   "hamilton": {
     "title": [
-      "なぜ位置と運動量を組にした状態で運動を記述するのか",
-      "Why describe motion using a pair of position and momentum?"
+      "ばねの状態とハミルトニアンについて",
+      "A spring state and the Hamiltonian"
     ],
     "observation": [
       "同じ位置にあるばねの物体でも、右に進んでいるときと左に戻っているときがある。位置だけでは次の動きを決められない。どの二つの量を与えれば、運動を順に追えるのだろう。",
@@ -242,8 +242,8 @@ export const mechanicsOriginsPart3={
   },
   "coupled": {
     "title": [
-      "複雑な二つの振動を、どうすれば単純な運動に分けられるか",
-      "How can two complicated oscillations become simpler patterns?"
+      "二つのばねの連成振動について",
+      "Coupled spring oscillations"
     ],
     "observation": [
       "同じ二つの物体をばねでつなぐと、一方を動かしただけで他方も動く。ところが両方を同じ向きに動かす場合と、反対向きに動かす場合では、中央のばねの伸び方がまったく違う。",
