@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.0
+# Physics Structure Lab — v3.1
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -41,10 +41,16 @@ Open http://localhost:4173/ . No npm installation step is required for the exist
 
 ## Offline use and data
 
-A service worker caches core textbook files and KaTeX assets after installation. Bundled app files are fetched from the network first when reachable, then served from cache when offline; pinned KaTeX assets favor cache-first for predictable formulas. Internet may be required at first load; first-time offline and device-specific behavior still require manual checking. Learning observations are kept locally in browser storage. The Discovery Workshop offers **user-initiated version-2 JSON export/import** containing learner notes, knowledge links, reinterpretations and Scientific Inquiry Lab records; older version-1 exports remain importable; there is no automatic cloud sync. Avoid entering student identifiers or sensitive information, and review personal notes before sharing exported files.
+A service worker caches core textbook files and KaTeX assets after installation. Bundled app files are fetched from the network first when reachable, then served from cache when offline; pinned KaTeX assets favor cache-first for predictable formulas. Internet may be required at first load; first-time offline and device-specific behavior still require manual checking. Learning observations are kept locally in browser storage. The Discovery Workshop offers **user-initiated version-3 JSON export/import** containing learner notes, knowledge links, reinterpretations, Scientific Inquiry Lab records and mechanics practice reasoning snapshots; older version-1 exports remain importable; there is no automatic cloud sync. Avoid entering student identifiers or sensitive information, and review personal notes before sharing exported files.
 
 Original observations are not overwritten by later insights. New links are explicitly labeled as **learner hypotheses**, not verified textbook facts. Import is additive with conflict protection.
 
 ## Academic integrity
 
 Physics Structure Lab is an independent project and is not affiliated with, endorsed by, or recommended by MIT or any other institution. See [Academic Quality Standard](../ACADEMIC_QUALITY_STANDARD.md) for the quality criteria and limitations.
+
+## Mechanics v3.1 educational completion boundary
+
+**In scope now:** twelve progressively linked mechanics chapters, detailed Japanese-English exposition, definitions, reasoning sequences, worked examples and equation interpretation, interactive parameter models, one numerical and one open-reasoning task per chapter (24), eight integrative synthesis problems, optional hints/solutions, and non-destructive dated learner reflections. Learners are free to navigate and revisit material regardless of numerical answers. The glossary and conceptual network support alternative paths, not mastery gates.
+
+**Still open / not claimed complete:** independent trials with novice learners, all historical experimental exceptions and measurements, fluid and continuum mechanics, complete analytical and nonlinear numerical treatments, exhaustive undergraduate or graduate-level problem banks, full third-party accessibility audit, and direct iPhone/iPad device tests. A successful automated browser suite is not evidence of universal comprehension.
