@@ -4,6 +4,7 @@
  * Nothing here makes network requests.
  */
 import {connectionNodes,connectionEdges,connectionTypes,nodeById} from './knowledge-connections-data.js';
+import {validInvestigation} from './inquiry-core.js';
 
 const ids=new Set(connectionNodes.map(n=>n.id));
 const types=new Set(Object.keys(connectionTypes));
@@ -32,15 +33,16 @@ export function validateLegacyNote(note){
 }
 export function normalizeNotebook(payload){
  if(!payload||typeof payload!=='object'||Array.isArray(payload)||
-  payload.kind!=='physics-structure-lab-knowledge-journal'||payload.version!==1)throw new RangeError('Unsupported notebook format');
- const keys=['notes','links','revisits'];
+  payload.kind!=='physics-structure-lab-knowledge-journal'||![1,2].includes(payload.version))throw new RangeError('Unsupported notebook format');
+ const keys=payload.version===2?['notes','links','revisits','investigations']:['notes','links','revisits'];
  for(const k of keys){
   if(!Array.isArray(payload[k])||payload[k].length>500)throw new RangeError('Invalid notebook entries: '+k);
  }
  if(!payload.notes.every(validateLegacyNote))throw new RangeError('Invalid observation in notebook');
  if(!payload.links.every(validateLearnerLink))throw new RangeError('Invalid learner-created relation');
  if(!payload.revisits.every(validateRevisit))throw new RangeError('Invalid reflection revision');
- return {notes:payload.notes.map(x=>({...x})),links:payload.links.map(x=>({...x})),revisits:payload.revisits.map(x=>({...x}))};
+ if(payload.version===2&&!payload.investigations.every(validInvestigation))throw new RangeError('Invalid investigation in notebook');
+ return Object.fromEntries(keys.map(k=>[k,payload[k].map(x=>({...x}))]));
 }
 export function createNotebookExport(notes,links,revisits,date=new Date().toISOString()){
  const object={kind:'physics-structure-lab-knowledge-journal',version:1,exportedAt:date,notes,links,revisits};
@@ -48,9 +50,14 @@ export function createNotebookExport(notes,links,revisits,date=new Date().toISOS
  normalizeNotebook(object);
  return object;
 }
+export function createUnifiedArchive(notes,links,revisits,investigations,date=new Date().toISOString()){
+ const object={kind:'physics-structure-lab-knowledge-journal',version:2,exportedAt:date,notes,links,revisits,investigations};
+ normalizeNotebook(object);
+ return object;
+}
 export function mergeNotebooks(existing,incoming){
  const merged={};
- for(const key of ['notes','links','revisits']){
+ for(const key of ['notes','links','revisits','investigations']){
   const initial=existing[key]||[],next=incoming[key]||[];
   const signature=item=>key==='notes'
     ? [item.concept,item.related||'',item.date||'',item.note].join('\u001f')
