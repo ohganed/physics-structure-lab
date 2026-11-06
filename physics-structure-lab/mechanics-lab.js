@@ -5,6 +5,7 @@ import { transferCases } from './transfer-cases.js';
 import { nodeById } from './knowledge-connections-data.js';
 import { chapterConnectionsHtml } from './knowledge-connections.js';
 import { getLanguage } from './language.js';
+import { deepIntroHtml, deepReasoningHtml, deepWorkedExampleHtml, deepRevisitHtml } from './mechanics-deep.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite)||x<=0||y<=0)throw new RangeError('Parameters must be positive');
@@ -62,8 +63,8 @@ function chapterHtml(c,index){
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +'<h3>'+word("① どんな現象を扱うのか","① What phenomenon are we describing?")+'</h3><p>'+esc(c.phenomenon)+'</p>'
-  +'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>'
-  +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+steps
+  +deepIntroHtml(c.key,en?'en':'ja')+'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>'
+  +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+deepReasoningHtml(c.key,en?'en':'ja')+steps+deepWorkedExampleHtml(c.key,en?'en':'ja')
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
   +chapterConnectionsHtml(c.key)
   +'<div class="inquiry-chapter-preview">'+inquiryScenarios.filter(p=>p.concept===c.key).map(p=>'<button type="button" class="secondary-btn" data-open-inquiry="'+p.id+'">'+(en?'Try an investigation: '+esc(p.title[1]):'自分で実験を組み立てる：'+esc(p.title[0]))+' →</button>').join(' ')+'</div>'
@@ -72,7 +73,7 @@ function chapterHtml(c,index){
   +'<div id="mech-output" class="mechanics-output" aria-live="polite"></div>'
   +'<h3>'+word("⑤ 同じ問題を3つの視点から見る","⑤ Compare three reasoning perspectives")+'</h3>'+insights
   +'<h3>'+word("⑥ 考えてから答えを見る","⑥ Predict before seeing the answer")+'</h3><p>'+esc(c.problem)+'</p><button class="secondary-btn" id="mech-reveal">'+word("解答・根拠を表示","Reveal answer and reasoning")+'</button><div id="mech-answer" class="callout hide"><p>'+esc(c.answer)+'</p></div>'
-  +'<h3>'+word("⑦ 大学物理への接続","⑦ University physics connections")+'</h3><p>'+esc(c.university)+'</p><p class="muted">'+word("この章の演習・証明の完全網羅や専門的な数値シミュレーションは継続整備対象です。","Complete proofs, extended exercises, and specialized simulations remain in development.")+'</p>'
+  +'<h3>'+word("⑦ 大学物理への接続","⑦ University physics connections")+'</h3><p>'+esc(c.university)+'</p>'+deepRevisitHtml(c.key,en?'en':'ja')<p class="muted">'+word("この章の演習・証明の完全網羅や専門的な数値シミュレーションは継続整備対象です。","Complete proofs, extended exercises, and specialized simulations remain in development.")+'</p>'
   +'<button class="primary-btn" id="mech-complete">'+word("この章を学習済みに記録","Mark this chapter studied")+'</button><p id="mech-feedback" class="muted" aria-live="polite"></p>'
   +'</div>';
 }
