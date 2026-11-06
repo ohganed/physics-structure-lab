@@ -96,3 +96,14 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 - Author Japanese and English explanations at comparable intellectual depth; do not rely solely on direct word-for-word translation.
 - Keep detailed reading optional, accessible, and collapsible on small screens. No quiz or reading step is a gate.
 - Automated completeness checks cannot establish human comprehensibility: validate with real beginners and accessibility reviews.
+
+## Why this physical quantity and this mathematical representation?
+
+- A formula is not understood simply because every symbol can be defined or the algebra reproduced. Explain **what in the phenomenon makes this form of mathematics worth constructing**.
+- Before introducing a named quantity, where pedagogically appropriate, begin with an observable contrast, a measurable operation, a graph, a geometric relation, or a known law that gives the learner a reason to seek a new quantity.
+- Let a useful combination emerge from comparing phenomena and equations; only then name it as a definition. Distinguish the **physical law used** from the **new definition created** and the result derived from both.
+- For momentum: varying a force's duration motivates the signed force–time area (impulse); combining F=ma with acceleration gives FΔt=mv−mv₀; the repeated state combination motivates p=mv; internal impulse cancellation then motivates conservation for a combined system with negligible external impulse.
+- State the model limitations: a rectangle applies to constant net force; a varying force requires an integral; mass is constant in this simple Newtonian lesson; forces and velocities have signs and directions; total momentum conservation requires negligible external impulse.
+- The instructional sequence **does not claim to reproduce the historical discovery sequence**. Historical investigation is separate and should be evidence-based, not a fictional story about what a scientist must have thought.
+- Do not enforce one mandatory route for every topic. Sometimes the physical quantity is defined operationally before a law is established; sometimes experiment suggests a relation before a useful name is assigned. Keep these distinctions explicit.
+- Revisit each subject with the question: "How does this mathematical description arise from the phenomenon, and what does it let us notice or predict?"
