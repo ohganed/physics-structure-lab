@@ -14,6 +14,7 @@ export const navigationLabels={
  phenomenon:['現象と定義','Phenomena & Definitions'],
  acceleration:['加速度の概念','Acceleration Concepts'],
  mechanics:['力学12章','12 Mechanics Chapters'],
+ connections:['知識のつながり','Knowledge Connections'],
  forcelab:['力と作用図','Forces & Free-Body Diagrams'],
  conservation:['保存則研究室','Conservation Lab'],
  advanced:['回転・振動・軌道','Rotation, Oscillation & Orbits'],
