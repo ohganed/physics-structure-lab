@@ -25,6 +25,18 @@ const presets={
 const f=n=>Math.abs(n)<0.00001?'0':n.toFixed(n>=100?1:3);
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 const tex=expression=>'<div class="formula tex-display" data-tex="'+esc(expression)+'">'+esc(expression)+'</div>';
+
+const englishModels={
+ force:['Newton\'s Second Law','Net force F (N)','Mass m (kg)','With constant mass, acceleration is proportional to net force.'],
+ incline:['Incline acceleration (no friction)','Slope angle θ (degrees)','Mass m (kg)','In the frictionless model, acceleration is independent of mass.'],
+ energy:['Speed after a free fall','Fall height h (m)','Mass m (kg)','Without air resistance, final speed does not depend on mass.'],
+ collision:['Perfectly inelastic collision','Moving mass m₁ (kg)','Stationary mass m₂ (kg)','Two bodies stick together, conserving total momentum but not kinetic energy.'],
+ circular:['Centripetal acceleration','Speed v (m/s)','Radius r (m)','Doubling speed quadruples centripetal acceleration.'],
+ spring:['Spring oscillation period','Mass m (kg)','Spring constant k (N/m)','The ideal undamped spring period scales with the square root of mass.'],
+ gravity:['Earth circular orbital speed','Orbital radius from center (km)','Satellite mass (kg)','Circular orbit speed depends on the gravitational parameter and central distance, not satellite mass.'],
+ torque:['Torque from a perpendicular force','Lever arm r (m)','Force F (N)','For a fixed perpendicular force, torque equals lever arm multiplied by force.']
+};
+
 export function mechanicsPage(){
  const en=getLanguage()==='en';
  const chapters=en?mechanicsEnglish:mechanicsChapters;
@@ -64,11 +76,12 @@ export function installMechanics(remarkMath){
   const x=document.getElementById('mech-x'),y=document.getElementById('mech-y'),out=document.getElementById('mech-output');
   function update(){
    const d=mechanicsEvaluate(c.model,Number(x.value),Number(y.value));
-   document.getElementById('mech-label-x').textContent=d.labels[0]+': '+x.value;
-   document.getElementById('mech-label-y').textContent=d.labels[1]+': '+y.value;
+   const translated=english?(englishModels[c.model]||['Example: spring oscillation','Mass m (kg)','Spring constant k (N/m)','An illustrative linear system; the full advanced numerical model remains in development.']):null;
+   document.getElementById('mech-label-x').textContent=(translated?translated[1]:d.labels[0])+': '+x.value;
+   document.getElementById('mech-label-y').textContent=(translated?translated[2]:d.labels[1])+': '+y.value;
    out.replaceChildren();
-   const strong=document.createElement('strong');strong.textContent=d.title+'：'+f(d.result)+' '+d.unit;
-   const note=document.createElement('p');note.textContent=d.explanation;
+   const strong=document.createElement('strong');strong.textContent=(translated?translated[0]:d.title)+': '+f(d.result)+' '+d.unit;
+   const note=document.createElement('p');note.textContent=translated?translated[3]:d.explanation;
    out.append(strong,note);
   }
   x.addEventListener('input',update);y.addEventListener('input',update);update();
