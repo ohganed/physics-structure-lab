@@ -11,7 +11,7 @@ import { conservationLabPage, installConservationLab } from './conservation-lab.
 import { advancedMechanicsPage, installAdvancedMechanics } from './advanced-mechanics-lab.js';
 import { analyticalLabPage, installAnalyticalLab } from './analytical-lab.js';
 import { kinematicsLabPage, installKinematicsLab } from './kinematics-lab.js';
-import { getLanguage, setLanguage, translateNavigation } from './language.js';
+import { getLanguage, setLanguage, translateNavigation, filterNavigation } from './language.js';
 import { englishOverview, englishPhenomenon } from './english-pages.js';
 
 const content = document.querySelector('#app-content');
@@ -215,6 +215,8 @@ function navigate(page, push = true) {
   renderPhysicsMath();
   translateNavigation();
 }
+
+document.querySelector('#nav-search')?.addEventListener('input',event=>filterNavigation(event.target.value));
 
 document.querySelector('#language-select')?.addEventListener('change',event=>{
   const page=location.hash.slice(1)||'overview';
