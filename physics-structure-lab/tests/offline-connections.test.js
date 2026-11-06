@@ -9,7 +9,7 @@ test('knowledge connections can load from the offline application cache',()=>{
  assert.match(sw,/\.\/knowledge-connections\.js/);
  assert.match(sw,/\.\/mechanics-data\.js/);
  assert.match(sw,/\.\/mechanics-en\.js/);
- assert.match(sw,/physics-structure-lab-offline-v1\.5/);
+ assert.match(sw,/const CACHE_NAME = 'physics-structure-lab-offline-v[0-9]+\.[0-9]+/);
 });
 test('knowledge explorer is in navigation, is reachable from mechanics and respects the language edition',()=>{
  assert.match(html,/data-page="connections"/);
@@ -19,5 +19,5 @@ test('knowledge explorer is in navigation, is reachable from mechanics and respe
  assert.match(html,/data-page="journeys"/);
  assert.match(app,/setConnectionFocus/);
  assert.match(app,/focusMechanicsChapter/);
- assert.match(app,/\['overview','phenomenon','mechanics','connections'\]/);
+ assert.match(app,/!\['overview','phenomenon','mechanics','connections','journeys'\]\.includes\(page\)/);
 });
