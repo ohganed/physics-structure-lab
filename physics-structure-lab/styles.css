@@ -256,3 +256,44 @@
 
 .transfer-chapter-preview{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
 .knowledge-jump{display:flex;gap:8px;flex-wrap:wrap}
+
+/* v1.9 — Scientific Inquiry Lab. Participation, reflection and hints are optional. */
+.inquiry-toolbar{margin:16px 0}
+.inquiry-toolbar label{display:flex;align-items:center;gap:13px;flex-wrap:wrap;font-size:13px;font-weight:750}
+.inquiry-toolbar select,.inquiry-page select{border:1px solid #bdd4c6;border-radius:10px;padding:10px 12px;background:white;color:var(--ink);font:inherit;min-width:0}
+.inquiry-layout{display:grid;grid-template-columns:minmax(185px,238px) minmax(0,1fr);align-items:start;gap:17px}
+.inquiry-case-list{display:grid;gap:8px;position:sticky;top:18px}
+.inquiry-case-button{padding:12px 13px;text-align:left;border:1px solid #d3e5d7;border-radius:12px;background:#f9fbf9;color:var(--ink);font-size:13px;font-weight:700;line-height:1.5;cursor:pointer}
+.inquiry-case-button.active{background:#e1f0e6;border-color:#81ab98;color:#255844}
+.inquiry-case-button:focus-visible{outline:3px solid #538d76;outline-offset:3px}
+.inquiry-study h3{margin:22px 0 10px;font-size:17px}
+.inquiry-study>p,.inquiry-study .inquiry-hint{font-size:13px;color:var(--muted);line-height:1.8}
+.inquiry-writing{font-size:13px;font-weight:700;margin:13px 0;display:grid;gap:7px}
+.inquiry-writing textarea{font:inherit;font-weight:400;border:1px solid #bfd1c8;border-radius:11px;padding:12px;line-height:1.65;width:100%;resize:vertical;min-height:65px;color:var(--ink)}
+.inquiry-writing textarea:focus-visible,.inquiry-controls input:focus-visible{outline:3px solid #77ad98;outline-offset:2px}
+.inquiry-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;padding:17px 2px}
+.inquiry-input-label{display:grid;gap:10px;font-size:12px;font-weight:700}
+.inquiry-input-label input{width:100%;accent-color:var(--teal)}
+.inquiry-input-label output{font-variant-numeric:tabular-nums;color:var(--green)}
+.inquiry-prediction{background:#f3f9f5;border:1px solid #d3e6d8;border-radius:13px;padding:16px}
+#inquiry-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-bottom:12px}
+.inquiry-result-value{background:white;border:1px solid #e0eae2;padding:12px;border-radius:11px}
+.inquiry-result-value small{display:block;color:#5b7768;font-size:12px}
+.inquiry-result-value strong{display:block;color:#1e6a50;font-size:clamp(16px,1.9vw,21px);font-variant-numeric:tabular-nums;margin-top:6px}
+.inquiry-conservation{grid-column:1/-1;font-size:12px;line-height:1.8;color:#48665a}
+.inquiry-trial{padding:10px 12px;border:1px solid #e0eae1;border-radius:9px;margin:8px 0;display:grid;gap:4px;background:#fff}
+.inquiry-trial strong{font-size:12px}
+.inquiry-trial span{font-size:12px;line-height:1.7;color:#536e61}
+.inquiry-comparison{margin:15px 0;padding:14px;border-radius:12px;background:#ecf5ef;border:1px solid #d4e5d7}
+.inquiry-comparison:empty{display:none}
+.inquiry-comparison strong{font-size:13px}
+.inquiry-comparison p{font-size:13px;line-height:1.8;margin:8px 0 0}
+.inquiry-interpretation{padding:13px 15px;background:#f9fbf8;border:1px solid #d7e4db;border-radius:12px;margin:18px 0}
+.inquiry-interpretation summary{cursor:pointer;font-size:13px;font-weight:800;color:#276550}
+.inquiry-interpretation p{font-size:13px;line-height:1.85}
+.inquiry-history-entry{padding:13px;border:1px solid #d4e6d9;border-radius:12px;margin:10px 0;background:#f7faf7}
+.inquiry-history-entry strong{font-size:13px}
+.inquiry-history-entry p{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;color:#586d61}
+.inquiry-history-entry .inquiry-old-observation{border-left:3px solid #89b5a0;padding-left:10px}
+@media(max-width:860px){.inquiry-layout{grid-template-columns:1fr}.inquiry-case-list{position:static;display:flex;overflow:auto;padding-bottom:8px}.inquiry-case-button{min-width:170px;flex:0 0 170px}}
+@media(max-width:530px){.inquiry-controls,#inquiry-result{grid-template-columns:1fr}}
