@@ -8,7 +8,8 @@ import { getLanguage } from './language.js';
 import { deepIntroHtml, deepReasoningHtml, deepWorkedExampleHtml, deepRevisitHtml, formulaReaderHtml } from './mechanics-deep.js';
 
 export function mechanicsEvaluate(model, x, y) {
- if(![x,y].every(Number.isFinite)||x<=0||y<=0)throw new RangeError('Parameters must be positive');
+ if(![x,y].every(Number.isFinite))throw new RangeError('Parameters must be finite');
+ if(model!=='hamilton'&&(model==='coupled'?(x<0||y<=0):(x<=0||y<=0)))throw new RangeError('Parameters must be physically valid');
  const g=9.8;
  switch(model) {
  case 'force': return {title:'ニュートンの第二法則',formula:'a=F/m',result:x/y,unit:'m/s²',labels:['力 F（N）','質量 m（kg）'],explanation:'質量が一定なら、同じ質量への合力が2倍で加速度も2倍になる。'};
@@ -19,13 +20,19 @@ export function mechanicsEvaluate(model, x, y) {
  case 'spring': return {title:'ばね振動の周期',formula:'T=2\\pi\\sqrt{\\frac{m}{k}}',result:2*Math.PI*Math.sqrt(x/y),unit:'s',labels:['質量 m（kg）','ばね定数 k（N/m）'],explanation:'小振幅・線形ばね・減衰なし。質量が4倍なら周期は2倍。'};
  case 'gravity': return {title:'円軌道の速さ（地球）',formula:'v=\\sqrt{\\frac{GM}{r}}',result:Math.sqrt(3.986004418e14/(x*1000))/1000,unit:'km/s',labels:['地心距離 r（km）','衛星質量 m（kg）'],explanation:'G Mは地球の標準重力パラメータ、円軌道・地球中心からの距離を使用。衛星質量によらない。'};
  case 'torque': return {title:'垂直に押すときのトルク',formula:'\\tau=rF',result:x*y,unit:'N·m',labels:['腕の長さ r（m）','力 F（N）'],explanation:'固定軸、力が腕に垂直な場合。一般には外積の大きさ rFsinθ。'};
+ case 'noninertial': return {title:'加速するバス内の見かけの力の大きさ',formula:'F_{\\mathrm{app}}=mA',result:x*y,unit:'N',labels:['バスの加速度 A（m/s²）','物体の質量 m（kg）'],explanation:'バスが右向きに加速するとき、並進に由来する見かけの力は左向き。計算値はその大きさ。回転しない座標系のモデル。'};
+ case 'lagrange': return {title:'ラグランジュ方程式から得るばねの角振動数',formula:'\\omega=\\sqrt{k/m}',result:Math.sqrt(y/x),unit:'rad/s',labels:['質量 m（kg）','ばね定数 k（N/m）'],explanation:'L=(m/2)ẋ²−(k/2)x² をオイラー＝ラグランジュ方程式へ代入すると mẍ+kx=0。これは力から求めた単振動と同じ角振動数。'};
+ case 'hamilton': return {title:'位相空間でのばねのハミルトニアン',formula:'H=p^2/(2m)+kq^2/2',result:y*y/4+25*x*x,unit:'J',labels:['位置 q（m）','正準運動量 p（kg·m/s）'],explanation:'質量2 kg、ばね定数50 N/mの線形振動子。位置と正準運動量から状態のエネルギーを計算。正準運動量はこの例ではm×速度。'};
+ case 'coupled': return {title:'2質点の逆位相モードの角振動数',formula:'\\omega_{-}=\\sqrt{(k+2k_c)/m}',result:Math.sqrt((8+2*x)/y),unit:'rad/s',labels:['結合ばね定数 k_c（N/m）','各質点の質量 m（kg）'],explanation:'外側のばね定数k=8 N/m、2質点は同質量、線形小振幅。結合が0なら同位相・逆位相の角振動数は一致する。'};
  default: return {title:'ばね振動を例に考える',formula:'\\omega=\\sqrt{\\frac{k}{m}}',result:Math.sqrt(y/x),unit:'rad/s',labels:['質量 m（kg）','ばね定数 k（N/m）'],explanation:'解析力学・非線形の各章は、基礎に戻って線形振動を比較する。大学の一般の場合の数値解は未実装。'};
  }
 }
 const presets={
  force:[6,2,1,20,.5,10],incline:[25,2,1,75,.5,10],energy:[5,2,.5,50,.5,10],
  collision:[2,1,.5,10,.5,10],circular:[6,3,.5,12,.5,12],spring:[2,50,.5,10,5,150],
- gravity:[7000,1,6500,30000,.5,100],torque:[.5,10,.1,3,1,30]
+ gravity:[7000,1,6500,30000,.5,100],torque:[.5,10,.1,3,1,30],
+ noninertial:[2,2,.5,6,.5,8],lagrange:[2,50,.5,10,5,150],
+ hamilton:[.4,3,-1,1,-10,10],coupled:[3,2,0,10,.5,8]
 };
 const f=n=>Math.abs(n)<0.00001?'0':n.toFixed(n>=100?1:3);
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
@@ -39,7 +46,11 @@ const englishModels={
  circular:['Centripetal acceleration','Speed v (m/s)','Radius r (m)','Doubling speed quadruples centripetal acceleration.'],
  spring:['Spring oscillation period','Mass m (kg)','Spring constant k (N/m)','The ideal undamped spring period scales with the square root of mass.'],
  gravity:['Earth circular orbital speed','Orbital radius from center (km)','Satellite mass (kg)','Circular orbit speed depends on the gravitational parameter and central distance, not satellite mass.'],
- torque:['Torque from a perpendicular force','Lever arm r (m)','Force F (N)','For a fixed perpendicular force, torque equals lever arm multiplied by force.']
+ torque:['Torque from a perpendicular force','Lever arm r (m)','Force F (N)','For a fixed perpendicular force, torque equals lever arm multiplied by force.'],
+ noninertial:['Apparent force in an accelerating bus','Frame acceleration A (m/s²)','Object mass m (kg)','Magnitude mA; direction opposite to the frame acceleration. No additional physical interaction acts.'],
+ lagrange:['Spring frequency from Euler–Lagrange','Mass m (kg)','Spring stiffness k (N/m)','Deriving m ẍ+kx=0 from L=K−U gives the same angular frequency as the Newtonian spring equation.'],
+ hamilton:['Hamiltonian of a spring state','Position q (m)','Canonical momentum p (kg·m/s)','For fixed m=2 kg and k=50 N/m: H=p²/(2m)+kq²/2. Position and momentum can be signed; energy is nonnegative.'],
+ coupled:['Opposite-phase normal-mode frequency','Coupling spring stiffness kc (N/m)','Mass of each oscillator (kg)','Two equal masses with outer spring stiffness k=8 N/m. Removing the coupling makes both normal-mode frequencies equal.']
 };
 
 const supportingLabs={
