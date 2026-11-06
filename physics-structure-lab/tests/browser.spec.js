@@ -229,3 +229,72 @@ test('advanced mechanics sliders model the selected topic rather than generic sp
  await page.locator('#language-select').selectOption('en');
  await expect(page.locator('#mech-output')).toContainText('Hamiltonian');
 });
+
+test('all twelve mechanics chapters and synthesis expose accessible optional problems',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/#practice');
+ const chapters=['force','friction','energy','momentum','circular','oscillation','gravitation','rotation','noninertial','lagrange','hamilton','coupled','synthesis'];
+ for(const ch of chapters){
+  await page.locator('[data-practice-section="'+ch+'"]').click();
+  await expect(page.locator('.practice-problem-button')).toHaveCount(ch==='synthesis'?8:2);
+  await expect(page.locator('.practice-hint')).toHaveCount(2);
+  await expect(page.locator('.practice-solution-steps li')).not.toHaveCount(0);
+  await page.locator('.practice-solution summary').click();
+  await expect(page.locator('.practice-solution')).toHaveAttribute('open','');
+  await expect(page.locator('.practice-solution')).toContainText('物理的な解釈');
+ }
+ expect(errors).toEqual([]);
+});
+test('numeric comparison is optional and qualitative answers do not become test gates',async({page})=>{
+ await page.goto(base+'/#practice');
+ await expect(page.locator('#practice-check-status')).toBeEmpty();
+ await page.locator('#practice-numeric').fill('2');
+ await page.locator('#practice-check').click();
+ await expect(page.locator('#practice-check-status')).toContainText('参考値に近い');
+ await page.locator('#practice-numeric').fill('20');
+ await page.locator('#practice-check').click();
+ await expect(page.locator('#practice-check-status')).toContainText('参考値とは違い');
+ await page.locator('[data-practice-problem="force-inertia"]').click();
+ await expect(page.locator('#practice-numeric')).toHaveCount(0);
+ await page.locator('.practice-solution summary').click();
+ await expect(page.locator('.practice-solution')).toHaveAttribute('open','');
+});
+test('learner thinking and older versions survive changes of chapter, language, and reload',async({page})=>{
+ await page.goto(base+'/#practice');
+ await page.locator('#practice-response').fill('At first I used the applied force only.');
+ await page.locator('#practice-reflection').fill('Now I also include friction.');
+ await page.locator('#practice-numeric').fill('2');
+ await page.locator('#practice-save').click();
+ await expect(page.locator('#practice-history .practice-history-entry')).toHaveCount(1);
+ await page.locator('#practice-response').fill('I now isolate the cart before drawing forces.');
+ await page.locator('[data-practice-section="energy"]').click();
+ await page.locator('[data-practice-section="force"]').click();
+ await expect(page.locator('#practice-response')).toHaveValue('I now isolate the cart before drawing forces.');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('.practice-problem-card h2')).toContainText('cart');
+ await expect(page.locator('#practice-history')).toContainText('At first I used');
+ await expect(page.locator('#practice-history')).toContainText('I now isolate');
+ await page.reload();
+ await expect(page.locator('#practice-response')).toHaveValue('I now isolate the cart before drawing forces.');
+ await expect(page.locator('#practice-history')).toContainText('Now I also include friction.');
+});
+test('mechanics chapter link navigates straight to its topic-specific practice',async({page})=>{
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="8"]').click();
+ await page.locator('[data-open-practice="noninertial"]').click();
+ await expect(page).toHaveURL(/#practice$/);
+ await expect(page.locator('.practice-chapter-button.active')).toContainText('非慣性系');
+ await expect(page.locator('.practice-problem-button')).toHaveCount(2);
+ await page.locator('[data-practice-section="synthesis"]').click();
+ await expect(page.locator('.practice-problem-button')).toHaveCount(8);
+});
+test('iPhone-width mechanics practice keeps the reading viewport and optional mathematics accessible',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#practice');
+ await page.locator('.practice-solution summary').click();
+ await expect(page.locator('.practice-solution-steps li')).not.toHaveCount(0);
+ const measured=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
+ expect(measured.scroll).toBeLessThanOrEqual(measured.client+2);
+ await page.locator('[data-practice-section="synthesis"]').click();
+ await expect(page.locator('.practice-problem-button')).toHaveCount(8);
+});
