@@ -15,6 +15,8 @@ test('knowledge explorer is in navigation, is reachable from mechanics and respe
  assert.match(html,/data-page="connections"/);
  assert.match(app,/connections: connectionsPage/);
  assert.match(app,/installConnections/);
+ assert.match(app,/installJourneys/);
+ assert.match(html,/data-page="journeys"/);
  assert.match(app,/setConnectionFocus/);
  assert.match(app,/focusMechanicsChapter/);
  assert.match(app,/\['overview','phenomenon','mechanics','connections'\]/);
