@@ -18,6 +18,15 @@ export const inquiryScenarios = [
   law:'t=\\sqrt{\\frac{2h}{g}},\\quad v=\\sqrt{2gh}',
   explanation:['このモデルでは質量は落下時間に影響しない。高さを4倍にすると落下時間は2倍。','In this ideal model mass does not affect falling time. Quadrupling height doubles falling time.'],
   caution:['空気抵抗のある羽と球などには一般化できない。','This cannot be generalized to drag-dominated falling objects such as feathers.']},
+ {id:'fall-drag',concept:'acceleration',title:['落下のモデルを見直す：空気抵抗を入れたら？','Revisit free fall: what changes when air drag matters?'],
+  phenomenon:['同じ高さ20 mから落ちる物体を考える。空気抵抗がある場合、重さの違いが結果に現れるかを調べる。','Release bodies from 20 m and compare an ideal vacuum model with a linear-resistance model.'],
+  prompt:['抵抗を無視した場合と、抵抗を含む場合で、質量の影響はどう違うだろう？','How does the role of mass change when drag is no longer negligible?'],
+  assumptions:['高さ20 m、初速0、重力 g=9.8 m/s²。抵抗力は速さに比例し進行方向と逆向き：F_d=−bv。bは質量によらず独立に設定できる理想化パラメータ。','Fixed height 20 m; zero initial speed; g=9.8 m/s². Air resistance is proportional to velocity and opposes the motion: F_d=−bv. The drag parameter b is treated independently of mass.'],
+  inputs:[{key:'mass',label:['質量 m (kg)','Mass m (kg)'],min:.5,max:10,step:.5,initial:2},
+          {key:'drag',label:['線形抵抗係数 b (kg/s)','Linear drag b (kg/s)'],min:0,max:6,step:.25,initial:1}],
+  law:'m\dot v=mg-bv\quad(\text{downward positive})',
+  explanation:['抵抗が0なら質量によらない自由落下。抵抗があると、同じ b でも質量によって減速度への寄与 b v/m が変わる。','With b=0, the ideal falling time is independent of mass. With b>0 and fixed b, the term bv/m introduces mass dependence.'],
+  caution:['実際の空気抵抗は速度の二乗に近い場合もある。物体の形状・密度・媒質によって係数が異なる。これは線形抵抗の比較モデル。','Real drag may be approximately quadratic and depends on shape, fluid and flow regime. This is an idealized linear-drag model.']},
  {id:'circular',concept:'circular',title:['円運動：速さ一定なら加速度も0？','Circular motion: is acceleration zero at constant speed?'],
   phenomenon:['半径一定の円を一定の速さで回る点を考える。','Consider a particle moving at constant speed on a circular path.'],
   prompt:['速さを2倍にする場合と半径を2倍にする場合で、加速度はどう変わる？','Compare doubling speed with doubling radius. What happens to acceleration?'],
@@ -49,6 +58,27 @@ export const inquiryScenarios = [
 
 export function scenarioById(id){return inquiryScenarios.find(c=>c.id===id)||null;}
 const valid=(value)=>typeof value==='number'&&Number.isFinite(value);
+/**
+ * Analytical linear-drag trajectory, with a bracketed monotonic root solve
+ * for the impact time. Downward is positive; resistance is -b v.
+ */
+export function linearDragFall({mass=2,drag=1,height=20,g=9.8}={}){
+ if(![mass,drag,height,g].every(Number.isFinite)||mass<=0||drag<0||height<=0||g<=0)throw new RangeError('Invalid linear-drag fall');
+ const idealTime=Math.sqrt(2*height/g);
+ if(drag===0)return {time:idealTime,speed:g*idealTime,terminalSpeed:Infinity,idealTime,idealSpeed:g*idealTime};
+ const terminalSpeed=mass*g/drag,relaxation=mass/drag;
+ const distance=t=>terminalSpeed*(t+relaxation*Math.expm1(-t/relaxation));
+ let lo=0,hi=Math.max(idealTime*2,height/terminalSpeed+relaxation+1);
+ while(distance(hi)<height&&hi<1e7)hi*=2;
+ if(distance(hi)<height)throw new RangeError('Impact solution not bracketed');
+ for(let j=0;j<72;j++){
+  const mid=(lo+hi)/2;
+  if(distance(mid)>=height)hi=mid;else lo=mid;
+ }
+ const time=(lo+hi)/2;
+ const speed=-terminalSpeed*Math.expm1(-time/relaxation);
+ return {time,speed,terminalSpeed,idealTime,idealSpeed:g*idealTime};
+}
 export function evaluateInquiry(id,values){
  const c=scenarioById(id);
  if(!c||!values||typeof values!=='object')throw new RangeError('Unknown scientific investigation');
@@ -62,6 +92,9 @@ export function evaluateInquiry(id,values){
   primary=a;secondary=3+2*a;
  }else if(id==='fall'){
   primary=Math.sqrt(2*values.height/9.8);secondary=Math.sqrt(2*9.8*values.height);
+ }else if(id==='fall-drag'){
+  const v=linearDragFall({mass:values.mass,drag:values.drag,height:20});
+  primary=v.time;secondary=v.speed;
  }else if(id==='circular'){
   primary=values.speed**2/values.radius;secondary=2*Math.PI*values.radius/values.speed;
  }else if(id==='spring'){
@@ -77,6 +110,7 @@ export function evaluateInquiry(id,values){
  const labels={
   cart:[['加速度 a','Acceleration a'],'m/s²',['2秒後の速度','Velocity after 2 s'],'m/s'],
   fall:[['落下時間 t','Fall time t'],'s',['着地直前の速さ','Impact speed'],'m/s'],
+  'fall-drag':[['抵抗ありの落下時間','Fall time with drag'],'s',['衝突直前の速さ','Impact speed'],'m/s'],
   circular:[['向心加速度 a','Centripetal acceleration a'],'m/s²',['1周の周期','Orbital period'],'s'],
   spring:[['振動周期 T','Oscillation period T'],'s',['全力学的エネルギー','Total mechanical energy'],'J'],
   collision:[['物体1の衝突後速度','Post-impact velocity 1'],'m/s',['物体2の衝突後速度','Post-impact velocity 2'],'m/s']
