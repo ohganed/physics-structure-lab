@@ -155,3 +155,47 @@
 .parallel-language summary{cursor:pointer;color:var(--green);font-size:13px;font-weight:750}
 .parallel-language h3{font-size:16px;margin:13px 0 6px}
 .parallel-language p{font-size:13px;line-height:1.85;margin:8px 0;color:#496b5c}
+
+/* Knowledge Connections — optional reflection, no mastery barriers */
+.knowledge-layout{display:grid;grid-template-columns:minmax(195px,250px) minmax(0,1fr);gap:18px;align-items:start}
+.knowledge-picker{position:sticky;top:12px;max-height:88vh;overflow:auto}
+.knowledge-picker h2{font-size:18px}
+.knowledge-picker label,.knowledge-journal label{font-size:13px;font-weight:700;display:block;margin:9px 0}
+.knowledge-picker input,.knowledge-journal textarea,.knowledge-journal select{width:100%;font:inherit;border:1px solid #b9d1c5;border-radius:10px;padding:10px 12px;background:white;color:var(--ink)}
+.knowledge-concept-list{display:grid;gap:4px;margin-top:12px}
+.knowledge-concept{padding:9px 10px;text-align:left;border:1px solid transparent;border-radius:10px;background:#f3f7f4;font-size:12px;color:var(--ink);cursor:pointer}
+.knowledge-concept:hover,.knowledge-concept:focus-visible{border-color:#669b88}
+.knowledge-concept.selected{background:#daeee3;border-color:#679f88;font-weight:800;color:#185341}
+.knowledge-question{font-size:15px;color:#396b57;font-weight:650}
+.knowledge-map{width:100%;height:auto;max-height:330px;display:block;margin:10px 0 18px;background:#f6faf7;border-radius:14px}
+.knowledge-filter-row{display:flex;gap:12px;align-items:center;margin-bottom:13px;flex-wrap:wrap}
+.knowledge-filter-row label{font-size:13px;font-weight:700}
+.knowledge-filter-row select{padding:8px 12px;max-width:230px;min-width:0;border-radius:9px;border:1px solid #b1cbbd;background:white}
+.knowledge-relations{display:grid;gap:10px}
+.knowledge-relation{padding:15px;border-radius:13px;background:#f6f9f5;border:1px solid #d4e5da}
+.knowledge-relation-top{display:flex;justify-content:space-between;gap:9px;align-items:center;flex-wrap:wrap}
+.knowledge-relation-type{font-size:11px;color:#376a57;font-weight:800;background:#e6f3e9;padding:5px 8px;border-radius:7px}
+.knowledge-relation-target{font-size:13px;color:#185c4a;text-decoration:underline;text-underline-offset:3px;background:transparent;border:0;cursor:pointer;font-weight:750;text-align:left}
+.knowledge-relation p{line-height:1.85;font-size:13px;margin:9px 0}
+.knowledge-relation p strong{color:#214d41}
+.knowledge-boundary{border-left:3px solid #d4a66a;padding-left:12px;color:#66543b}
+.knowledge-relation small{font-size:11px;color:#627b70}
+.knowledge-jump{margin:16px 0 23px}
+.knowledge-journal{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.knowledge-journal textarea{min-height:90px;resize:vertical;line-height:1.7}
+.knowledge-journal select{margin-bottom:12px}
+.knowledge-journal>p{font-size:13px;color:var(--muted)}
+.knowledge-note{background:#f3f8f5;border-radius:10px;border:1px solid #d7e6da;padding:10px 13px;margin:9px 0}
+.knowledge-note small{color:#6d8177}
+.knowledge-note p{margin:5px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8}
+.knowledge-chapter-bridge{padding:17px;background:#f3f9f4;border:1px solid #cfdfd4;border-radius:13px;margin:18px 0}
+.knowledge-chapter-bridge h3{margin:8px 0}
+.knowledge-chapter-bridge>p{font-size:13px}
+.knowledge-bridge-list{display:grid;gap:8px;margin:13px 0}
+.knowledge-bridge-button{background:white;padding:11px;border:1px solid #d5e4d9;border-radius:11px;text-align:left;color:var(--ink);cursor:pointer}
+.knowledge-bridge-button strong{display:block;font-size:13px}
+.knowledge-bridge-button span{display:block;font-size:12px;color:#50685b;line-height:1.6;margin-top:4px}
+.knowledge-concept:focus-visible,.knowledge-relation-target:focus-visible,.knowledge-bridge-button:focus-visible{outline:3px solid #437b69;outline-offset:2px}
+@media(max-width:900px){.knowledge-layout{grid-template-columns:1fr}.knowledge-picker{position:static;max-height:none}.knowledge-concept-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:170px;overflow:auto}}
+@media(max-width:520px){.knowledge-concept-list{grid-template-columns:1fr}.knowledge-map{max-height:200px}.knowledge-relation-top{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.knowledge-page *{scroll-behavior:auto!important}}
