@@ -107,3 +107,12 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 - The instructional sequence **does not claim to reproduce the historical discovery sequence**. Historical investigation is separate and should be evidence-based, not a fictional story about what a scientist must have thought.
 - Do not enforce one mandatory route for every topic. Sometimes the physical quantity is defined operationally before a law is established; sometimes experiment suggests a relation before a useful name is assigned. Keep these distinctions explicit.
 - Revisit each subject with the question: "How does this mathematical description arise from the phenomenon, and what does it let us notice or predict?"
+
+## Mathematical exposition audit across the full mechanics pathway (v3.3)
+
+- For each chapter, require an observable question, a reason to choose coordinates or a graphical representation, and explicit separation of empirical law, definition and mathematical consequence.
+- Every major displayed equation must be accompanied by a learner-readable explanation of the step and a physical interpretation. Show intermediate operations rather than skipping directly to an authoritative formula.
+- When a derivation needs more mathematics than the prerequisite background, define and explain the additional operation; do not pretend that variation or Legendre transforms are elementary identities.
+- Surface what the result newly predicts, an assumption that may invalidate it, and a connection to another chapter. Let explanations remain optional to read, not mandatory mastery gates.
+- Do not manufacture historical stories to justify the learning order; these narratives are epistemic and pedagogical, not a documentary reconstruction of discoveries.
+- On phone-width layouts, keep long formulas in internally scrollable containers instead of allowing the entire page to overflow horizontally.
