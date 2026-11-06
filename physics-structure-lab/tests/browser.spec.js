@@ -209,3 +209,23 @@ test('detailed mechanics chapter remains readable on iPhone-width Chromium viewp
  const overflow=await page.evaluate(()=>({viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
  expect(overflow.scroll).toBeLessThanOrEqual(overflow.viewport+2);
 });
+
+test('advanced mechanics sliders model the selected topic rather than generic spring motion',async({page})=>{
+ await page.goto(base+'/#mechanics');
+ const checks=[
+  [8,'見かけの力','N'],
+  [9,'ラグランジュ','rad/s'],
+  [10,'ハミルトニアン','J'],
+  [11,'逆位相','rad/s']
+ ];
+ for(const [index,term,unit] of checks){
+  await page.locator('[data-mech-chapter="'+index+'"]').click();
+  await expect(page.locator('#mech-output')).toContainText(term);
+  await expect(page.locator('#mech-output')).toContainText(unit);
+ }
+ await page.locator('[data-mech-chapter="10"]').click();
+ await expect(page.locator('#mech-label-x')).toContainText('位置 q');
+ await expect(page.locator('#mech-label-y')).toContainText('正準運動量 p');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#mech-output')).toContainText('Hamiltonian');
+});
