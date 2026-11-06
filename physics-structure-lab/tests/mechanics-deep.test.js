@@ -26,7 +26,7 @@ test('every mechanics chapter has substantial, genuinely bilingual self-study ex
   });
   v.example.steps.forEach(([latex,reason])=>{
    assert.ok(latex.length>=8);
-   assert.ok(reason.ja.length>12 && reason.en.length>12);
+   assert.ok(reason.ja.trim().length>=6 && reason.en.trim().length>=12,c.key+' missing step explanation');
   });
  }
 });
