@@ -2,8 +2,8 @@
 export const mechanicsOriginsPart2={
   "oscillation": {
     "title": [
-      "なぜばねの運動が同じ時間で繰り返されるのか",
-      "Why does a spring mass repeat its motion?"
+      "ばねの振動について",
+      "Spring oscillations"
     ],
     "observation": [
       "ばねの物体を右へ引いて離すと、平衡位置を通り過ぎ、左端で向きを変える。最も右にある瞬間は速度が0なのに、なぜ左へ動き始めるのだろう。",
@@ -100,8 +100,8 @@ export const mechanicsOriginsPart2={
   },
   "gravitation": {
     "title": [
-      "落下する物体と人工衛星を一つの法則で考えられるか",
-      "Can falling objects and satellites share one law?"
+      "万有引力と円軌道について",
+      "Gravity and circular orbits"
     ],
     "observation": [
       "落とした石は地上へ落ちる。一方、人工衛星は地球の近くを回り続ける。衛星に重力が働いていないと考えるより、重力によって進行方向を曲げられ続けていると考えたらどうだろう。",
@@ -187,8 +187,8 @@ export const mechanicsOriginsPart2={
   },
   "rotation": {
     "title": [
-      "同じ力でも回しやすさが違うことをどう数式化するか",
-      "How can mathematics describe different rotational effects of the same push?"
+      "力の回転への働きについて",
+      "Forces and rotation"
     ],
     "observation": [
       "ドアは蝶番の近くより取っ手付近を押した方が開きやすい。同じ場所でも蝶番へ向かって押すと回らない。力の大きさ以外に、作用位置と向きを表す必要がある。",
@@ -296,8 +296,8 @@ export const mechanicsOriginsPart2={
   },
   "noninertial": {
     "title": [
-      "同じ運動が観測者によって違って見える理由を式にする",
-      "Why does the same motion look different to accelerating observers?"
+      "加速する座標系について",
+      "Accelerating reference frames"
     ],
     "observation": [
       "発進するバスに乗ると体が後ろへ引かれたように感じる。しかし地面にいる人から見れば、乗客はもとの速度を保とうとしている。二人の説明は矛盾するだろうか。",
