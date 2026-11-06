@@ -199,3 +199,10 @@
 @media(max-width:900px){.knowledge-layout{grid-template-columns:1fr}.knowledge-picker{position:static;max-height:none}.knowledge-concept-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:170px;overflow:auto}}
 @media(max-width:520px){.knowledge-concept-list{grid-template-columns:1fr}.knowledge-map{max-height:200px}.knowledge-relation-top{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.knowledge-page *{scroll-behavior:auto!important}}
+
+.knowledge-revisit{padding:12px 0;margin:13px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.knowledge-revisit h3{font-size:16px;margin:10px 0}
+.knowledge-revisit p{font-size:13px;line-height:1.75;color:var(--muted)}
+.knowledge-home-entry{margin:20px 0;padding:20px 24px}
+.knowledge-home-entry h2{margin:8px 0 12px}
+.knowledge-home-entry p{font-size:14px;line-height:1.85;color:var(--muted);margin-bottom:14px}
