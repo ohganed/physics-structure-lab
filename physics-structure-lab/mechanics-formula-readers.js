@@ -118,42 +118,60 @@ export const formulaReaders = {
     ]
   },
   "momentum": {
-    "expression": "\\Delta\\boldsymbol P=\\int\\boldsymbol F_{\\mathrm{ext}}\\,dt",
+    "expression": "F\\Delta t=mv-mv_0=\\Delta p",
     "meaning": [
-      "運動量の変化は、系に加わる外力を時間について積み重ねたもの。",
-      "The system momentum change equals external net impulse integrated over time."
+      "一定の合力の時間的な積み重ね（グラフの符号付き面積）を考えると、それは最初と最後のmvの差になる。そこでmvを運動量pと名付ける。",
+      "Accumulating constant net force over time (the signed graph area) yields the difference between final and initial mv. That motivates naming mv as momentum p."
     ],
     "symbols": [
       [
-        "\\boldsymbol P",
-        "系の総運動量",
-        "Total system momentum",
-        "kg·m/s"
-      ],
-      [
-        "\\boldsymbol F_{\\mathrm{ext}}",
-        "系への外力の合計",
-        "Net external force on the system",
+        "F",
+        "一つの物体に作用する、選んだ軸方向の合力",
+        "Net force on the chosen body along the selected axis",
         "N"
       ],
       [
-        "dt",
-        "ごく短い時間の幅",
-        "Infinitesimal time interval",
+        "\\Delta t",
+        "合力が作用する時間の長さ",
+        "Duration of the net force",
         "s"
+      ],
+      [
+        "m",
+        "物体の質量（一定）",
+        "Constant mass of the body",
+        "kg"
+      ],
+      [
+        "v_0",
+        "最初の速度（符号付き）",
+        "Initial signed velocity",
+        "m/s"
+      ],
+      [
+        "v",
+        "最後の速度（符号付き）",
+        "Final signed velocity",
+        "m/s"
+      ],
+      [
+        "\\Delta p",
+        "運動量p=mvの終値と初値の差",
+        "Final minus initial momentum p=mv",
+        "kg·m/s"
       ]
     ],
     "unit": [
-      "N·s = kg·m/s。力積と運動量は同じ単位。",
-      "N·s equals kg·m/s, matching impulse and momentum."
+      "力積FΔtの単位はN·sで、kg·m/sと等しい。右辺mv−mv₀と単位が一致する。",
+      "Impulse FΔt has units N·s, equal to kg·m/s, matching mv−mv₀."
     ],
     "limit": [
-      "外力の力積を0とみなせれば総運動量は保存。しかし個々の物体の運動量は変わり得る。",
-      "With negligible external impulse, total momentum is conserved, though each body's momentum can change."
+      "作用時間が0に近ければ、有限の力で生じる力積も0に近づく。力の向きを逆にすれば力積も逆符号になり、運動量の変化の向きが反転する。",
+      "With finite force, an interval shrinking to zero gives vanishing impulse. Reversing force reverses the signed area and the change in momentum."
     ],
     "scope": [
-      "外力の力積を無視できる短い衝突、または孤立系を想定。",
-      "Applies to an isolated system or a collision where net external impulse is negligible."
+      "この長方形の式は質量・合力が一定の一次元運動。変化する力なら符号付き面積を積分する。二物体の総運動量保存は外力積が無視できる場合に限る。",
+      "The rectangle formula assumes one-dimensional motion with constant mass and net force. A changing force requires signed integration; total momentum is conserved only if external impulse is negligible."
     ]
   },
   "circular": {
