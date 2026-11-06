@@ -20,3 +20,27 @@
 .derivation-line .derivation-math{background:#f4f8f6;margin:12px 0 8px;line-height:1.7}
 .derivation-reason{color:#546b63;font-size:14px;line-height:1.8;margin:0 0 6px}
 @media(max-width:600px){.derivation-line .derivation-math{font-size:18px}.derivation-stage{padding:16px}}
+
+/* Definition research lab: responsive sliders, live motion and quantitative comparisons */
+.definition-lab{margin:24px 0}
+.definition-lab>p{font-size:14px;color:var(--muted)}
+.definition-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;padding:16px 0}
+.definition-controls label{display:grid;gap:9px;font-size:13px;font-weight:650}
+.definition-controls output{float:right;color:var(--teal);font-variant-numeric:tabular-nums;font-weight:800}
+.definition-controls input,.definition-player input{accent-color:var(--teal);width:100%;min-width:0}
+.definition-track-frame{background:#f3f8f4;border:1px solid var(--line);border-radius:14px;padding:12px 12px 15px}
+#def-track{display:block;width:100%;height:auto;max-height:220px}
+.definition-player{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:8px 8px 0}
+.definition-player label{font-size:13px;white-space:nowrap}
+.definition-player input{flex:1 1 140px}
+.definition-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.definition-stats>div{background:#eef5f1;border:1px solid #d9e8df;border-radius:12px;padding:14px 10px}
+.definition-stats small{display:block;color:#55756a;font-size:11px;line-height:1.5}
+.definition-stats strong{display:block;font-size:clamp(15px,1.8vw,21px);color:var(--green);margin-top:8px;font-variant-numeric:tabular-nums}
+.definition-math-area{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.definition-math-area>div{min-width:0}
+.definition-math-area .formula{font-size:clamp(14px,1.6vw,21px);padding:16px 8px}
+.definition-lab [data-def-question]{font-size:12px}
+#def-question-response{font-size:14px;line-height:1.8}
+@media(max-width:900px){.definition-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.definition-math-area{grid-template-columns:1fr}}
+@media(max-width:550px){.definition-controls{grid-template-columns:1fr}.definition-player{gap:7px}.definition-stats strong{font-size:17px}}
