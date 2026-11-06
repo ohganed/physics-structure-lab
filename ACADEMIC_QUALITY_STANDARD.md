@@ -73,3 +73,14 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 - Treat a graph as a visualization of model behavior under stated assumptions; it does not establish a universal law.
 - Preserve multiple versions of the learner's thinking, allow unfinished hypotheses and optional notes, and maintain separate drafts by topic.
 - Learning records should be portable, validated, backward compatible and stored locally unless the learner explicitly chooses to export them.
+
+## Evidence, independent investigation and gradual withdrawal of guidance
+
+- The learner may choose either an optional predict-before-reveal mode or immediate live predictions. Neither mode should require writing answers to advance.
+- Scaffolding prompts ask the learner to identify the system, measurement, controlled variables and model limitations. Prompts should be removable at the learner's discretion.
+- Learner-entered observations must remain marked as **learner reported**, distinct from deterministic calculations. Record the measured quantity's unit, method and uncertainty if known; do not invent uncertainty values.
+- Comparisons and plotted uncertainty bars facilitate questioning and model revision; they must not automatically label a physical theory as validated or refuted by one user-entered datum.
+- Only overlay measurements from trials where the other modeled inputs match the controlled-variable graph, so confounded conditions are not visually blended.
+- Reopening historical records must not silently overwrite the current unfinished inquiry. Show earlier and current reasoning side by side.
+- Browser Back/Forward navigation should preserve the natural exploration history across scientific topics and concept connections.
+- Keep a real-browser smoke suite alongside mathematical unit tests, including Japanese and English modes, mobile widths, local data persistence and offline reopening. Mark any untested device or platform explicitly.
