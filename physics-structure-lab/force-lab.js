@@ -70,6 +70,7 @@ export function installForceLab(){
  const target=$('force-target'),tSlider=$('force-t'),play=$('force-play');
  let t=0,run=false,frame=0,prev=null,disposed=false;
  let model;
+ let renderedTarget=null;
  const values=()=>Object.fromEntries(ids.map(id=>[id,Number(inputs[id].value)]));
  function update(){
   let p=values();if(p.muK>p.muS){p.muK=p.muS;inputs.muK.value=String(p.muS);}
@@ -86,12 +87,14 @@ export function installForceLab(){
   const bx=xb,ax=xa+30;
   $('force-block-a').setAttribute('x',ax);$('force-block-b').setAttribute('x',bx);
   $('force-label-a').setAttribute('x',ax+35);$('force-label-b').setAttribute('x',bx+65);
+  $('force-external').style.opacity=model.F===0?'0':'1';
   $('force-external').setAttribute('x1',target.value==='upper'?ax+70:bx+130);
   $('force-external').setAttribute('x2',target.value==='upper'?ax+126:bx+186);
   $('force-external').setAttribute('y1',target.value==='upper'?132:181);
   $('force-external').setAttribute('y2',target.value==='upper'?132:181);
   const upperEquation=target.value==='upper'?'F-f=m_Aa_A':'f=m_Aa_A';
   const lowerEquation=target.value==='upper'?'f=m_Ba_B':'F-f=m_Ba_B';
+  if(renderedTarget!==target.value){
   $('force-equations').innerHTML=
    '<p><strong>Aの水平方向：</strong></p><div class="formula tex-display" data-tex="'+upperEquation+'">'+upperEquation+'</div>'+
    '<p><strong>Bの水平方向：</strong></p><div class="formula tex-display" data-tex="'+lowerEquation+'">'+lowerEquation+'</div>'+
@@ -99,6 +102,8 @@ export function installForceLab(){
    '<div class="formula tex-display" data-tex="a=\\frac{F}{m_A+m_B}">a=F/(mA+mB)</div>'+
    '<p>ただし、この式を使い続けられるのは必要な静止摩擦が限界以下の場合だけです。</p>';
   if(window.katex)$('force-equations').querySelectorAll('[data-tex]').forEach(el=>window.katex.render(el.dataset.tex,el,{throwOnError:false,displayMode:true}));
+  renderedTarget=target.value;
+  }
   $('force-threshold').innerHTML='<strong>限界となる外力 '+f(model.threshold)+' N</strong><p>必要な静止摩擦：'+f(model.requiredFriction)+' N、最大静止摩擦：'+f(model.maxStatic)+' N。'+(model.sticks?'滑りません。':'限界超過のため動摩擦モデルに切り替えます。')+'</p>';
   $('force-regime').innerHTML='<strong>'+(model.sticks?'静止摩擦領域':'滑走領域')+'</strong><p>Aの変位：'+f(at.xA)+' m、Bの変位：'+f(at.xB)+' m。相対変位：'+f(at.relativeDisplacement)+' m。折り返しや左右方向の変化はこのモデルでは扱いません。</p>';
   drawFBD($('force-fbd-a'),'A',model);drawFBD($('force-fbd-b'),'B',model);
