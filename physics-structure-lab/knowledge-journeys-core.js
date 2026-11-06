@@ -15,7 +15,7 @@ const hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 export function validateLearnerLink(link){
  return Boolean(link&&typeof link==='object'&&!Array.isArray(link)&&
  validId(link.id)&&ids.has(link.from)&&ids.has(link.to)&&link.from!==link.to&&
- types.has(link.type)&&validText(link.reason,1200)&&validText(link.boundary,1200)&&
+ types.has(link.type)&&validText(link.reason,1200)&&typeof link.boundary==='string'&&link.boundary.length<=1200&&
  isDate(link.date));
 }
 export function validateRevisit(revisit){
