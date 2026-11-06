@@ -334,7 +334,7 @@ export const mechanicsChapters = [
     "university": "回転系と地球上の運動、フーコーの振り子。",
     "problem": "加速度2 m/s²で右へ加速する車内。2 kgの物体への並進系の見かけの力は？",
     "answer": "左向き4 N。",
-    "model": "force"
+    "model": "noninertial"
   },
   {
     "key": "lagrange",
@@ -373,7 +373,7 @@ export const mechanicsChapters = [
     "university": "ネーターの定理・対称性・場の理論。",
     "problem": "L=mẋ²/2−kx²/2から運動方程式を求めよ。",
     "answer": "mẍ+kx=0。",
-    "model": "spring"
+    "model": "lagrange"
   },
   {
     "key": "hamilton",
@@ -412,7 +412,7 @@ export const mechanicsChapters = [
     "university": "位相空間、ポアソン括弧、正準変換、量子力学との接続。",
     "problem": "H=p²/(2m)+kx²/2 の正準方程式は？",
     "answer": "ẋ=p/m、ṗ=−kx。",
-    "model": "spring"
+    "model": "hamilton"
   },
   {
     "key": "coupled",
@@ -451,6 +451,6 @@ export const mechanicsChapters = [
     "university": "安定性解析、リャプノフ指数、カオス、数値計算。",
     "problem": "同じ2質点の対称連成系で、両者が同位相で動くモードでは中間ばねは伸びる？",
     "answer": "同位相で変位が等しければ中間ばねは伸びず、中間ばねの復元力は0。",
-    "model": "spring"
+    "model": "coupled"
   }
 ];
