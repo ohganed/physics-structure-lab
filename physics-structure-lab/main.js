@@ -7,6 +7,8 @@ import { conservationLabPage, installConservationLab } from './conservation-lab.
 import { advancedMechanicsPage, installAdvancedMechanics } from './advanced-mechanics-lab.js';
 import { analyticalLabPage, installAnalyticalLab } from './analytical-lab.js';
 import { kinematicsLabPage, installKinematicsLab } from './kinematics-lab.js';
+import { getLanguage, setLanguage, translateNavigation } from './language.js';
+import { englishOverview, englishPhenomenon } from './english-pages.js';
 
 const content = document.querySelector('#app-content');
 const nav = document.querySelector('#nav');
@@ -174,12 +176,18 @@ const pages = { overview, phenomenon, acceleration: accelerationLabHtml, mechani
 function navigate(page, push = true) {
   if (!pages[page]) page = 'overview';
   stopAnimation(); stopAnimation = () => {};
-  content.innerHTML = pages[page]();
+  const english=getLanguage()==='en';
+  content.innerHTML = english && page==='overview' ? englishOverview()
+    : english && page==='phenomenon' ? englishPhenomenon()
+    : pages[page]();
+  if(english && !['overview','phenomenon','mechanics'].includes(page)) {
+    content.insertAdjacentHTML('afterbegin','<div class="i18n-notice" role="status"><strong>English edition in progress.</strong> This specialized interactive lab currently contains Japanese instructional text. The English mechanics textbook is available under “12 Mechanics Chapters”. Physical calculations and your saved learning progress remain unchanged.</div>');
+  }
   nav.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('active', el.dataset.page === page));
   side.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false');
   if (push && location.hash !== `#${page}`) history.replaceState(null, '', `#${page}`);
   window.scrollTo({ top: 0, behavior: 'instant' });
-  if (page === 'phenomenon') stopAnimation = installDefinitionLab();
+  if (page === 'phenomenon' && !english) stopAnimation = installDefinitionLab();
   if (page === 'acceleration') stopAnimation = installAccelerationLab();
   if (page === 'mechanics') stopAnimation = installMechanics(renderPhysicsMath);
   if (page === 'forcelab') stopAnimation = installForceLab();
@@ -192,7 +200,16 @@ function navigate(page, push = true) {
   if (page === 'exam') installExam();
   if (page === 'reflection') installNotes();
   renderPhysicsMath();
+  translateNavigation();
 }
+
+document.querySelector('#language-select')?.addEventListener('change',event=>{
+  const page=location.hash.slice(1)||'overview';
+  setLanguage(event.target.value);
+  navigate(page,false);
+});
+setLanguage(getLanguage());
+document.querySelector('#language-select').value=getLanguage();
 
 document.addEventListener('click', e => {
   const target = e.target.closest('[data-page], [data-goto], [data-reveal], [data-complete]');
