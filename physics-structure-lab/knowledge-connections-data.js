@@ -420,7 +420,7 @@ export const connectionEdges = [
     "type": "builds",
     "ja": "二つの振動子がつながると同位相・逆位相などの独立な振動パターンが現れる。",
     "en": "Coupled oscillators exhibit normal modes such as in-phase and out-of-phase motion.",
-    "limitJa": "線形化・小振幅の近似が基本。",
+    "limitJa": "独立した固有モードへ分解できるのは、線形化や小振幅の近似が成り立つ範囲である。",
     "limitEn": "Normal-mode decomposition assumes an appropriate linear regime."
   },
   {
