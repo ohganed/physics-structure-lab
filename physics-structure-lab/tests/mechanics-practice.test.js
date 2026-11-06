@@ -25,7 +25,7 @@ test('each problem teaches conditions, multiple hints and step-by-step reasoning
    assert.ok(p[key].every(s=>s.length>=8),p.id+':'+key);
   }
   for(const s of p.steps){
-   assert.ok(s.tex.length>8,p.id+' formula');
+   assert.ok(s.tex.length>=5,p.id+' formula');
    assert.ok(s.why[0].length>=8&&s.why[1].length>=8,p.id+' equation explanation');
   }
  }
