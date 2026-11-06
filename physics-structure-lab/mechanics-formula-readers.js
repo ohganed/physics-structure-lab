@@ -222,7 +222,7 @@ export const formulaReaders = {
       ]
     ],
     "unit": [
-      "m/kの単位はs²、その平方根が秒。",
+      "質量の単位kgをばね定数の単位N/mで割るとs²になり、平方根を取ると周期の単位s（秒）が得られる。",
       "m/k has units s², so its square root has units of seconds."
     ],
     "limit": [
