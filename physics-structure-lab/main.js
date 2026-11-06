@@ -1,6 +1,7 @@
 import { motionAt, twoStageTrain, approximatelyEqual } from './physics.js';
 import { definitionLabHtml, installDefinitionLab } from './definition-lab.js';
 import { accelerationLabHtml, installAccelerationLab } from './acceleration-lab.js';
+import { mechanicsPage, installMechanics } from './mechanics-lab.js';
 
 const content = document.querySelector('#app-content');
 const nav = document.querySelector('#nav');
@@ -164,7 +165,7 @@ function historyPage() {
   </div>`;
 }
 
-const pages = { overview, phenomenon, acceleration: accelerationLabHtml, derivation, lab, exam, reflection, history: historyPage };
+const pages = { overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, derivation, lab, exam, reflection, history: historyPage };
 function navigate(page, push = true) {
   if (!pages[page]) page = 'overview';
   stopAnimation(); stopAnimation = () => {};
@@ -175,6 +176,7 @@ function navigate(page, push = true) {
   window.scrollTo({ top: 0, behavior: 'instant' });
   if (page === 'phenomenon') stopAnimation = installDefinitionLab();
   if (page === 'acceleration') stopAnimation = installAccelerationLab();
+  if (page === 'mechanics') stopAnimation = installMechanics(renderPhysicsMath);
   if (page === 'derivation') installDepth();
   if (page === 'lab') stopAnimation = installLab();
   if (page === 'exam') installExam();
