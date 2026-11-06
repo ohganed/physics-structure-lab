@@ -399,3 +399,55 @@
 .mechanics-formula-symbols dd strong{color:#264f41;font-size:13px}
 .mechanics-formula-symbols dd span{color:#648076;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 @media(max-width:580px){.mechanics-formula-content{padding:5px 12px 13px}.mechanics-formula-content p{font-size:14px}.mechanics-formula-symbols>div{grid-template-columns:75px minmax(0,1fr);padding:8px;gap:7px}}
+
+/* Mechanics Practice & Synthesis: non-gating, readable on phone and desktop */
+.practice-note-intro{padding:14px 17px;background:#edf6f0;border:1px solid #cfe5d7;border-radius:13px;margin:18px 0}
+.practice-note-intro strong{font-size:15px;color:#285c46}
+.practice-note-intro p{font-size:13px;margin:7px 0 0;line-height:1.8}
+.practice-layout{display:grid;grid-template-columns:minmax(175px,235px) minmax(0,1fr);gap:18px;align-items:start}
+.practice-chapters{display:grid;gap:7px;position:sticky;top:14px;max-height:calc(100vh - 40px);overflow-y:auto}
+.practice-chapter-button{padding:11px 13px;text-align:left;display:flex;align-items:center;gap:9px;border-radius:11px;background:#f8faf8;border:1px solid #d6e4da;cursor:pointer;color:var(--ink);font:inherit;font-size:13px;font-weight:700;line-height:1.5}
+.practice-chapter-button span{color:#668e7b;font-size:11px;font-weight:800}
+.practice-chapter-button.active,.practice-problem-button.active{background:#e4f2e9;border-color:#73aa8c;color:#1e5e43}
+.practice-chapter-button:focus-visible,.practice-problem-button:focus-visible{outline:3px solid #5c9d81;outline-offset:2px}
+.practice-main{min-width:0}
+.practice-problem-switch{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;margin:0 0 12px}
+.practice-problem-button{min-width:155px;flex:1 0 auto;max-width:300px;text-align:left;padding:12px;border:1px solid #d3e3d8;border-radius:12px;font-size:13px;font-weight:700;line-height:1.5;background:#fff;color:var(--ink);cursor:pointer}
+.practice-problem-card{min-width:0}
+.practice-problem-card h2{line-height:1.4;overflow-wrap:anywhere}
+.practice-problem-card h3{font-size:16px;margin:21px 0 9px}
+.practice-problem-card>p,.practice-problem-card .practice-principle,.practice-problem-card .practice-hints p{font-size:14px;line-height:1.85;overflow-wrap:anywhere}
+.practice-question{padding:12px 15px;background:#f2f8f4;border-left:3px solid #639c80;border-radius:0 10px 10px 0}
+.practice-question strong{color:#296c4e}
+.practice-principle{padding:13px;background:#fbf8ed;border:1px solid #e9d9b9;border-radius:11px}
+.practice-hint{margin:8px 0;border:1px solid #dbe6de;border-radius:10px;padding:11px 14px;background:#f9fbfa}
+.practice-hint summary,.practice-solution summary{font-size:13px;font-weight:750;color:#2d6750;cursor:pointer;line-height:1.6}
+.practice-hint summary:focus-visible,.practice-solution summary:focus-visible{outline:3px solid #6ba68d;outline-offset:3px}
+.practice-hint p{margin:12px 0 0}
+.practice-response{margin:15px 0}
+.practice-response label,.practice-reflection-label{display:grid;gap:8px;margin:12px 0;font-size:13px;font-weight:750;line-height:1.6}
+.practice-response textarea,.practice-reflection-label textarea{font:inherit;font-size:14px;color:var(--ink);padding:11px;border:1px solid #bccfc3;border-radius:10px;width:100%;line-height:1.7;resize:vertical;min-width:0}
+.practice-answer-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.practice-answer-row input{max-width:140px;min-width:95px;font-size:15px;border:1px solid #bdd1c4;border-radius:9px;padding:10px;color:var(--ink)}
+.practice-answer-row span{font-size:13px;color:#426e5b}
+.practice-solution{padding:14px 16px;border:1px solid #cde1d4;border-radius:13px;background:#f2f8f4;margin:18px 0}
+.practice-solution-steps{padding:12px 0 0 25px;margin:0}
+.practice-solution-steps li{padding-left:3px;margin:0 0 16px}
+.practice-solution-steps .formula{max-width:100%;overflow-x:auto;line-height:1.65}
+.practice-solution-steps li p{font-size:14px;line-height:1.8;margin:6px 0}
+.practice-reference-answer{font-size:15px;font-weight:800;color:#225e42}
+.practice-trap{padding:12px;background:#fdf7ea;border-radius:10px;line-height:1.8}
+.practice-links{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
+.practice-history-entry{border:1px solid #dbe7de;padding:12px 13px;border-radius:12px;margin:9px 0;background:#f8faf8}
+.practice-history-entry summary{cursor:pointer;font-weight:700;font-size:13px;color:#315e49}
+.practice-history-entry p{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8}
+.practice-history-current{background:#e4f2e9;border-radius:9px;padding:10px 12px}
+.practice-transfer{margin-top:26px}
+.practice-file-label{display:inline-flex;align-items:center;padding:10px 15px;border:1px solid #bfd5c5;border-radius:10px;cursor:pointer;font-weight:650;font-size:13px;position:relative}
+.practice-file-label input{position:absolute;width:1px;height:1px;opacity:0}
+.practice-file-label:focus-within{outline:3px solid #62a487}
+.mechanics-practice-preview{margin:18px 0;padding:17px;background:#eef8f1;border:1px solid #d1e5d7;border-radius:13px}
+.mechanics-practice-preview h3{margin:0 0 8px}
+.mechanics-practice-preview p{font-size:14px;line-height:1.8}
+@media(max-width:900px){.practice-layout{grid-template-columns:1fr}.practice-chapters{position:static;display:flex;max-height:none;overflow-x:auto;padding:0 0 9px;gap:8px}.practice-chapter-button{flex:0 0 175px}.practice-problem-card{padding:16px}}
+@media(max-width:560px){.practice-chapter-button{flex-basis:150px;font-size:12px}.practice-problem-button{min-width:146px}.practice-problem-card{padding:12px}.practice-solution{padding:11px}.practice-solution-steps{padding-left:24px}.practice-answer-row input{max-width:125px}.practice-note-intro{padding:12px}}
