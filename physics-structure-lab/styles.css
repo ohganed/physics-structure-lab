@@ -253,3 +253,6 @@
 .transfer-value span{display:block;margin-top:6px;font-size:16px;color:#1c5c4a;font-weight:800;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 @media(max-width:900px){.transfer-layout{grid-template-columns:1fr}.transfer-case-list{position:static;display:flex;overflow-x:auto;gap:8px;padding-bottom:8px}.transfer-case-button{flex:0 0 190px}}
 @media(max-width:590px){.transfer-compare,.transfer-values{grid-template-columns:1fr}}
+
+.transfer-chapter-preview{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
+.knowledge-jump{display:flex;gap:8px;flex-wrap:wrap}
