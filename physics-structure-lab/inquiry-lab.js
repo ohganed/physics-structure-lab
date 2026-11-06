@@ -2,6 +2,7 @@ import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,valid
 import {getLanguage} from './language.js';
 
 const DRAFT_KEY='physics-structure-lab-inquiry-draft-v1';
+const WORKSPACES_KEY='physics-structure-lab-inquiry-workspaces-v1';
 const RECORD_KEY='physics-structure-lab-inquiry-records-v1';
 const lng=()=>getLanguage()==='en'?1:0;
 const tr=(ja,en)=>lng()?en:ja;
@@ -18,8 +19,7 @@ function initialDraft(){
 function readJSON(key,fallback){
  try{const obj=JSON.parse(localStorage.getItem(key)||'null');return obj??fallback;}catch{return fallback;}
 }
-function readDraft(){
- const raw=readJSON(DRAFT_KEY,null);
+function normalizeDraft(raw){
  if(!raw||typeof raw!=='object'||!scenarioById(raw.scenario))return initialDraft();
  const c=scenarioById(raw.scenario);
  const values={...initialInputs(c),...(raw.values&&typeof raw.values==='object'?raw.values:{})};
@@ -32,10 +32,21 @@ function readDraft(){
   ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(key=>[key,typeof raw[key]==='string'?raw[key].slice(0,2000):'']))
  };
 }
+function readDraft(){return normalizeDraft(readJSON(DRAFT_KEY,null));}
 function saveDraft(draft){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draft));return true;}catch{return false;}}
+function readWorkspaces(){
+ const source=readJSON(WORKSPACES_KEY,{}),result={};
+ if(source&&typeof source==='object'&&!Array.isArray(source)){
+  for(const c of inquiryScenarios){
+   if(source[c.id]?.scenario===c.id)result[c.id]=normalizeDraft(source[c.id]);
+  }
+ }
+ return result;
+}
+function saveWorkspaces(spaces){try{localStorage.setItem(WORKSPACES_KEY,JSON.stringify(spaces));return true;}catch{return false;}}
 function readRecords(){
  const rows=readJSON(RECORD_KEY,[]);
- return Array.isArray(rows)?rows.filter(validInvestigation).slice(-150):[];
+ return Array.isArray(rows)?rows.filter(validInvestigation).slice(0,500):[];
 }
 function writeRecords(rows){try{localStorage.setItem(RECORD_KEY,JSON.stringify(rows));return true;}catch{return false;}}
 function recordId(){return 'inq-'+(typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2));}
@@ -91,11 +102,13 @@ function contentFor(c,mode){
 }
 export function installInquiry(renderMath){
  const host=document.getElementById('inquiry-content');if(!host)return()=>{};
- let draft=scratch&&scenarioById(scratch.scenario)?scratch:readDraft();
+ let draft=normalizeDraft(scratch&&scenarioById(scratch.scenario)?scratch:readDraft());
+ let spaces=readWorkspaces();
+ spaces[draft.scenario]=draft;
  let records=readRecords();
  const $=id=>document.getElementById(id);
  const mode=$('inquiry-mode');mode.value=draft.mode;
- function remember(){scratch={...draft};saveDraft(draft);}
+ function remember(){scratch={...draft};spaces[draft.scenario]=draft;saveWorkspaces(spaces);saveDraft(draft);}
  function attach(){
   const c=scenarioById(draft.scenario);host.innerHTML=contentFor(c,draft.mode);
   document.querySelectorAll('[data-inquiry-case]').forEach(b=>{
@@ -146,7 +159,7 @@ export function installInquiry(renderMath){
    $('inquiry-status').textContent=tr('今回の試行を新しくしました。問い・仮説・以前の記録は残っています。','Trial set cleared. Questions, hypotheses, and saved investigations are preserved.');
   });
   $('inquiry-save').addEventListener('click',()=>{
-   if(records.length>=150){$('inquiry-status').textContent=tr('保存上限に達しました。','Saved investigation limit reached.');return;}
+   if(records.length>=500){$('inquiry-status').textContent=tr('保存上限に達しました。','Saved investigation limit reached.');return;}
    const record={id:recordId(),date:new Date().toISOString(),scenario:draft.scenario,
     trials:draft.trials.map(t=>({...t,inputs:{...t.inputs}})),
     ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(k=>[k,draft[k]]))};
@@ -160,7 +173,7 @@ export function installInquiry(renderMath){
    draft.trials.forEach((trial,index)=>{
     const card=document.createElement('div');card.className='inquiry-trial';
     const label=document.createElement('strong');label.textContent=tr('試行 ','Trial ')+(index+1);
-    const vals=document.createElement('span');vals.textContent=c.inputs.map(x=>local(x.label)+': '+number(trial.inputs[x.key])).join(' / ')+' → '+local(trial.primaryLabel)+': '+number(trial.primary)+' '+trial.primaryUnit;
+    const vals=document.createElement('span');vals.textContent=c.inputs.map(x=>local(x.label)+': '+number(trial.inputs[x.key])).join(' / ')+' → '+local(evaluateInquiry(c.id,trial.inputs).primaryLabel)+': '+number(trial.primary)+' '+trial.primaryUnit;
     card.append(label,vals);list.append(card);
    });
    const panel=$('inquiry-comparison');panel.replaceChildren();
@@ -211,7 +224,8 @@ export function installInquiry(renderMath){
  mode.addEventListener('change',()=>{draft.mode=mode.value;remember();attach();});
  document.querySelectorAll('[data-inquiry-case]').forEach(b=>b.addEventListener('click',()=>{
   const id=b.dataset.inquiryCase;if(id===draft.scenario)return;
-  const m=draft.mode;draft={...initialDraft(),scenario:id,mode:m,values:initialInputs(scenarioById(id))};
+  const m=draft.mode;draft=spaces[id]?normalizeDraft(spaces[id]):{...initialDraft(),scenario:id,mode:m,values:initialInputs(scenarioById(id))};
+  draft.mode=m;
   remember();attach();
  }));
  attach();return()=>{scratch={...draft};};
