@@ -116,3 +116,22 @@ test('browser Back and Forward return learners to previously explored concepts',
  await page.goForward();
  await expect(page).toHaveURL(/#inquiry$/);
 });
+
+test('optional guidance is adjustable and earlier observations do not overwrite current thinking',async({page})=>{
+ await page.goto(base+'/#inquiry');
+ await expect(page.locator('.inquiry-scaffold')).toHaveAttribute('open','');
+ await page.locator('#inquiry-mode').selectOption('light');
+ await expect(page.locator('.inquiry-scaffold')).not.toHaveAttribute('open','');
+ await page.locator('.inquiry-scaffold summary').click();
+ await expect(page.locator('.inquiry-scaffold-step')).toHaveCount(2);
+ await page.locator('#inquiry-hypothesis').fill('Earlier explanation: force is needed to keep moving.');
+ await page.locator('#inquiry-save').click();
+ await page.locator('#inquiry-hypothesis').fill('Current explanation: net force changes velocity.');
+ await page.locator('.inquiry-history-details summary').first().click();
+ await expect(page.locator('.inquiry-history-pair').first()).toContainText('Earlier');
+ await expect(page.locator('.inquiry-history-details')).toContainText('force is needed to keep moving.');
+ await expect(page.locator('.inquiry-history-details')).toContainText('net force changes velocity.');
+ await expect(page.locator('#inquiry-hypothesis')).toHaveValue('Current explanation: net force changes velocity.');
+ await page.locator('#inquiry-mode').selectOption('open');
+ await expect(page.locator('.inquiry-scaffold')).not.toHaveAttribute('open','');
+});
