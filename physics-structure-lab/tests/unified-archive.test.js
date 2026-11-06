@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createNotebookExport,createUnifiedArchive,normalizeNotebook,mergeNotebooks} from '../knowledge-journeys-core.js';
+import {createNotebookExport,createUnifiedArchive,createComprehensiveArchive,normalizeNotebook,mergeNotebooks} from '../knowledge-journeys-core.js';
 import {evaluateInquiry} from '../inquiry-core.js';
 const observation={concept:'velocity',related:'circular',note:'Direction matters even if speed is constant.',date:'2026-11-06T00:00:00Z'};
 const investigation={
@@ -45,3 +45,36 @@ test('tampered records and missing investigation array are rejected in v2',()=>{
  assert.throws(()=>normalizeNotebook({...createShape([investigation]),investigations:undefined}),/Invalid notebook/);
 });
 function createShape(entries){return {kind:'physics-structure-lab-knowledge-journal',version:2,notes:[],links:[],revisits:[],investigations:entries};}
+
+const mechanicsNote={id:'mp-integration-1234',problemId:'force-net',date:'2026-11-06T02:30:00Z',
+ response:'I add the force vectors before dividing by mass.',
+ reflection:'Now I recognize the force the cart exerts on the floor is not in the cart equation.',
+ answerInput:'2'};
+test('version 3 archive contains earlier inquiry notes and mechanics practice',()=>{
+ const archive=createComprehensiveArchive([observation],[],[],[investigation],[mechanicsNote]);
+ assert.equal(archive.version,3);
+ const copy=normalizeNotebook(JSON.parse(JSON.stringify(archive)));
+ assert.deepEqual(copy.practice,[mechanicsNote]);
+ assert.deepEqual(copy.investigations,[investigation]);
+});
+test('version 1 and 2 imports preserve existing version 3 mechanics practice',()=>{
+ const current={notes:[],links:[],revisits:[],investigations:[investigation],practice:[mechanicsNote]};
+ for(const older of [createNotebookExport([observation],[],[]),createUnifiedArchive([observation],[],[],[investigation])]){
+  const merged=mergeNotebooks(current,normalizeNotebook(older));
+  assert.equal(merged.practice.length,1);
+  assert.equal(merged.practice[0].reflection,mechanicsNote.reflection);
+ }
+});
+test('duplicate and conflicting mechanics reasoning records are not silently overwritten',()=>{
+ const data={notes:[],links:[],revisits:[],investigations:[],practice:[mechanicsNote]};
+ const duplicate=mergeNotebooks(data,{notes:[],links:[],revisits:[],investigations:[],practice:[mechanicsNote]});
+ assert.equal(duplicate.practiceSkipped,1);
+ const changed=mergeNotebooks(data,{notes:[],links:[],revisits:[],investigations:[],practice:[{...mechanicsNote,reflection:'A new interpretation'}]});
+ assert.equal(changed.practiceConflicts,1);
+ assert.equal(changed.practice[0].reflection,mechanicsNote.reflection);
+});
+test('invalid or absent practice entries invalidate a version 3 archive',()=>{
+ const archive=createComprehensiveArchive([],[],[],[],[mechanicsNote]);
+ assert.throws(()=>normalizeNotebook({...archive,practice:undefined}),/Invalid notebook entries/);
+ assert.throws(()=>normalizeNotebook({...archive,practice:[{...mechanicsNote,problemId:'invalid'}]}),/Invalid mechanics practice/);
+});
