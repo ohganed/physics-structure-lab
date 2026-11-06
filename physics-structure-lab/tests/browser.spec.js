@@ -82,3 +82,20 @@ test('self-reported measurements remain separate from predictions and persist th
  await expect(page.locator('#inquiry-observation-list')).not.toContainText('6.2');
  await expect(page.locator('#inquiry-history')).toContainText('観測');
 });
+
+test('installed application can reopen its bilingual textbook and inquiry labs while offline',async({page,context})=>{
+ await page.goto(base+'/#inquiry');
+ await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller),{},{timeout:45000});
+ await page.goto(base+'/#mechanics');
+ await expect(page.locator('h1')).toBeVisible();
+ await context.setOffline(true);
+ await page.reload({waitUntil:'domcontentloaded'});
+ await expect(page.locator('h1')).toContainText('力学');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('h1')).toContainText('Explore Mechanics');
+ await page.goto(base+'/#inquiry',{waitUntil:'domcontentloaded'});
+ await expect(page.locator('h1')).toContainText('Develop your own scientific questions');
+ await page.locator('#inquiry-reveal').click();
+ await expect(page.locator('#inquiry-result')).toContainText('Acceleration a');
+ await context.setOffline(false);
+});
