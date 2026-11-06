@@ -172,6 +172,14 @@ export function installInquiry(renderMath){
     const num=document.createElement('strong');num.textContent=number(value)+' '+unit;
     d.append(title,num);out.append(d);
    }
+   if(c.id==='fall-drag'){
+    const ideal=evaluateInquiry('fall',{mass:draft.values.mass,height:20});
+    const note=document.createElement('p');note.className='inquiry-model-comparison';
+    note.textContent=tr('同じ20 m・空気抵抗なし：落下時間 ','Same 20 m without drag: fall time ')
+      +number(ideal.primary)+' s / '+tr('線形抵抗あり：','linear-drag model: ')+number(v.primary)
+      +' s。'+tr('モデルを変えると、質量への依存も変わり得ます。','Changing the model changes whether mass can affect the prediction.');
+    out.append(note);
+   }
    if(v.conserved){
     const note=document.createElement('p');note.className='inquiry-conservation';
     note.textContent=tr('総運動量：衝突前 ','Total momentum: before ')+number(v.conserved.initialMomentum)
