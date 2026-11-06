@@ -53,6 +53,17 @@ export const mechanicsOriginsPart2={
       },
       {
         "question": [
+          "まず位置を微分して速度を出す",
+          "Differentiate position once to obtain velocity"
+        ],
+        "tex": "v=\\dot x=-A\\omega\\sin(\\omega t+\\phi)",
+        "why": [
+          "cosの微分は−sinで、括弧の中のωtを微分するとωが掛かる。位置と速度の変化を、途中を飛ばさず確認する。",
+          "Differentiate cosine to negative sine, and multiply by ω using the chain rule. This shows the intermediate velocity before finding acceleration."
+        ]
+      },
+      {
+        "question": [
           "試した関数を2回微分する",
           "Differentiate the candidate position twice"
         ],
@@ -234,6 +245,28 @@ export const mechanicsOriginsPart2={
         "why": [
           "トルクの大きさは作用点・方向・力の大きさから決まり、同じ力でも作用点を変える理由を説明する。",
           "Torque magnitude depends on force direction and lever arm, explaining why equal pushes can have different turning effects."
+        ]
+      },
+      {
+        "question": [
+          "円周上の質点の接線加速度は？",
+          "What tangential acceleration does an angular acceleration cause?"
+        ],
+        "tex": "a_t=r\\alpha,\\qquad\\alpha=\\frac{d\\omega}{dt}",
+        "why": [
+          "弧の移動距離s=rθを時間で二回微分する。半径が大きいほど同じ角加速度でも接線加速度が大きい。",
+          "Differentiate the arc-distance relation s=rθ twice. At greater radius, the same angular acceleration produces more tangential acceleration."
+        ]
+      },
+      {
+        "question": [
+          "一つの質点に必要なトルクを計算する",
+          "Compute torque for a single rotating mass"
+        ],
+        "tex": "\\tau_i=r_iF_{t,i}=r_i(m_i r_i\\alpha)=m_i r_i^2\\alpha",
+        "why": [
+          "ニュートンの第二法則Ft,i=mi at,iを、前に定義したトルクτi=ri Ft,iへ代入する。ここで初めて距離の二乗が現れる。",
+          "Insert Newton’s tangential force relation Fti=mi ati into the previously motivated torque τi=ri Fti. The square of distance now emerges."
         ]
       },
       {
