@@ -350,3 +350,33 @@
 .inquiry-history-pair p{font-size:13px;margin:5px 0;white-space:pre-wrap;overflow-wrap:anywhere}
 .inquiry-current-thought{background:#e9f5ed;border-radius:8px;padding:9px 12px}
 .inquiry-history-trial{font-size:12px;color:#516b5d}
+
+/* v2.6 Deep-reading mechanics: enough detail to self-study, optional on mobile */
+.mechanics-explain-details{margin:14px 0;border:1px solid #d6e6dd;border-radius:13px;background:#f7faf7;overflow:hidden}
+.mechanics-explain-details>summary{padding:14px 18px;font-weight:750;color:#235b47;cursor:pointer;line-height:1.6;font-size:15px;list-style:revert}
+.mechanics-explain-details>summary:hover{background:#edf6ef}
+.mechanics-explain-details>summary:focus-visible{outline:3px solid #4d9f80;outline-offset:-4px}
+.mechanics-explain-details[open]>summary{border-bottom:1px solid #d5e6dc}
+.mechanics-reading-prose{padding:2px 18px 14px;max-width:80ch}
+.mechanics-reading-prose p,.mechanics-reasoning-sequence li,.mechanics-worked-steps li p,.mechanics-vocab dd,.mechanics-common-error p,.mechanics-revisit p{font-size:15px;line-height:1.95;letter-spacing:.015em;overflow-wrap:anywhere}
+.mechanics-reading-prose p{margin:13px 0}
+.mechanics-vocab{display:grid;gap:12px;margin:0;padding:15px 18px}
+.mechanics-vocab>div{padding:11px 12px;background:white;border:1px solid #e2eee5;border-radius:10px}
+.mechanics-vocab dt{font-size:15px;font-weight:800;color:#275942;margin:0 0 4px}
+.mechanics-vocab dd{margin:0;color:#355a4d}
+.mechanics-reasoning-sequence,.mechanics-worked-steps{margin:0;padding:16px 22px 16px 44px;max-width:83ch}
+.mechanics-reasoning-sequence li,.mechanics-worked-steps li{padding-left:4px;margin:0 0 13px}
+.mechanics-reasoning-sequence li::marker,.mechanics-worked-steps li::marker{font-weight:800;color:#2a795a}
+.mechanics-example-prompt{margin:16px 18px 4px;font-size:15px;line-height:1.85;font-weight:700}
+.mechanics-worked-steps{padding-top:6px}
+.mechanics-worked-steps .formula{max-width:100%;overflow-x:auto;line-height:1.6}
+.mechanics-worked-steps li p{margin:7px 0}
+.mechanics-example-conclusion{margin:0 16px 16px;padding:13px 14px;background:#eaf5ee;border-radius:10px;line-height:1.85;font-size:15px}
+.mechanics-common-error{margin:15px 0;padding:15px 17px;background:#fdf8ef;border:1px solid #ead7b7;border-radius:12px}
+.mechanics-common-error>strong{font-size:14px;color:#6f512c}
+.mechanics-common-error p{margin:7px 0 0;color:#55472f}
+.mechanics-revisit{margin:22px 0 18px;padding:18px;background:#f0f7f3;border:1px solid #cbded3;border-radius:13px}
+.mechanics-revisit h3{margin:6px 0 12px}
+.mechanics-revisit p{margin:7px 0}
+.mechanics-revisit .muted{font-size:13px;color:#5f786c}
+@media(max-width:580px){.mechanics-explain-details>summary{padding:12px 13px;font-size:14px}.mechanics-reading-prose{padding:0 13px 10px}.mechanics-reading-prose p,.mechanics-reasoning-sequence li,.mechanics-worked-steps li p,.mechanics-vocab dd,.mechanics-common-error p,.mechanics-revisit p{font-size:15px;line-height:1.85}.mechanics-reasoning-sequence,.mechanics-worked-steps{padding:13px 13px 10px 32px}.mechanics-vocab{padding:12px}.mechanics-revisit{padding:14px}}
