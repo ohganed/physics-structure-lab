@@ -334,3 +334,19 @@
 .inquiry-observation-entry{background:#f1f8f3;border:1px solid #c9dfd0;border-radius:11px;padding:12px 14px;margin:10px 0}
 .inquiry-observation-entry strong{display:block;font-size:13px;color:#235c46}
 .inquiry-observation-entry p{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;margin:6px 0}
+
+/* Discovery scaffolds: questions rather than mandatory checkpoints */
+.inquiry-scaffold{border:1px solid #d6e5d9;border-radius:12px;background:#f4f9f5;margin:15px 0;padding:13px 15px}
+.inquiry-scaffold summary{font-size:13px;color:#28664f;cursor:pointer;font-weight:750}
+.inquiry-scaffold summary:focus-visible{outline:3px solid #6eaa91;outline-offset:3px}
+.inquiry-scaffold-step{border-top:1px solid #d7e7da;padding:10px 0 3px}
+.inquiry-scaffold-step:first-of-type{margin-top:12px}
+.inquiry-scaffold-step strong{display:block;font-size:12px;color:#2f6852}
+.inquiry-scaffold-step p{margin:5px 0;font-size:13px;line-height:1.8}
+.inquiry-history-details{border-top:1px solid #d4e4da;padding:12px 0;margin-top:13px}
+.inquiry-history-details summary{cursor:pointer;color:#1d674b;font-weight:700;font-size:13px}
+.inquiry-history-pair{border-bottom:1px solid #e2ebe4;padding:9px 0}
+.inquiry-history-pair strong{font-size:12px}
+.inquiry-history-pair p{font-size:13px;margin:5px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.inquiry-current-thought{background:#e9f5ed;border-radius:8px;padding:9px 12px}
+.inquiry-history-trial{font-size:12px;color:#516b5d}
