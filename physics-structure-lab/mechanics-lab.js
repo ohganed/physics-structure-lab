@@ -1,5 +1,7 @@
 import { mechanicsChapters } from './mechanics-data.js';
 import { mechanicsEnglish } from './mechanics-en.js';
+import { transferCases } from './transfer-cases.js';
+import { nodeById } from './knowledge-connections-data.js';
 import { chapterConnectionsHtml } from './knowledge-connections.js';
 import { getLanguage } from './language.js';
 
@@ -63,6 +65,7 @@ function chapterHtml(c,index){
   +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+steps
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
   +chapterConnectionsHtml(c.key)
+  +'<div class="transfer-chapter-preview">'+transferCases.filter(p=>nodeById(p.concept)?.chapter===c.key).map(p=>'<button class="secondary-btn" type="button" data-open-transfer="'+p.id+'">'+(en?'Transfer Lab: '+esc(p.title[1])+' →':'別の分野に広げる：'+esc(p.title[0])+' →')+'</button>').join(' ')+'</div>'
   +'<h3>'+word("④ 条件を変え、予測を検証する","④ Change parameters and test predictions")+'</h3><div class="mechanics-parameter-grid"><label id="mech-label-x" for="mech-x">'+word("パラメータ1","Parameter 1")+'</label><input id="mech-x" type="range" min="'+p[2]+'" max="'+p[3]+'" step="any" value="'+p[0]+'"><label id="mech-label-y" for="mech-y">'+word("パラメータ2","Parameter 2")+'</label><input id="mech-y" type="range" min="'+p[4]+'" max="'+p[5]+'" step="any" value="'+p[1]+'"></div>'
   +'<div id="mech-output" class="mechanics-output" aria-live="polite"></div>'
   +'<h3>'+word("⑤ 同じ問題を3つの視点から見る","⑤ Compare three reasoning perspectives")+'</h3>'+insights
