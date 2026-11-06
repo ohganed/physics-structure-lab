@@ -1,3 +1,4 @@
+import {readFile} from 'node:fs/promises';
 import {test,expect} from '@playwright/test';
 
 const base='http://127.0.0.1:4173';
@@ -297,4 +298,25 @@ test('iPhone-width mechanics practice keeps the reading viewport and optional ma
  expect(measured.scroll).toBeLessThanOrEqual(measured.client+2);
  await page.locator('[data-practice-section="synthesis"]').click();
  await expect(page.locator('.practice-problem-button')).toHaveCount(8);
+});
+
+test('unified knowledge backup includes original mechanics reflections and survives reimport',async({page})=>{
+ await page.goto(base+'/#practice');
+ await page.locator('#practice-response').fill('A force diagram shows the net force, not the velocity.');
+ await page.locator('#practice-save').click();
+ await page.goto(base+'/#journeys');
+ const downloadEvent=page.waitForEvent('download');
+ await page.locator('#journey-export').click();
+ const download=await downloadEvent;
+ const archive=JSON.parse(await readFile(await download.path(),'utf8'));
+ expect(archive.version).toBe(3);
+ expect(archive.practice).toHaveLength(1);
+ expect(archive.practice[0].response).toContain('force diagram');
+ await page.locator('#journey-import').setInputFiles({
+  name:'knowledge-learning-v3.json',mimeType:'application/json',
+  buffer:Buffer.from(JSON.stringify(archive))
+ });
+ await expect(page.locator('#journey-transfer-status')).toContainText('力学演習 1 件');
+ await page.goto(base+'/#practice');
+ await expect(page.locator('#practice-history')).toContainText('force diagram');
 });
