@@ -29,3 +29,29 @@ test('gravity, torque, and parameter validation',()=>{
  close(mechanicsEvaluate('torque',.5,10).result,5);
  assert.throws(()=>mechanicsEvaluate('force',0,2));
 });
+
+test('advanced mechanics experiments are aligned to their respective chapter concepts',()=>{
+ const noninertial=mechanicsEvaluate('noninertial',2,2);
+ close(noninertial.result,4);
+ assert.equal(noninertial.unit,'N');
+ assert.match(noninertial.explanation,/見かけの力/);
+ const lagrange=mechanicsEvaluate('lagrange',2,50);
+ close(lagrange.result,5);
+ assert.equal(lagrange.unit,'rad/s');
+ const hamilton=mechanicsEvaluate('hamilton',.4,3);
+ close(hamilton.result,6.25);
+ close(mechanicsEvaluate('hamilton',0,0).result,0);
+ close(mechanicsEvaluate('hamilton',-.4,-3).result,hamilton.result);
+ const coupled=mechanicsEvaluate('coupled',3,2);
+ close(coupled.result,Math.sqrt(7));
+ close(mechanicsEvaluate('coupled',0,2).result,2);
+ assert.throws(()=>mechanicsEvaluate('coupled',-1,2));
+ assert.throws(()=>mechanicsEvaluate('noninertial',0,2));
+ assert.throws(()=>mechanicsEvaluate('hamilton',Infinity,2));
+});
+test('no advanced chapter silently falls back to an unrelated spring model',()=>{
+ const keys=['noninertial','lagrange','hamilton','coupled'];
+ for(const c of mechanicsChapters.filter(c=>keys.includes(c.key))){
+  assert.equal(c.model,c.key,c.key+' must have a corresponding model');
+ }
+});
