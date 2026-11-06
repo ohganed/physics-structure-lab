@@ -44,3 +44,20 @@
 #def-question-response{font-size:14px;line-height:1.8}
 @media(max-width:900px){.definition-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.definition-math-area{grid-template-columns:1fr}}
 @media(max-width:550px){.definition-controls{grid-template-columns:1fr}.definition-player{gap:7px}.definition-stats strong{font-size:17px}}
+
+/* Acceleration concept lab v0.5 */
+.acceleration-lab{margin:20px 0}
+.acc-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding:20px 0}
+.acc-controls label{display:grid;gap:10px;font-size:13px;font-weight:700}
+.acc-controls output{font-size:12px;color:var(--teal);font-variant-numeric:tabular-nums}
+.acc-controls input,.acc-player input{width:100%;accent-color:var(--teal);min-width:0}
+.acc-figure{border-radius:16px;border:1px solid var(--line);overflow:hidden;background:#f4f9f6}
+.acc-figure svg{display:block;width:100%;height:auto;max-height:320px}
+.acc-player{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px}
+.acc-player label{white-space:nowrap;font-size:12px}
+.acc-player input{flex:1 1 130px}
+.acc-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.acc-results>div{background:#eef5f1;border:1px solid #d9e8df;border-radius:12px;padding:13px}
+.acc-results small{display:block;color:#55756a;font-size:12px}
+.acc-results strong{display:block;font-size:clamp(15px,2vw,22px);margin-top:8px;color:var(--green);font-variant-numeric:tabular-nums}
+@media(max-width:600px){.acc-controls{grid-template-columns:1fr}.acc-results{grid-template-columns:1fr}.acc-player{gap:7px}}
