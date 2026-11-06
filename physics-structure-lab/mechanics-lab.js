@@ -89,19 +89,19 @@ function chapterHtml(c,index){
  const parallel='<details class="parallel-language"><summary>'+(en?'Compare with Japanese explanation / 日本語で確認':'Read this concept in academic English / 英語で学ぶ')+'</summary><h3>'+esc(other.name)+'</h3><p><strong>'+(en?'定義':'Definition')+':</strong> '+esc(other.definition)+'</p><p><strong>'+(en?'定義の必要性':'Why this definition matters')+':</strong> '+esc(other.why)+'</p><p><strong>'+(en?'成立条件':'Validity')+':</strong> '+esc(other.conditions)+'</p></details>';
  const phenomenonIntro=c.key==='momentum'
    ?momentumOriginHtml(en?'en':'ja')
-    +'<h3>'+word('ここまでの発見を言葉で整理する','Summarize the quantity we have constructed')+'</h3>'
+    +'<h3>'+word('運動量について','About momentum')+'</h3>'
     +'<p>'+esc(c.definition)+'</p>'
-    +'<div class="callout"><strong>'+word('この量を使う理由','Why this quantity helps')+'</strong><p>'+esc(c.why)+'</p></div>'
+    +'<div class="callout"><strong>'+word('運動量の使い方','Using momentum')+'</strong><p>'+esc(c.why)+'</p></div>'
     +deepIntroHtml(c.key,en?'en':'ja')
    :mechanicsOriginHtml(c.key,en?'en':'ja')
-    +'<h3>'+word('現象を数式化した後で、定義を整理する','Now summarize the formal definitions')+'</h3>'
+    +'<h3>'+word('用語と記号','Terms and notation')+'</h3>'
     +'<p>'+esc(c.definition)+'</p>'
-    +'<div class="callout"><strong>'+word('この表現を使う理由','Why this representation helps')+'</strong><p>'+esc(c.why)+'</p></div>'
+    +'<div class="callout"><strong>'+word('この関係の使い方','Using this relation')+'</strong><p>'+esc(c.why)+'</p></div>'
     +deepIntroHtml(c.key,en?'en':'ja');
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +phenomenonIntro
-  +parallel+'<h3>'+(c.key==='momentum'?word('もう一度、式と運動量保存を確認する','Revisit the equation and momentum conservation'):word("③ 実験法則と数学的な導出","③ Empirical laws and derivations"))+'</h3><p>'+esc(c.law)+'</p>'+deepReasoningHtml(c.key,en?'en':'ja')+steps+formulaReaderHtml(c.key,en?'en':'ja')+deepWorkedExampleHtml(c.key,en?'en':'ja')+ (supportingLabs[c.key]?'<div class="mechanics-try-lab"><p>'+word('読んだ説明を、動くモデルで試してみましょう。理解の確認テストではありません。','Use an interactive model to revisit the explanation. This is not a mastery test.')+'</p><button type="button" class="secondary-btn" data-goto="'+supportingLabs[c.key][0]+'">'+esc(supportingLabs[c.key][en?2:1])+' →</button></div>':'')
+  +parallel+'<h3>'+(c.key==='momentum'?word('式の確認','Checking the equations'):word("法則と計算の確認","Laws and calculations"))+'</h3><p>'+esc(c.law)+'</p>'+deepReasoningHtml(c.key,en?'en':'ja')+steps+formulaReaderHtml(c.key,en?'en':'ja')+deepWorkedExampleHtml(c.key,en?'en':'ja')+ (supportingLabs[c.key]?'<div class="mechanics-try-lab"><p>'+word('読んだ説明を、動くモデルで試してみましょう。理解の確認テストではありません。','Use an interactive model to revisit the explanation. This is not a mastery test.')+'</p><button type="button" class="secondary-btn" data-goto="'+supportingLabs[c.key][0]+'">'+esc(supportingLabs[c.key][en?2:1])+' →</button></div>':'')
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
   +chapterConnectionsHtml(c.key)
   +'<div class="inquiry-chapter-preview">'+inquiryScenarios.filter(p=>p.concept===c.key).map(p=>'<button type="button" class="secondary-btn" data-open-inquiry="'+p.id+'">'+(en?'Try an investigation: '+esc(p.title[1]):'自分で実験を組み立てる：'+esc(p.title[0]))+' →</button>').join(' ')+'</div>'
