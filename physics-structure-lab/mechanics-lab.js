@@ -5,7 +5,7 @@ import { transferCases } from './transfer-cases.js';
 import { nodeById } from './knowledge-connections-data.js';
 import { chapterConnectionsHtml } from './knowledge-connections.js';
 import { getLanguage } from './language.js';
-import { deepIntroHtml, deepReasoningHtml, deepWorkedExampleHtml, deepRevisitHtml } from './mechanics-deep.js';
+import { deepIntroHtml, deepReasoningHtml, deepWorkedExampleHtml, deepRevisitHtml, formulaReaderHtml } from './mechanics-deep.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite)||x<=0||y<=0)throw new RangeError('Parameters must be positive');
@@ -78,7 +78,7 @@ function chapterHtml(c,index){
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +'<h3>'+word("① どんな現象を扱うのか","① What phenomenon are we describing?")+'</h3><p>'+esc(c.phenomenon)+'</p>'
   +deepIntroHtml(c.key,en?'en':'ja')+'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>'
-  +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+deepReasoningHtml(c.key,en?'en':'ja')+steps+deepWorkedExampleHtml(c.key,en?'en':'ja')+ (supportingLabs[c.key]?'<div class="mechanics-try-lab"><p>'+word('読んだ説明を、動くモデルで試してみましょう。理解の確認テストではありません。','Use an interactive model to revisit the explanation. This is not a mastery test.')+'</p><button type="button" class="secondary-btn" data-goto="'+supportingLabs[c.key][0]+'">'+esc(supportingLabs[c.key][en?2:1])+' →</button></div>':'')
+  +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+deepReasoningHtml(c.key,en?'en':'ja')+steps+formulaReaderHtml(c.key,en?'en':'ja')+deepWorkedExampleHtml(c.key,en?'en':'ja')+ (supportingLabs[c.key]?'<div class="mechanics-try-lab"><p>'+word('読んだ説明を、動くモデルで試してみましょう。理解の確認テストではありません。','Use an interactive model to revisit the explanation. This is not a mastery test.')+'</p><button type="button" class="secondary-btn" data-goto="'+supportingLabs[c.key][0]+'">'+esc(supportingLabs[c.key][en?2:1])+' →</button></div>':'')
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
   +chapterConnectionsHtml(c.key)
   +'<div class="inquiry-chapter-preview">'+inquiryScenarios.filter(p=>p.concept===c.key).map(p=>'<button type="button" class="secondary-btn" data-open-inquiry="'+p.id+'">'+(en?'Try an investigation: '+esc(p.title[1]):'自分で実験を組み立てる：'+esc(p.title[0]))+' →</button>').join(' ')+'</div>'
