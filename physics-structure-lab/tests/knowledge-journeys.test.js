@@ -7,7 +7,7 @@ const revisit={id:'revisit-1',concept:'velocity',before:'I assumed speed and vel
 const note={concept:'velocity',related:'circular',note:'Circular motion made me reconsider the meaning of velocity.',date:'2026-11-06T02:01:00.000Z'};
 
 test('curated conceptual shortest paths are connected and the endpoints are preserved',()=>{
- for(const [a,b] of [['position','symmetry'],['velocity','circular'],['force','hamilton'],['friction','gravitation']]){
+ for(const [a,b] of [['position','symmetry'],['velocity','circular'],['force','hamilton'],['friction','gravity']]){
   const p=shortestConceptPath(a,b);
   assert.ok(p,a+' to '+b);
   assert.equal(p.nodes[0],a);assert.equal(p.nodes.at(-1),b);
