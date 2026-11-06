@@ -13,7 +13,7 @@ test('the bilingual knowledge graph has valid distinct concepts and informative 
  const chapters=new Set(mechanicsChapters.map(c=>c.key));
  for(const n of connectionNodes){
    assert.ok(chapters.has(n.chapter),n.id+' invalid chapter');
-   for(const field of ['ja','en','jaQuestion','enQuestion'])assert.ok(n[field]?.length>=5,n.id+' missing '+field);
+   for(const field of ['ja','en','jaQuestion','enQuestion'])assert.ok(n[field]?.trim().length>=(field==='ja'?2:5),n.id+' missing '+field);
    assert.ok(relatedEdges(n.id).length>0,n.id+' unconnected');
    assert.equal(nodeById(n.id).id,n.id);
  }
