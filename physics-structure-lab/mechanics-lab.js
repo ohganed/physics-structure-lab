@@ -7,6 +7,7 @@ import { chapterConnectionsHtml } from './knowledge-connections.js';
 import { getLanguage } from './language.js';
 import { deepIntroHtml, deepReasoningHtml, deepWorkedExampleHtml, deepRevisitHtml, formulaReaderHtml } from './mechanics-deep.js';
 import {momentumOriginHtml,installMomentumOrigin} from './momentum-origin-lab.js';
+import {mechanicsOriginHtml} from './mechanics-origins.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite))throw new RangeError('Parameters must be finite');
@@ -92,10 +93,11 @@ function chapterHtml(c,index){
     +'<p>'+esc(c.definition)+'</p>'
     +'<div class="callout"><strong>'+word('この量を使う理由','Why this quantity helps')+'</strong><p>'+esc(c.why)+'</p></div>'
     +deepIntroHtml(c.key,en?'en':'ja')
-   :'<h3>'+word("① どんな現象を扱うのか","① What phenomenon are we describing?")+'</h3><p>'+esc(c.phenomenon)+'</p>'
-    +deepIntroHtml(c.key,en?'en':'ja')
-    +'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p>'
-    +'<div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>';
+   :mechanicsOriginHtml(c.key,en?'en':'ja')
+    +'<h3>'+word('現象を数式化した後で、定義を整理する','Now summarize the formal definitions')+'</h3>'
+    +'<p>'+esc(c.definition)+'</p>'
+    +'<div class="callout"><strong>'+word('この表現を使う理由','Why this representation helps')+'</strong><p>'+esc(c.why)+'</p></div>'
+    +deepIntroHtml(c.key,en?'en':'ja');
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +phenomenonIntro
