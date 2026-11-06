@@ -1,5 +1,6 @@
 import { mechanicsChapters } from './mechanics-data.js';
 import { mechanicsEnglish } from './mechanics-en.js';
+import { chapterConnectionsHtml } from './knowledge-connections.js';
 import { getLanguage } from './language.js';
 
 export function mechanicsEvaluate(model, x, y) {
@@ -37,6 +38,11 @@ const englishModels={
  torque:['Torque from a perpendicular force','Lever arm r (m)','Force F (N)','For a fixed perpendicular force, torque equals lever arm multiplied by force.']
 };
 
+let selectedChapterIndex=0;
+export function focusMechanicsChapter(chapterKey){
+ const index=mechanicsChapters.findIndex(c=>c.key===chapterKey);
+ if(index>=0)selectedChapterIndex=index;
+}
 export function mechanicsPage(){
  const en=getLanguage()==='en';
  const chapters=en?mechanicsEnglish:mechanicsChapters;
@@ -56,6 +62,7 @@ function chapterHtml(c,index){
   +'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>'
   +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+steps
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
+  +chapterConnectionsHtml(c.key)
   +'<h3>'+word("④ 条件を変え、予測を検証する","④ Change parameters and test predictions")+'</h3><div class="mechanics-parameter-grid"><label id="mech-label-x" for="mech-x">'+word("パラメータ1","Parameter 1")+'</label><input id="mech-x" type="range" min="'+p[2]+'" max="'+p[3]+'" step="any" value="'+p[0]+'"><label id="mech-label-y" for="mech-y">'+word("パラメータ2","Parameter 2")+'</label><input id="mech-y" type="range" min="'+p[4]+'" max="'+p[5]+'" step="any" value="'+p[1]+'"></div>'
   +'<div id="mech-output" class="mechanics-output" aria-live="polite"></div>'
   +'<h3>'+word("⑤ 同じ問題を3つの視点から見る","⑤ Compare three reasoning perspectives")+'</h3>'+insights
@@ -71,6 +78,7 @@ export function installMechanics(remarkMath){
  const chapters=english?mechanicsEnglish:mechanicsChapters;
  let completed=[];try{completed=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(completed))completed=[];}catch{}
  function show(index){
+  selectedChapterIndex=index;
   const c=chapters[index];box.innerHTML=chapterHtml(c,index);
   document.querySelectorAll('[data-mech-chapter]').forEach((b,i)=>{b.classList.toggle('active',i===index);b.classList.toggle('is-done',completed.includes(i));});
   if(typeof remarkMath==='function')remarkMath(box);
@@ -95,6 +103,6 @@ export function installMechanics(remarkMath){
  }
  const buttons=[...document.querySelectorAll('[data-mech-chapter]')];
  buttons.forEach(button=>button.addEventListener('click',()=>{show(Number(button.dataset.mechChapter));}));
- show(0);
+ show(selectedChapterIndex);
  return ()=>{};
 }
