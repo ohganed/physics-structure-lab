@@ -128,7 +128,7 @@ test('optional guidance is adjustable and earlier observations do not overwrite 
  await page.locator('#inquiry-save').click();
  await page.locator('#inquiry-hypothesis').fill('Current explanation: net force changes velocity.');
  await page.locator('.inquiry-history-details summary').first().click();
- await expect(page.locator('.inquiry-history-pair').first()).toContainText('Earlier');
+ await expect(page.locator('.inquiry-history-pair').first()).toContainText('当時');
  await expect(page.locator('.inquiry-history-details')).toContainText('force is needed to keep moving.');
  await expect(page.locator('.inquiry-history-details')).toContainText('net force changes velocity.');
  await expect(page.locator('#inquiry-hypothesis')).toHaveValue('Current explanation: net force changes velocity.');
