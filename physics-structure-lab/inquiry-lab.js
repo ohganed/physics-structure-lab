@@ -16,7 +16,7 @@ let requestedScenario=null;
 export function focusInquiryScenario(id){if(scenarioById(id))requestedScenario=id;}
 
 function initialDraft(){
- return {scenario:'cart',mode:'guided',values:initialInputs(inquiryScenarios[0]),trials:[],question:'',hypothesis:'',interpretation:'',nextQuestion:''};
+ return {scenario:'cart',mode:'guided',displayMode:'predict',values:initialInputs(inquiryScenarios[0]),trials:[],question:'',hypothesis:'',interpretation:'',nextQuestion:''};
 }
 function readJSON(key,fallback){
  try{const obj=JSON.parse(localStorage.getItem(key)||'null');return obj??fallback;}catch{return fallback;}
@@ -27,7 +27,7 @@ function normalizeDraft(raw){
  const values={...initialInputs(c),...(raw.values&&typeof raw.values==='object'?raw.values:{})};
  try{evaluateInquiry(c.id,values);}catch{return initialDraft();}
  return {
-  scenario:c.id,mode:['guided','light','open'].includes(raw.mode)?raw.mode:'guided',values,
+  scenario:c.id,mode:['guided','light','open'].includes(raw.mode)?raw.mode:'guided',displayMode:raw.displayMode==='live'?'live':'predict',values,
   trials:Array.isArray(raw.trials)?raw.trials.filter(t=>{
    try{if(t.scenario!==c.id)return false;const expected=evaluateInquiry(c.id,t.inputs);return Math.abs(t.primary-expected.primary)<1e-7&&Math.abs(t.secondary-expected.secondary)<1e-7;}catch{return false;}
   }).slice(0,40):[],
@@ -81,10 +81,15 @@ function contentFor(c,mode){
   +'<div class="callout warm"><strong>'+tr('ここで得られるのは実測値ではなく、モデルの予測です','These are model predictions, not measurements')+'</strong>'
   +'<p>'+esc(local(c.assumptions))+'</p></div>'
   +'<div class="inquiry-controls">'+paramControls(c)+'</div>'
-  +'<div class="inquiry-prediction"><div id="inquiry-result" aria-live="polite"></div>'
+  +'<fieldset class="inquiry-reveal-mode"><legend>'+tr('結果の見方を選ぶ','Choose how to see results')+'</legend>'
+  +'<label><input type="radio" name="inquiry-display-mode" value="predict"> '+tr('まず予測してから確認（入力は任意）','Predict, then reveal (writing optional)')+'</label>'
+  +'<label><input type="radio" name="inquiry-display-mode" value="live"> '+tr('条件を動かしながら即時に確認','See predictions live while changing parameters')+'</label></fieldset>'
+  +'<div class="inquiry-reveal-action"><button type="button" class="secondary-btn" id="inquiry-reveal">'+tr('モデルの予測を表示','Reveal model prediction')+'</button>'
+  +'<p id="inquiry-reveal-hint" class="muted">'+tr('仮説を書かなくても表示できます。','You can reveal without writing a hypothesis.')+'</p></div>'
+  +'<div class="inquiry-prediction" id="inquiry-prediction-panel"><div id="inquiry-result" aria-live="polite"></div>'
   +'<button class="primary-btn" id="inquiry-capture" type="button">'+tr('この条件を試行として記録','Capture this trial')+'</button></div>'
   +'<p class="muted">'+tr('比較するときは、できれば変数を一つだけ変えてみましょう。複数を同時に変えても試行は記録できます。','For a controlled comparison, try varying just one parameter. You may still capture trials with several parameters changed.')+'</p>'
-  +'<div class="inquiry-graph-panel"><h3>'+tr('1つだけ変えたら、どんな曲線になる？','What curve appears when one variable changes?')+'</h3>'
+  +'<div class="inquiry-graph-panel" id="inquiry-graph-panel"><h3>'+tr('1つだけ変えたら、どんな曲線になる？','What curve appears when one variable changes?')+'</h3>'
   +'<label>'+tr('変化させる変数','Vary one parameter')+' <select id="inquiry-graph-param">'+c.inputs.map(i=>'<option value="'+i.key+'">'+esc(local(i.label))+'</option>').join('')+'</select></label>'
   +'<svg id="inquiry-curve" viewBox="0 0 620 250" role="img" aria-label="'+tr('変数を一つずつ変えて計算した予測値のグラフ','Predicted output plotted against one varying input')+'"></svg>'
   +'<p id="inquiry-curve-note" class="muted"></p></div>'
@@ -116,10 +121,12 @@ export function installInquiry(renderMath){
   draft=spaces[id]||{...initialDraft(),scenario:id,mode:draft.mode,values:initialInputs(scenarioById(id))};
  }
  let records=readRecords();
+ let revealed=false;
  const $=id=>document.getElementById(id);
  const mode=$('inquiry-mode');mode.value=draft.mode;
  function remember(){scratch={...draft};spaces[draft.scenario]=draft;saveWorkspaces(spaces);saveDraft(draft);}
  function attach(){
+  revealed=draft.displayMode==='live';
   const c=scenarioById(draft.scenario);host.innerHTML=contentFor(c,draft.mode);
   document.querySelectorAll('[data-inquiry-case]').forEach(b=>{
    b.classList.toggle('active',b.dataset.inquiryCase===c.id);
@@ -127,6 +134,22 @@ export function installInquiry(renderMath){
   });
   const controls=[...host.querySelectorAll('[data-inquiry-input]')];
   for(const el of controls)el.value=draft.values[el.dataset.inquiryInput];
+  const modes=[...host.querySelectorAll('[name="inquiry-display-mode"]')];
+  for(const el of modes)el.checked=el.value===draft.displayMode;
+  function applyReveal(){
+   const show=draft.displayMode==='live'||revealed;
+   $('inquiry-prediction-panel').hidden=!show;
+   $('inquiry-graph-panel').hidden=!show;
+   $('inquiry-reveal').hidden=show;
+   $('inquiry-reveal-hint').textContent=show
+    ?tr('結果を確認しています。','Model predictions are visible.')
+    :tr('値を変更して予想できます。文章の記入は必須ではありません。','Change values and predict. Writing is optional.');
+  }
+  modes.forEach(el=>el.addEventListener('change',()=>{
+   if(!el.checked)return;
+   draft.displayMode=el.value;revealed=draft.displayMode==='live';remember();applyReveal();
+  }));
+  $('inquiry-reveal').addEventListener('click',()=>{revealed=true;applyReveal();});
   for(const key of ['question','hypothesis','interpretation','nextQuestion']){
    const field=$('inquiry-'+key);field.value=draft[key];field.addEventListener('input',()=>{
     draft[key]=field.value;remember();
@@ -192,8 +215,12 @@ export function installInquiry(renderMath){
    return v;
   }
   $('inquiry-graph-param').addEventListener('change',drawCurve);
-  controls.forEach(el=>el.addEventListener('input',paint));
+  controls.forEach(el=>el.addEventListener('input',()=>{
+   if(draft.displayMode==='predict'){revealed=false;applyReveal();}
+   paint();
+  }));
   $('inquiry-capture').addEventListener('click',()=>{
+   revealed=true;applyReveal();
    if(draft.trials.length>=40){$('inquiry-status').textContent=tr('試行の上限です。記録を保存して新しい比較を始めてください。','Trial limit reached. Save a snapshot and start a new set.');return;}
    draft.trials.push(current());remember();drawTrials();
    $('inquiry-status').textContent=tr('モデルの予測を記録しました。','Model prediction captured.');
@@ -264,7 +291,7 @@ export function installInquiry(renderMath){
    }
   }
   if(typeof renderMath==='function')renderMath(host);
-  paint();drawTrials();drawHistory();
+  paint();applyReveal();drawTrials();drawHistory();
  }
  mode.addEventListener('change',()=>{draft.mode=mode.value;remember();attach();});
  document.querySelectorAll('[data-inquiry-case]').forEach(b=>b.addEventListener('click',()=>{
