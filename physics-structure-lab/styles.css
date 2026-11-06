@@ -89,3 +89,32 @@
 .mechanics-perspectives p{font-size:13px;line-height:1.8;margin:0}
 @media(max-width:850px){.mechanics-layout{grid-template-columns:1fr}.mechanics-chapter-list{position:static;grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}}
 @media(max-width:520px){.mechanics-chapter-list{grid-template-columns:1fr}.mechanics-topic{padding:17px}}
+
+/* Newton's force analysis lab */
+.force-lab-page>section{margin-top:21px}
+.force-control-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.force-control-grid label{display:grid;gap:8px;font-weight:700;font-size:13px}
+.force-control-grid label:first-child{grid-column:1/-1}
+.force-control-grid input{width:100%;accent-color:var(--teal)}
+.force-control-grid select{max-width:320px;background:white;border:1px solid var(--line);padding:8px;border-radius:9px}
+.force-control-grid output{font-variant-numeric:tabular-nums;color:var(--teal)}
+.force-scene{background:#f4f9f6;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.force-scene svg{display:block;width:100%;height:auto;max-height:300px}
+.force-play{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:14px 0}
+.force-play input{flex:1 1 130px;accent-color:var(--teal)}
+.force-play label{font-size:12px;white-space:nowrap}
+.force-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:15px 0}
+.force-metrics>div{background:var(--light);padding:12px;border-radius:11px}
+.force-metrics small{display:block;color:#5c766d;font-size:11px}
+.force-metrics strong{display:block;font-size:clamp(14px,1.8vw,19px);margin-top:6px;font-variant-numeric:tabular-nums}
+.force-fbd-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.force-fbd{background:#f6faf7;border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.force-fbd svg{width:100%;height:auto}
+.force-fbd h3{font-size:15px}
+.force-fbd>div{color:#536b61;font-size:12px}
+.force-thinking{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0}
+.force-thinking>div{background:#f5f9f5;border-radius:12px;padding:14px;border:1px solid var(--line)}
+.force-thinking h3{font-size:14px}
+.force-thinking p{font-size:13px;line-height:1.8}
+@media(max-width:900px){.force-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.force-thinking{grid-template-columns:1fr}}
+@media(max-width:600px){.force-control-grid,.force-fbd-grid{grid-template-columns:1fr}}
