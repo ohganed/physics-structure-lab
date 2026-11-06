@@ -48,12 +48,13 @@ function chapterHtml(c,index){
  const word=(ja,english)=>en?english:ja;
  const steps=c.steps.map(([heading,equation,meaning],i)=>'<div class="mechanics-equation-step"><strong>'+String(i+1)+'. '+esc(heading)+'</strong>'+tex(equation)+'<p>'+esc(meaning)+'</p></div>').join('');
  const p=presets[c.model]||[2,50,.5,10,5,150];
- const xLabel=c.model==='gravity'?'地心距離 r（km）':null;
+ const other=en?mechanicsChapters[index]:mechanicsEnglish[index];
+ const parallel='<details class="parallel-language"><summary>'+(en?'Compare with Japanese explanation / 日本語で確認':'Read this concept in academic English / 英語で学ぶ')+'</summary><h3>'+esc(other.name)+'</h3><p><strong>'+(en?'定義':'Definition')+':</strong> '+esc(other.definition)+'</p><p><strong>'+(en?'定義の必要性':'Why this definition matters')+':</strong> '+esc(other.why)+'</p><p><strong>'+(en?'成立条件':'Validity')+':</strong> '+esc(other.conditions)+'</p></details>';
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +'<h3>'+word("① どんな現象を扱うのか","① What phenomenon are we describing?")+'</h3><p>'+esc(c.phenomenon)+'</p>'
   +'<h3>'+word("② 定義と、その定義が必要な理由","② Definitions and their purpose")+'</h3><p>'+esc(c.definition)+'</p><div class="callout"><strong>'+word("なぜ定義するのか","Why define this quantity?")+'</strong><p>'+esc(c.why)+'</p></div>'
-  +'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+steps
+  +parallel+'<h3>'+word("③ 実験法則と数学的な導出","③ Empirical laws and derivations")+'</h3><p>'+esc(c.law)+'</p>'+steps
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
   +'<h3>'+word("④ 条件を変え、予測を検証する","④ Change parameters and test predictions")+'</h3><div class="mechanics-parameter-grid"><label id="mech-label-x" for="mech-x">'+word("パラメータ1","Parameter 1")+'</label><input id="mech-x" type="range" min="'+p[2]+'" max="'+p[3]+'" step="any" value="'+p[0]+'"><label id="mech-label-y" for="mech-y">'+word("パラメータ2","Parameter 2")+'</label><input id="mech-y" type="range" min="'+p[4]+'" max="'+p[5]+'" step="any" value="'+p[1]+'"></div>'
   +'<div id="mech-output" class="mechanics-output" aria-live="polite"></div>'
