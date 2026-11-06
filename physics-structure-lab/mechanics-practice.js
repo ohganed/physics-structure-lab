@@ -40,7 +40,7 @@ export function mechanicsPracticePage(){
   +t('試行錯誤や途中の予想を、日付付きで残せます。計算結果の照合は任意です。','Keep dated snapshots of unfinished ideas and revisions. Numeric comparison is optional.')+'</p></div>'
   +'<div class="practice-layout"><nav class="practice-chapters" id="practice-chapters" aria-label="'+t('演習の章一覧','Practice chapter menu')+'">'
   +practiceSectionIds.map((id,i)=>'<button type="button" data-practice-section="'+esc(id)+'" class="practice-chapter-button"><span>'+String(i+1).padStart(2,'0')+'</span> '+esc(label(id))+'</button>').join('')
-  +'</nav><main class="practice-main" id="practice-main"><div id="practice-problem"></div></main></div>'
+  +'</nav><div class="practice-main" id="practice-main"><div id="practice-problem"></div></div></div>'
   +'<section class="card practice-transfer"><h2>'+t('学習記録を持ち出す','Take your learning notes with you')+'</h2>'
   +'<p>'+t('演習の記録は端末内に保存します。この演習専用のJSONで書き出したり、別端末から読み込んだりできます。既存の記録は上書きしません。','Practice notes are stored on this device. Export a practice JSON file and import it elsewhere without overwriting existing records.')+'</p>'
   +'<div class="button-row"><button class="secondary-btn" id="practice-export" type="button">'+t('演習記録をJSONに書き出す','Export practice JSON')+'</button>'
