@@ -194,7 +194,7 @@ function navigate(page, push = true) {
   }
   nav.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('active', el.dataset.page === page));
   side.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false');
-  if (push && location.hash !== `#${page}`) history.replaceState(null, '', `#${page}`);
+  if (push && location.hash !== `#${page}`) history.pushState(null, '', `#${page}`);
   window.scrollTo({ top: 0, behavior: 'instant' });
   if (page === 'phenomenon' && !english) stopAnimation = installDefinitionLab();
   if (page === 'acceleration') stopAnimation = installAccelerationLab();
