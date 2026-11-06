@@ -110,3 +110,21 @@ export function validInvestigation(record){
  }catch{return false;}
  return true;
 }
+
+/**
+ * Sample a single-parameter relationship while holding all other model inputs fixed.
+ * Model predictions, not observations or measured evidence. No AI or random noise.
+ */
+export function inquiryCurve(id,baseValues,parameter,count=41){
+ const c=scenarioById(id),input=c?.inputs.find(x=>x.key===parameter);
+ if(!input||!Number.isInteger(count)||count<2||count>201)throw new RangeError('Invalid curve specification');
+ evaluateInquiry(id,baseValues);
+ const points=[];
+ for(let i=0;i<count;i++){
+  const x=input.min+(input.max-input.min)*i/(count-1);
+  const result=evaluateInquiry(id,{...baseValues,[parameter]:x});
+  points.push({x,y:result.primary});
+ }
+ const ymin=Math.min(...points.map(p=>p.y)),ymax=Math.max(...points.map(p=>p.y));
+ return {scenario:id,parameter,points,ymin,ymax,flat:Math.abs(ymax-ymin)<=Math.max(1,Math.abs(ymax),Math.abs(ymin))*1e-11};
+}
