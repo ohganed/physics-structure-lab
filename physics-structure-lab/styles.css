@@ -380,3 +380,6 @@
 .mechanics-revisit p{margin:7px 0}
 .mechanics-revisit .muted{font-size:13px;color:#5f786c}
 @media(max-width:580px){.mechanics-explain-details>summary{padding:12px 13px;font-size:14px}.mechanics-reading-prose{padding:0 13px 10px}.mechanics-reading-prose p,.mechanics-reasoning-sequence li,.mechanics-worked-steps li p,.mechanics-vocab dd,.mechanics-common-error p,.mechanics-revisit p{font-size:15px;line-height:1.85}.mechanics-reasoning-sequence,.mechanics-worked-steps{padding:13px 13px 10px 32px}.mechanics-vocab{padding:12px}.mechanics-revisit{padding:14px}}
+
+.mechanics-try-lab{margin:13px 0 20px;border:1px solid #d2e4d7;border-radius:12px;padding:15px 17px;background:#f2f8f4}
+.mechanics-try-lab p{font-size:14px;line-height:1.8;margin:0 0 11px}
