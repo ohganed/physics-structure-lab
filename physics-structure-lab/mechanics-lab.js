@@ -73,7 +73,7 @@ function chapterHtml(c,index){
   +'<div id="mech-output" class="mechanics-output" aria-live="polite"></div>'
   +'<h3>'+word("⑤ 同じ問題を3つの視点から見る","⑤ Compare three reasoning perspectives")+'</h3>'+insights
   +'<h3>'+word("⑥ 考えてから答えを見る","⑥ Predict before seeing the answer")+'</h3><p>'+esc(c.problem)+'</p><button class="secondary-btn" id="mech-reveal">'+word("解答・根拠を表示","Reveal answer and reasoning")+'</button><div id="mech-answer" class="callout hide"><p>'+esc(c.answer)+'</p></div>'
-  +'<h3>'+word("⑦ 大学物理への接続","⑦ University physics connections")+'</h3><p>'+esc(c.university)+'</p>'+deepRevisitHtml(c.key,en?'en':'ja')<p class="muted">'+word("この章の演習・証明の完全網羅や専門的な数値シミュレーションは継続整備対象です。","Complete proofs, extended exercises, and specialized simulations remain in development.")+'</p>'
+  +'<h3>'+word("⑦ 大学物理への接続","⑦ University physics connections")+'</h3><p>'+esc(c.university)+'</p>'+deepRevisitHtml(c.key,en?'en':'ja')+'<p class="muted">'+word("この章の演習・証明の完全網羅や専門的な数値シミュレーションは継続整備対象です。","Complete proofs, extended exercises, and specialized simulations remain in development.")+'</p>'
   +'<button class="primary-btn" id="mech-complete">'+word("この章を学習済みに記録","Mark this chapter studied")+'</button><p id="mech-feedback" class="muted" aria-live="polite"></p>'
   +'</div>';
 }
