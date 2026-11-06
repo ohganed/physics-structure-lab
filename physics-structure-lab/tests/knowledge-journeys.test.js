@@ -46,7 +46,8 @@ test('JSON round-trip uses explicit version and preserves ungraded learning reco
  const backup=createNotebookExport([note],[learner],[revisit],'2026-11-06T02:05:00.000Z');
  const json=JSON.stringify(backup);
  assert.deepEqual(normalizeNotebook(JSON.parse(json)),{notes:[note],links:[learner],revisits:[revisit]});
- assert.throws(()=>normalizeNotebook({...backup,version:2}),/Unsupported notebook/);
+ assert.throws(()=>normalizeNotebook({...backup,version:2}),/Invalid notebook entries: investigations/);
+ assert.throws(()=>normalizeNotebook({...backup,version:3}),/Unsupported notebook/);
  assert.throws(()=>normalizeNotebook({...backup,links:[{...learner,reason:' '}]}),/Invalid learner/);
  assert.throws(()=>normalizeNotebook({...backup,notes:undefined}),/Invalid notebook/);
 });
