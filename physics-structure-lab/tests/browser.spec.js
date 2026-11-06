@@ -372,7 +372,7 @@ test('phenomenon-first narratives precede definitions throughout eleven mechanic
 test('mathematical reasoning pathways are bilingual and stay optional to explore',async({page})=>{
  await page.goto(base+'/#mechanics');
  await page.locator('[data-mech-chapter="2"]').click();
- await expect(page.locator('#mechanics-origin-path')).toContainText('力を受けながら');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('なぜ速度の二乗');
  await page.locator('#language-select').selectOption('en');
  await expect(page.locator('#mechanics-origin-path')).toContainText('Why do squared speed');
  await expect(page.locator('#mechanics-origin-path')).toContainText('What does this representation now explain?');
