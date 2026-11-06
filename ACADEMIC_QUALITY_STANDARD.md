@@ -62,3 +62,14 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 - When mathematical structure appears in different fields, show both the shared mathematical relation and the different physical units, systems, boundary conditions, and failure modes.
 - Export/import must be user-initiated, local-only, versioned and validated; never silently overwrite prior dated observations.
 - Measure educational success through authentic independent reasoning and longitudinal evidence rather than quiz pass thresholds, streaks or time-on-app.
+
+## Scientific inquiry without compulsory checking
+
+- Encourage the learner to articulate questions, model assumptions, predictions, counterexamples and revised interpretations, but never require written answers before continuing.
+- Offer user-controlled guidance levels instead of a mandatory fixed sequence.
+- In comparisons, identify whether one variable or multiple parameters changed. A confounded contrast must not be presented as proof of causality.
+- Explicitly distinguish **simulated model predictions** from measurements, observations, or empirical scientific evidence.
+- Use contrasting models (for example ideal free fall versus linear resistance) to teach the limits of a result, not merely to generate different numbers.
+- Treat a graph as a visualization of model behavior under stated assumptions; it does not establish a universal law.
+- Preserve multiple versions of the learner's thinking, allow unfinished hypotheses and optional notes, and maintain separate drafts by topic.
+- Learning records should be portable, validated, backward compatible and stored locally unless the learner explicitly chooses to export them.
