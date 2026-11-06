@@ -64,3 +64,21 @@ test('mobile navigation search supports both languages',async({page})=>{
  await page.locator('#nav-search').fill('force');
  await expect(page.locator('[data-page="forcelab"]')).toBeVisible();
 });
+
+test('self-reported measurements remain separate from predictions and persist through snapshots',async({page})=>{
+ await page.goto(base+'/#inquiry');
+ await page.locator('#inquiry-reveal').click();
+ await page.locator('#inquiry-capture').click();
+ await page.locator('#inquiry-observed-value').fill('6.2');
+ await page.locator('#inquiry-observed-uncertainty').fill('0.3');
+ await page.locator('#inquiry-observed-method').fill('Simulated demonstration input for browser test; not a real measurement.');
+ await page.locator('#inquiry-observation-form [type=submit]').click();
+ await expect(page.locator('#inquiry-observation-list')).toContainText('学習者が入力した観測値');
+ await expect(page.locator('#inquiry-observation-list')).toContainText('0.3');
+ await page.locator('#inquiry-save').click();
+ await page.reload();
+ await expect(page.locator('#inquiry-observation-list')).toContainText('6.2');
+ await page.locator('#inquiry-clear-trials').click();
+ await expect(page.locator('#inquiry-observation-list')).not.toContainText('6.2');
+ await expect(page.locator('#inquiry-history')).toContainText('観測');
+});
