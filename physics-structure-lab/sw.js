@@ -1,7 +1,7 @@
 /* Physics Structure Lab v0.2 - offline reading and simulation.
    Review the cache version whenever static files change. */
-const CACHE_NAME = 'physics-structure-lab-offline-v1.6-20261106';
-const APP_FILES = ['./','./index.html','./main.js','./physics.js','./definition-lab.js','./acceleration-lab.js','./mechanics-lab.js','./mechanics-data.js','./force-model.js','./force-lab.js','./conservation-lab.js','./conservation-model.js','./advanced-mechanics-model.js','./advanced-mechanics-lab.js','./analytical-lab.js','./kinematics-extensions.js','./kinematics-lab.js','./language.js','./english-pages.js','./mechanics-en.js','./knowledge-connections-data.js','./knowledge-connections.js','./knowledge-journeys-core.js','./knowledge-journeys.js','./styles.css','./icon.svg','./manifest.webmanifest'];
+const CACHE_NAME = 'physics-structure-lab-offline-v1.7-20261106';
+const APP_FILES = ['./','./index.html','./main.js','./physics.js','./definition-lab.js','./acceleration-lab.js','./mechanics-lab.js','./mechanics-data.js','./force-model.js','./force-lab.js','./conservation-lab.js','./conservation-model.js','./advanced-mechanics-model.js','./advanced-mechanics-lab.js','./analytical-lab.js','./kinematics-extensions.js','./kinematics-lab.js','./language.js','./english-pages.js','./mechanics-en.js','./knowledge-connections-data.js','./knowledge-connections.js','./knowledge-journeys-core.js','./knowledge-journeys.js','./transfer-cases.js','./transfer-models.js','./transfer-lab.js','./styles.css','./icon.svg','./manifest.webmanifest'];
 const KATEX_ORIGIN = 'https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/';
 const KATEX_FILES = [
   KATEX_ORIGIN + 'katex.min.css',
