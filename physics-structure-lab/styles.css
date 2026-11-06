@@ -383,3 +383,19 @@
 
 .mechanics-try-lab{margin:13px 0 20px;border:1px solid #d2e4d7;border-radius:12px;padding:15px 17px;background:#f2f8f4}
 .mechanics-try-lab p{font-size:14px;line-height:1.8;margin:0 0 11px}
+
+/* Equation understanding: literal meaning, symbols, units, limits and validity (v2.7). */
+.mechanics-formula-reader{margin:16px 0 20px}
+.mechanics-formula-content{padding:7px 18px 18px;max-width:100%}
+.mechanics-formula-content h4{font-size:14px;font-weight:800;color:#235b47;margin:16px 0 6px}
+.mechanics-formula-content p{font-size:15px;line-height:1.9;margin:9px 0;overflow-wrap:anywhere}
+.mechanics-formula-content .mechanics-formula-lead{font-weight:650}
+.mechanics-formula-content .formula{max-width:100%;overflow-x:auto;padding:12px 5px}
+.mechanics-formula-symbols{display:grid;gap:9px;margin:8px 0 14px}
+.mechanics-formula-symbols>div{display:grid;grid-template-columns:minmax(76px,110px) minmax(0,1fr);align-items:center;gap:11px;padding:9px 11px;border-radius:10px;background:white;border:1px solid #d9e7dd}
+.mechanics-formula-symbols dt .formula{margin:0;padding:2px;font-size:16px;overflow-x:auto}
+.mechanics-formula-symbols dt .katex-display{margin:0;text-align:left}
+.mechanics-formula-symbols dd{margin:0;display:grid;gap:2px;font-size:13px;line-height:1.6;min-width:0}
+.mechanics-formula-symbols dd strong{color:#264f41;font-size:13px}
+.mechanics-formula-symbols dd span{color:#648076;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media(max-width:580px){.mechanics-formula-content{padding:5px 12px 13px}.mechanics-formula-content p{font-size:14px}.mechanics-formula-symbols>div{grid-template-columns:75px minmax(0,1fr);padding:8px;gap:7px}}
