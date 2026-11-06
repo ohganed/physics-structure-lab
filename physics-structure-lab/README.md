@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.1
+# Physics Structure Lab — v3.2
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -10,7 +10,7 @@ Source repository: https://github.com/ohganed/physics-structure-lab
 
 A detailed explanation is not the same as independent learning. The primary goal is for learners to connect concepts across topics, revisit earlier knowledge, build models, formulate hypotheses, notice the limits of analogies, and increasingly reason scientifically without external guidance. A concept may become clear later in another subject; passing a quiz is **not** a prerequisite for moving ahead.
 
-The typical learning structure is **phenomenon → choice of quantities → definitions → laws/assumptions → mathematical modeling → parameter experiments → transfer across domains → optional reflection**.
+The typical learning structure is **phenomenon → choose a useful representation → connect known laws → discover recurring quantities → define them when useful → model and test assumptions → revisit across domains → optional reflection**.
 
 ## Study areas
 
@@ -54,3 +54,9 @@ Physics Structure Lab is an independent project and is not affiliated with, endo
 **In scope now:** twelve progressively linked mechanics chapters, detailed Japanese-English exposition, definitions, reasoning sequences, worked examples and equation interpretation, interactive parameter models, one numerical and one open-reasoning task per chapter (24), eight integrative synthesis problems, optional hints/solutions, and non-destructive dated learner reflections. Learners are free to navigate and revisit material regardless of numerical answers. The glossary and conceptual network support alternative paths, not mastery gates.
 
 **Still open / not claimed complete:** independent trials with novice learners, all historical experimental exceptions and measurements, fluid and continuum mechanics, complete analytical and nonlinear numerical treatments, exhaustive undergraduate or graduate-level problem banks, full third-party accessibility audit, and direct iPhone/iPad device tests. A successful automated browser suite is not evidence of universal comprehension.
+
+## Why does momentum deserve a definition? (v3.2)
+
+The momentum chapter now starts with a cart that changes its velocity when force acts for different durations. Learners inspect the **signed area under the net-force versus time graph**, first for constant force (rectangle), then for a linearly increasing force (triangle), before meeting the name "momentum". The earlier Newtonian relationship is rearranged to obtain **FΔt = mv − mv₀**; the recurring state combination **mv** is then *defined* as momentum p. Only after this does the chapter introduce combined systems and impulse cancellation in collisions. The real history of physics is a different research question: this sequence describes a pedagogical path from phenomena to mathematical representation, not historical discovery.
+
+The model is in Japanese and English, includes signed forces and velocities, uses constant mass in an inertial frame, shows ideal calculated outputs rather than measurement data, and compares force–time area to changes between the initial and final momentum. This is the first chapter reorganized under the updated explanation-design principle; the remaining mechanics chapters still require the same qualitative audit and user testing.
