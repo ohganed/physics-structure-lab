@@ -474,3 +474,27 @@
 .momentum-origin-observations{padding:9px 13px;background:white;border:1px solid #d7e6db;border-radius:10px}
 .momentum-origin-observations p{font-size:13px;line-height:1.9;margin:7px 0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media(max-width:600px){.momentum-origin{padding:11px}.momentum-origin-step h3{font-size:15px}.momentum-origin-step p{font-size:14px}.momentum-origin-experiment{padding:10px}.momentum-origin-controls{grid-template-columns:minmax(0,1fr)}}
+
+/* Physics Structure Lab: phenomenon-first mathematical derivations, all mechanics chapters. */
+.mechanics-origin-path{margin:18px 0 24px;padding:17px 18px;border:1px solid #bfd9c8;background:#f7fbf8;border-radius:15px;min-width:0}
+.mechanics-origin-path>.eyebrow{letter-spacing:.07em}
+.mechanics-origin-path>h3{font-size:19px;line-height:1.5;color:#245c43;margin:9px 0 17px}
+.mechanics-origin-path h4{font-size:15px;font-weight:760;line-height:1.55;color:#285f49;margin:0 0 7px}
+.mechanics-origin-path p{line-height:1.95;font-size:14px;margin:5px 0 15px;overflow-wrap:anywhere}
+.mechanics-origin-premise{border-bottom:1px solid #d8e8dd;margin:0 0 15px;padding:4px 0 6px}
+.mechanics-origin-derivation{background:white;border:1px solid #bfd8c8;border-radius:12px;margin:12px 0 19px;padding:13px}
+.mechanics-origin-derivation summary{font-size:15px;color:#245c43;font-weight:800;line-height:1.6;cursor:pointer}
+.mechanics-origin-derivation summary:focus-visible{outline:3px solid #83b69c;outline-offset:3px}
+.mechanics-origin-steps{margin:14px 0 0;padding:0 0 0 25px}
+.mechanics-origin-steps>li{padding:12px 0 14px 4px;border-bottom:1px solid #e2eee7;list-style-type:decimal}
+.mechanics-origin-steps>li:last-child{border-bottom:0}
+.mechanics-origin-steps h4{font-size:14px}
+.mechanics-origin-steps .formula{max-width:100%;overflow-x:auto;padding:10px 4px;box-sizing:border-box}
+.mechanics-origin-steps .katex-display{margin:6px 0;overflow-x:auto;overflow-y:hidden}
+.mechanics-origin-steps li p{color:#425e50;font-size:14px;margin:7px 0}
+.mechanics-origin-result,.mechanics-origin-boundary,.mechanics-origin-transfer{padding:14px;margin:11px 0;border-radius:12px;border:1px solid #cfdfd3}
+.mechanics-origin-result{background:#e9f4ec}
+.mechanics-origin-boundary{background:#fcf7ea;border-color:#eee1bd}
+.mechanics-origin-transfer{background:#f0f7f3}
+.mechanics-origin-result p,.mechanics-origin-boundary p,.mechanics-origin-transfer p{margin:3px 0}
+@media(max-width:560px){.mechanics-origin-path{padding:11px 10px}.mechanics-origin-path>h3{font-size:17px}.mechanics-origin-derivation{padding:10px}.mechanics-origin-steps{padding-left:22px}.mechanics-origin-steps h4{font-size:13px}.mechanics-origin-path p{font-size:13px}.mechanics-origin-result,.mechanics-origin-boundary,.mechanics-origin-transfer{padding:11px}}
