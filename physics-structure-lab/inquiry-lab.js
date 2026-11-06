@@ -372,16 +372,36 @@ export function installInquiry(renderMath){
     if(row.interpretation){
      const note=document.createElement('p');note.className='inquiry-old-observation';note.textContent=tr('当時の気づき：','Earlier observation: ')+row.interpretation;entry.append(note);
     }
-    const reopen=document.createElement('button');reopen.type='button';reopen.className='secondary-btn';
-    reopen.textContent=tr('この時の考えを読み返す','Revisit this earlier state');
-    reopen.addEventListener('click',()=>{
-     draft={scenario:row.scenario,mode:draft.mode,displayMode:draft.displayMode,values:row.trials.at(-1)?.inputs||initialInputs(c),
-      trials:row.trials.map(t=>({...t,inputs:{...t.inputs}})),
-      observations:(row.observations||[]).map(o=>({...o})),
-      ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(k=>[k,row[k]]))};
-     remember();attach();host.scrollIntoView({block:'start'});
-    });
-    entry.append(reopen);list.append(entry);
+    const details=document.createElement('details');details.className='inquiry-history-details';
+    const summary=document.createElement('summary');
+    summary.textContent=tr('以前の考えを現在の考えと並べて読む','Compare this earlier reasoning with my current thinking');
+    details.append(summary);
+    for(const [label,key] of [[tr('当時の問い','Earlier question'),'question'],[tr('当時の仮説','Earlier hypothesis'),'hypothesis'],
+      [tr('当時の考察','Earlier interpretation'),'interpretation'],[tr('次に調べたかったこと','Next question then'),'nextQuestion']]){
+     const box=document.createElement('div');box.className='inquiry-history-pair';
+     const heading=document.createElement('strong');heading.textContent=label;
+     const earlier=document.createElement('p');earlier.textContent=row[key]||tr('記録なし','Not recorded');
+     const current=document.createElement('p');current.className='inquiry-current-thought';
+     current.textContent=tr('現在の書きかけ：','Current draft: ')+(draft[key]||tr('記録なし','Not recorded'));
+     box.append(heading,earlier,current);details.append(box);
+    }
+    if(row.trials.length){
+     const trialTitle=document.createElement('strong');
+     trialTitle.textContent=tr('その時のモデル試行','Captured model trials');details.append(trialTitle);
+     for(const [index,trial] of row.trials.entries()){
+      const line=document.createElement('p');line.className='inquiry-history-trial';
+      line.textContent=tr('試行 ','Trial ')+(index+1)+' : '+number(trial.primary)+' '+trial.primaryUnit;
+      details.append(line);
+     }
+    }
+    for(const observation of row.observations||[]){
+     const trial=row.trials[observation.trialIndex];
+     if(!trial||!validateObservation(observation,row.trials))continue;
+     const item=document.createElement('p');item.className='inquiry-history-trial';
+     item.textContent=tr('申告された観測値：','Learner-reported observation: ')+number(observation.measured)+' '+trial.primaryUnit;
+     details.append(item);
+    }
+    entry.append(details);list.append(entry);
    }
   }
   if(typeof renderMath==='function')renderMath(host);
