@@ -1,4 +1,4 @@
-import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation} from './inquiry-core.js';
+import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation,inquiryCurve} from './inquiry-core.js';
 import {getLanguage} from './language.js';
 
 const DRAFT_KEY='physics-structure-lab-inquiry-draft-v1';
@@ -84,6 +84,10 @@ function contentFor(c,mode){
   +'<div class="inquiry-prediction"><div id="inquiry-result" aria-live="polite"></div>'
   +'<button class="primary-btn" id="inquiry-capture" type="button">'+tr('この条件を試行として記録','Capture this trial')+'</button></div>'
   +'<p class="muted">'+tr('比較するときは、できれば変数を一つだけ変えてみましょう。複数を同時に変えても試行は記録できます。','For a controlled comparison, try varying just one parameter. You may still capture trials with several parameters changed.')+'</p>'
+  +'<div class="inquiry-graph-panel"><h3>'+tr('1つだけ変えたら、どんな曲線になる？','What curve appears when one variable changes?')+'</h3>'
+  +'<label>'+tr('変化させる変数','Vary one parameter')+' <select id="inquiry-graph-param">'+c.inputs.map(i=>'<option value="'+i.key+'">'+esc(local(i.label))+'</option>').join('')+'</select></label>'
+  +'<svg id="inquiry-curve" viewBox="0 0 620 250" role="img" aria-label="'+tr('変数を一つずつ変えて計算した予測値のグラフ','Predicted output plotted against one varying input')+'"></svg>'
+  +'<p id="inquiry-curve-note" class="muted"></p></div>'
   +'<h3>'+tr('③ 試行を比較する','③ Compare trials')+'</h3>'
   +'<div id="inquiry-trial-list"></div><div class="inquiry-comparison" id="inquiry-comparison"></div>'
   +'<details class="inquiry-interpretation"><summary>'+tr('モデルの式と、考えを広げるためのヒントを見る（任意）','Show equations and reasoning prompts (optional)')+'</summary>'
@@ -132,6 +136,32 @@ export function installInquiry(renderMath){
    const values=Object.fromEntries(controls.map(el=>[el.dataset.inquiryInput,Number(el.value)]));
    return evaluateInquiry(c.id,values);
   }
+  function drawCurve(){
+   const key=$('inquiry-graph-param')?.value||c.inputs[0].key;
+   const curve=inquiryCurve(c.id,draft.values,key);
+   const graph=$('inquiry-curve'),w=620,h=250,left=60,right=585,top=22,bottom=212;
+   const x0=curve.points[0].x,x1=curve.points.at(-1).x;
+   const dy=curve.ymax-curve.ymin;
+   const ymin=curve.ymin-(dy>1e-11?dy*.1:Math.max(1,Math.abs(curve.ymin)*.15));
+   const ymax=curve.ymax+(dy>1e-11?dy*.1:Math.max(1,Math.abs(curve.ymin)*.15));
+   const sx=x=>left+(x-x0)/(x1-x0)*(right-left);
+   const sy=y=>bottom-(y-ymin)/(ymax-ymin)*(bottom-top);
+   const points=curve.points.map((p,i)=>(i?'L':'M')+sx(p.x).toFixed(2)+' '+sy(p.y).toFixed(2)).join(' ');
+   const p=evaluateInquiry(c.id,draft.values),px=sx(draft.values[key]),py=sy(p.primary);
+   graph.innerHTML='<rect x="0" y="0" width="'+w+'" height="'+h+'" fill="#f7fbf8" rx="10"/>'
+     +'<path d="M'+left+' '+top+' V'+bottom+' H'+right+'" stroke="#86a899" fill="none" stroke-width="1.6"/>'
+     +'<path d="'+points+'" stroke="#247762" fill="none" stroke-width="3"/>'
+     +'<circle cx="'+px.toFixed(2)+'" cy="'+py.toFixed(2)+'" r="6" fill="#cc8e4b" stroke="white" stroke-width="2"/>'
+     +'<g fill="#45685b" font-size="13"><text x="'+left+'" y="'+(bottom+22)+'" text-anchor="middle">'+number(x0)+'</text>'
+     +'<text x="'+right+'" y="'+(bottom+22)+'" text-anchor="middle">'+number(x1)+'</text>'
+     +'<text x="'+(left-10)+'" y="'+(top+5)+'" text-anchor="end">'+number(curve.ymax)+'</text>'
+     +'<text x="'+(left-10)+'" y="'+(bottom)+'" text-anchor="end">'+number(curve.ymin)+'</text></g>';
+   const label=local(c.inputs.find(i=>i.key===key).label);
+   $('inquiry-curve-note').textContent=(curve.flat
+    ?tr('このモデルでは、','In this model, ')+label+tr('を変えても主要な予測値は変化しません。',' does not change the selected outcome.')
+    :tr('横軸：','Horizontal axis: ')+label+tr('。他の条件は固定しています。','; all other parameters are held fixed.'))
+    +' '+tr('橙色の点は今の条件です。実測ではありません。','The orange point marks the current parameters. These are predictions, not measurements.');
+  }
   function paint(){
    const v=current();draft.values=v.inputs;
    for(const el of controls){$('inquiry-output-'+el.dataset.inquiryInput).textContent=el.value;}
@@ -150,9 +180,10 @@ export function installInquiry(renderMath){
       +tr('／衝突後 ',' / after ')+number(v.conserved.energyAfter)+' J';
     out.append(note);
    }
-   remember();
+   drawCurve();remember();
    return v;
   }
+  $('inquiry-graph-param').addEventListener('change',drawCurve);
   controls.forEach(el=>el.addEventListener('input',paint));
   $('inquiry-capture').addEventListener('click',()=>{
    if(draft.trials.length>=40){$('inquiry-status').textContent=tr('試行の上限です。記録を保存して新しい比較を始めてください。','Trial limit reached. Save a snapshot and start a new set.');return;}
