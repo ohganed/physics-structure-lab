@@ -6,6 +6,8 @@ const en=()=>getLanguage()==='en';
 const loc=pair=>pair[en()?1:0];
 const say=(ja,eng)=>en()?eng:ja;
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+let pendingTransferCase='spring-lc';
+export function setTransferCase(id){if(transferCases.some(c=>c.id===id))pendingTransferCase=id;}
 const parameters={
  oscillators:[
   ['m', '質量 m (kg)','Mass m (kg)',2,.5,8,.5],
@@ -101,5 +103,5 @@ export function installTransferLab(renderMath){
   if(typeof renderMath==='function')renderMath(host);
  }
  document.querySelectorAll('[data-transfer-case]').forEach(button=>button.addEventListener('click',()=>show(transferCases.find(c=>c.id===button.dataset.transferCase))));
- show(transferCases[0]);return()=>{};
+ show(transferCases.find(c=>c.id===pendingTransferCase)||transferCases[0]);return()=>{};
 }
