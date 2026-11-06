@@ -1,7 +1,8 @@
 import { motionAt, twoStageTrain, approximatelyEqual } from './physics.js';
 import { definitionLabHtml, installDefinitionLab } from './definition-lab.js';
 import { accelerationLabHtml, installAccelerationLab } from './acceleration-lab.js';
-import { mechanicsPage, installMechanics } from './mechanics-lab.js';
+import { mechanicsPage, installMechanics, focusMechanicsChapter } from './mechanics-lab.js';
+import { connectionsPage, installConnections, setConnectionFocus } from './knowledge-connections.js';
 import { forceLabPage, installForceLab } from './force-lab.js';
 import { conservationLabPage, installConservationLab } from './conservation-lab.js';
 import { advancedMechanicsPage, installAdvancedMechanics } from './advanced-mechanics-lab.js';
@@ -172,7 +173,7 @@ function historyPage() {
   </div>`;
 }
 
-const pages = { overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, forcelab: forceLabPage, conservation: conservationLabPage, advanced: advancedMechanicsPage, analytical: analyticalLabPage, kinematics: kinematicsLabPage, derivation, lab, exam, reflection, history: historyPage };
+const pages = { connections: connectionsPage, overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, forcelab: forceLabPage, conservation: conservationLabPage, advanced: advancedMechanicsPage, analytical: analyticalLabPage, kinematics: kinematicsLabPage, derivation, lab, exam, reflection, history: historyPage };
 function navigate(page, push = true) {
   if (!pages[page]) page = 'overview';
   stopAnimation(); stopAnimation = () => {};
@@ -180,7 +181,7 @@ function navigate(page, push = true) {
   content.innerHTML = english && page==='overview' ? englishOverview()
     : english && page==='phenomenon' ? englishPhenomenon()
     : pages[page]();
-  if(english && !['overview','phenomenon','mechanics'].includes(page)) {
+  if(english && !['overview','phenomenon','mechanics','connections'].includes(page)) {
     content.insertAdjacentHTML('afterbegin','<div class="i18n-notice" role="status"><strong>English edition in progress.</strong> This specialized interactive lab currently contains Japanese instructional text. The English mechanics textbook is available under “12 Mechanics Chapters”. Physical calculations and your saved learning progress remain unchanged.</div>');
   }
   nav.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('active', el.dataset.page === page));
@@ -190,6 +191,7 @@ function navigate(page, push = true) {
   if (page === 'phenomenon' && !english) stopAnimation = installDefinitionLab();
   if (page === 'acceleration') stopAnimation = installAccelerationLab();
   if (page === 'mechanics') stopAnimation = installMechanics(renderPhysicsMath);
+  if (page === 'connections') stopAnimation = installConnections(renderPhysicsMath);
   if (page === 'forcelab') stopAnimation = installForceLab();
   if (page === 'conservation') stopAnimation = installConservationLab();
   if (page === 'advanced') stopAnimation = installAdvancedMechanics(renderPhysicsMath);
@@ -212,6 +214,10 @@ setLanguage(getLanguage());
 document.querySelector('#language-select').value=getLanguage();
 
 document.addEventListener('click', e => {
+  const connection = e.target.closest('[data-open-connection]');
+  if (connection) { setConnectionFocus(connection.dataset.openConnection); navigate('connections'); return; }
+  const chapterLink = e.target.closest('[data-open-chapter]');
+  if (chapterLink) { focusMechanicsChapter(chapterLink.dataset.openChapter); navigate('mechanics'); return; }
   const target = e.target.closest('[data-page], [data-goto], [data-reveal], [data-complete]');
   if (!target) return;
   if (target.dataset.page || target.dataset.goto) { navigate(target.dataset.page || target.dataset.goto); return; }
