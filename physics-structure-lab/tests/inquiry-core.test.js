@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation,inquiryCurve} from '../inquiry-core.js';
+import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation,inquiryCurve,linearDragFall} from '../inquiry-core.js';
 const near=(actual,expected,tol=1e-9)=>assert.ok(Math.abs(actual-expected)<tol,'Expected '+expected+', got '+actual);
 const params=id=>Object.fromEntries(scenarioById(id).inputs.map(i=>[i.key,i.initial]));
 const record={id:'inq-correct-scientific-record',scenario:'fall',date:'2026-11-06T03:00:00.000Z',
   question:'Does mass affect the fall time?',hypothesis:'Possibly, but only the model can decide.',
   interpretation:'Compare mass while holding height fixed.',nextQuestion:'What happens if drag is included?',trials:[evaluateInquiry('fall',params('fall'))]};
 test('five bilingual scientific inquiry scenarios with valid models and stated assumptions',()=>{
- assert.equal(inquiryScenarios.length,5);
+ assert.equal(inquiryScenarios.length,6);
  for(const c of inquiryScenarios){
   for(const field of ['title','phenomenon','prompt','assumptions','explanation','caution']){
    assert.equal(c[field].length,2,c.id+' missing '+field);
@@ -94,4 +94,22 @@ test('one-variable curves reveal invariances and nonlinear scaling',()=>{
  near(cart.points.at(-1).y,12/2);
  assert.throws(()=>inquiryCurve('cart',{force:6,mass:2},'unknown'));
  assert.throws(()=>inquiryCurve('fall',{mass:2,height:10},'mass',1));
+});
+
+test('linear drag revisits the ideal mass-independent falling model with explicit assumptions',()=>{
+ const ideal=linearDragFall({mass:2,drag:0,height:20});
+ const noDrag=evaluateInquiry('fall',{mass:2,height:20});
+ near(ideal.time,noDrag.primary);
+ near(ideal.speed,noDrag.secondary);
+ const resisted=linearDragFall({mass:2,drag:2,height:20});
+ assert.ok(resisted.time>ideal.time);
+ assert.ok(resisted.speed<ideal.speed);
+ assert.ok(resisted.terminalSpeed>resisted.speed);
+ const heavy=linearDragFall({mass:8,drag:2,height:20});
+ assert.ok(heavy.time<resisted.time);
+ const closeToIdeal=linearDragFall({mass:2,drag:.0001,height:20});
+ assert.ok(Math.abs(closeToIdeal.time-ideal.time)<.01);
+ const c=inquiryCurve('fall-drag',{mass:2,drag:1},'mass');
+ assert.equal(c.flat,false);
+ assert.throws(()=>linearDragFall({mass:2,drag:-1,height:20}));
 });
