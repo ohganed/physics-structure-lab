@@ -7,6 +7,7 @@ const say=(ja,en)=>getLanguage()==='en'?en:ja;
 const text=(entry,ja='ja',en='en')=>entry[getLanguage()==='en'?en:ja];
 const escapeHTML=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 let pendingFocus=null;
+let lastFocus='velocity';
 
 export function setConnectionFocus(id){if(nodeById(id))pendingFocus=id;}
 export function getConnectionsForChapter(chapter){
@@ -63,7 +64,7 @@ function relativeEdgeHtml(e,id){
 export function installConnections(renderMath){
  const host=document.getElementById('knowledge-main');
  if(!host)return()=>{};
- let focus=nodeById(pendingFocus)?.id||'velocity',search='',filter='all';
+ let focus=nodeById(pendingFocus)?.id||lastFocus,search='',filter='all';
  pendingFocus=null;
  const conceptList=document.getElementById('knowledge-concepts');
  const searchBox=document.getElementById('knowledge-search');
@@ -71,7 +72,7 @@ export function installConnections(renderMath){
  let active=true;
  function choose(id){
   if(!nodeById(id))return;
-  focus=id;renderConceptList();render();
+  focus=id;lastFocus=id;renderConceptList();render();
  }
  function renderConceptList(){
   conceptList.replaceChildren();
@@ -105,6 +106,7 @@ export function installConnections(renderMath){
   +graphSVG(focus,shown)
   +'<div class="knowledge-filter-row"><label for="knowledge-filter">'+say('関係の種類','Relation type')+'</label><select id="knowledge-filter"><option value="all">'+say('すべてを見る','Show all')+'</option>'+Object.entries(connectionTypes).map(([key,val])=>'<option value="'+key+'" '+(key===filter?'selected':'')+'>'+escapeHTML(val[getLanguage()==='en'?1:0])+'</option>').join('')+'</select></div>'
   +'<div class="knowledge-relations">'+(shown.length?shown.map(e=>relativeEdgeHtml(e,focus)).join(''):'<p>'+say('この種類のつながりはありません。','No relationships in this category.')+'</p>')+'</div>'
+  +'<section class="knowledge-revisit"><h3>'+say('他の概念で残した気づきを思い出す','Revisit insights from related concepts')+'</h3><div id="knowledge-related-notes"></div></section>'
   +'<div class="knowledge-jump"><button type="button" class="secondary-btn" data-open-chapter="'+escapeHTML(n.chapter)+'">'+say('関連する力学の章を読む →','Read the connected mechanics chapter →')+'</button></div>'
   +'<section class="knowledge-journal"><h3>'+say('後から気づいたことを残す（任意）','Record a connection you noticed (optional)')+'</h3>'
   +'<p>'+say('以前の考えを消す必要はありません。時間がたってから読み返し、考え方の変化を見つけられます。採点も進行制限もありません。','Keep old thoughts instead of overwriting them. Revisit them later to notice how your understanding changes. There is no score or gate.')+'</p>'
@@ -122,6 +124,24 @@ export function installConnections(renderMath){
    if(writeNotes([...notes,next])){notes.push(next);field.value='';host.querySelector('#knowledge-note-status').textContent=say('この端末に保存しました。','Saved on this device.');showOldNotes();}
    else host.querySelector('#knowledge-note-status').textContent=say('端末に保存できませんでした。','Could not save on this device.');
   });
+  const relatedNotes=host.querySelector('#knowledge-related-notes');
+  const neighborIds=new Set(all.map(e=>e.from===focus?e.to:e.from));
+  const previous=notes.filter(entry=>neighborIds.has(entry.concept)).slice(-4).reverse();
+  relatedNotes.replaceChildren();
+  if(!previous.length){
+    const tip=document.createElement('p');
+    tip.textContent=say('他の概念で気づきを残すと、ここを学ぶときに再び出会えます。記録は任意です。','Notes you left on connected concepts will appear here when you return. Writing is optional.');
+    relatedNotes.append(tip);
+  }else{
+    for(const earlier of previous){
+      const card=document.createElement('article');card.className='knowledge-note';
+      const open=document.createElement('button');open.type='button';open.className='knowledge-relation-target';
+      open.textContent=text(nodeById(earlier.concept))+' →';
+      open.addEventListener('click',()=>choose(earlier.concept));
+      const paragraph=document.createElement('p');paragraph.textContent=earlier.note;
+      card.append(open,paragraph);relatedNotes.append(card);
+    }
+  }
   showOldNotes();
  }
  searchBox.addEventListener('input',e=>{search=e.target.value;renderConceptList();});
