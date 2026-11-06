@@ -83,19 +83,19 @@ export const deepMechanicsLessons={
  },
  momentum:{
   intuition:[
-   B('衝突する瞬間には大きな力が働きますが、その力が何秒間どのように変わったかを細かく測るのは難しいことがあります。それでも、衝突前と後の速度を比較すれば重要なことがわかります。','During a collision, large forces may change rapidly, making the force–time history hard to measure. Yet the velocities before and after impact still reveal essential information.'),
-   B('二つの物体を合わせた系では、互いに押し合う力は内部の相互作用です。外部からの力積が十分小さければ、系全体の運動量は保存します。個々の物体の運動量が保存するのではありません。','For the combined two-body system, contact forces are internal. If net external impulse is negligible, total momentum is conserved; each object’s momentum need not be.')
+   B('力を長く作用させるほど、物体の速度はより大きく変わる。そこで力と作用時間を二つの軸に取ると、面積という数学的表現が使える。力積とは、その面積を物理量として読む考え方である。','A force acting longer changes velocity more. Plotting net force against time suggests a signed area. Impulse gives physical meaning to this area.'),
+   B('さらに運動方程式を使うと、面積FΔtがmv−mv₀になる。最初と最後の状態に同じmvが現れたので、この組み合わせに運動量という名前を付ける。そこから二物体の保存則へ進める。','Rewriting Newton’s law gives FΔt=mv−mv₀. The same combination mv appears in the initial and final states, motivating momentum as a useful quantity before examining two-body conservation.')
   ],
   vocabulary:[
-   [B('運動量','Momentum'),B('質量と速度の積 p=mv。向きのあるベクトル量。','The vector quantity p=mv, whose direction follows velocity.')],
-   [B('力積','Impulse'),B('力を作用時間について積分した量。運動量の変化に等しい。','The time integral of force, equal to the momentum change.')],
-   [B('完全非弾性衝突','Perfectly inelastic collision'),B('衝突後に物体がくっついて同じ速度で動くモデル。運動エネルギーは通常保存しない。','An idealized collision where bodies stick together and share a final velocity; kinetic energy is generally not conserved.')]
+   [B('力積','Impulse'),B('合力を作用時間にわたって積み重ねた量。一定の合力ならFΔtで、力–時間図の符号付き面積に対応する。','Net force accumulated over time. For constant net force, impulse is FΔt: signed area on a force–time graph.')],
+   [B('運動量','Momentum'),B('力積の式に最初と最後のmvという組み合わせが現れるため、状態を表す量としてp=mvと定義する。向きを持つ。','The recurring state combination mv in the impulse equation motivates defining p=mv. Momentum is directional.')],
+   [B('孤立系・外力積','Isolated system / external impulse'),B('二物体系に対し、相互の接触力は内力。外側から受ける合力の力積が0なら総運動量は変わらない。','For two bodies, mutual contact forces are internal. If the system receives zero net external impulse, its total momentum is unchanged.')]
   ],
   logic:[
-   B('まず系を衝突する二つの物体の全体に取ります。物体同士の力は作用反作用の組で、系の総運動量を変える外力ではありません。','Define the system to include both colliding bodies. Their mutual forces are action–reaction pairs and do not change the total momentum of the combined system.'),
-   B('外力の力積を無視できるなら、衝突前の各運動量を符号付きで足した値が、衝突後の総運動量と一致します。速度の向きによって正負を付けることが重要です。','When external impulse is negligible, the signed sum of momenta before collision equals the total after collision. Sign conventions matter.'),
-   B('くっつく場合は、衝突後の速度が一つに決まるという条件を加えます。この条件がない場合、運動量保存だけで二つの衝突後速度を決められるとは限りません。','For sticking bodies, the common final velocity provides an additional condition. Without it, momentum conservation alone may not determine both final velocities.'),
-   B('運動量と運動エネルギーは別の量です。くっつく衝突では変形や熱などにエネルギーが移るため、通常、衝突後の運動エネルギーは小さくなります。','Momentum and kinetic energy are different. A sticking collision usually converts some kinetic energy into deformation, heat, or other internal forms.')
+   B('同じ力でも作用時間を変えて比較する。横を時間、縦を合力としたグラフにすると、力が一定なら長方形の面積FΔtが得られる。これを力積と呼ぶ。','Compare equal net forces acting for different durations. On a force–time graph, a constant force makes a rectangle whose signed area FΔt defines impulse.'),
+   B('質量一定の一物体についてF=maと、加速度の式a=(v−v₀)/Δtを組み合わせる。両辺にΔtを掛ければ、FΔt=mv−mv₀が現れる。','For one constant-mass body, combine F=ma with a=(v−v₀)/Δt. Multiply by duration and obtain FΔt=mv−mv₀.'),
+   B('力積が最初と最後のmvの差であるとわかった。そこでp=mvを運動量と呼べばJ=Δpと書ける。力が時間とともに変わる場合は面積を細分して積分で表す。','The impulse equals a difference between endpoint values of mv. Define momentum p=mv, giving J=Δp. If force varies, subdivide and integrate the signed area.'),
+   B('二物体を一つの系にすると、衝突中に互いに及ぼす力は等しく逆向きなので力積が相殺される。外力積が無視できるなら、系全体の運動量変化は0である。','Choose both colliding bodies as the system. Their equal-and-opposite contact forces produce cancelling impulses; with negligible external impulse, total system momentum has zero change.')
   ],
   example:{problem:B('2 kgの物体が右に3 m/sで進み、静止している1 kgの物体と衝突して合体する。合体後の速さは？','A 2 kg body moving right at 3 m/s sticks to a stationary 1 kg body. Find the final speed.'),
    steps:[
