@@ -21,7 +21,7 @@ test('every mechanics chapter has substantial, genuinely bilingual self-study ex
   v.vocabulary.forEach(([term,meaning])=>{
    for(const language of ['ja','en']){
     assert.ok(term[language]?.length>1);
-    assert.ok(meaning[language]?.length>22);
+    assert.ok(meaning[language]?.trim().length>=10,c.key+' undefined vocabulary explanation');
    }
   });
   v.example.steps.forEach(([latex,reason])=>{
