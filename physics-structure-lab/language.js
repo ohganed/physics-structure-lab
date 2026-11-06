@@ -17,6 +17,7 @@ export const navigationLabels={
  connections:['知識のつながり','Knowledge Connections'],
  journeys:['つながり発見ラボ','Discovery Workshop'],
  transfer:['分野横断ラボ','Transfer Lab'],
+ inquiry:['科学的探究ラボ','Scientific Inquiry Lab'],
  forcelab:['力と作用図','Forces & Free-Body Diagrams'],
  conservation:['保存則研究室','Conservation Lab'],
  advanced:['回転・振動・軌道','Rotation, Oscillation & Orbits'],
