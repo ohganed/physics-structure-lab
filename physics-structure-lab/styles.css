@@ -9,3 +9,14 @@
 .tex-inline{font-style:normal;white-space:nowrap;display:inline-block;vertical-align:baseline;line-height:1.5}
 .tex-inline .katex{font-size:1.05em}
 @media(max-width:600px){.tex-display.formula{padding:17px 9px;font-size:18px}}
+
+/* v0.3: equation-by-equation derivations */
+.derivation-stage{margin-top:19px;padding:clamp(18px,3vw,28px)}
+.derivation-stage>p{color:var(--muted);font-size:14px}
+.derivation-line{padding:17px 0;border-top:1px solid var(--line)}
+.derivation-line:first-of-type{margin-top:8px}
+.derivation-line-head{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink)}
+.derivation-line-number{display:inline-grid;place-items:center;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--light);color:var(--green);font-size:12px;font-weight:800}
+.derivation-line .derivation-math{background:#f4f8f6;margin:12px 0 8px;line-height:1.7}
+.derivation-reason{color:#546b63;font-size:14px;line-height:1.8;margin:0 0 6px}
+@media(max-width:600px){.derivation-line .derivation-math{font-size:18px}.derivation-stage{padding:16px}}
