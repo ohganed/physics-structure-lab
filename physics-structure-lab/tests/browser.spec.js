@@ -179,3 +179,33 @@ test('a detailed explanation links directly to the relevant interactive model',a
  await page.locator('.mechanics-try-lab [data-goto="advanced"]').click();
  await expect(page).toHaveURL(/#advanced$/);
 });
+
+test('each of the twelve mechanics chapters has optional deep bilingual reading and formula interpretations',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/#mechanics');
+ for(let i=0;i<12;i++){
+  await page.locator('[data-mech-chapter="'+i+'"]').click();
+  await expect(page.locator('.mechanics-deep-intro')).toHaveCount(1);
+  await expect(page.locator('.mechanics-reasoning-sequence li')).toHaveCount(4);
+  await expect(page.locator('.mechanics-formula-reader')).toHaveCount(1);
+  await expect(page.locator('.mechanics-worked-steps li')).not.toHaveCount(0);
+  await expect(page.locator('.mechanics-revisit')).toHaveCount(1);
+  await page.locator('.mechanics-formula-reader summary').click();
+  await expect(page.locator('.mechanics-formula-symbols dt')).not.toHaveCount(0);
+  await expect(page.locator('.mechanics-formula-content')).toContainText('単位は合っているか');
+ }
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('.mechanics-formula-reader summary')).toContainText('Read each symbol');
+ await page.locator('.mechanics-formula-reader summary').click();
+ await expect(page.locator('.mechanics-formula-content')).toContainText('Do the units agree');
+ await expect(page.locator('.mechanics-formula-content')).toContainText('limiting case');
+ expect(errors).toEqual([]);
+});
+test('detailed mechanics chapter remains readable on iPhone-width Chromium viewport',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ await page.locator('.mechanics-formula-reader summary').click();
+ await expect(page.locator('.mechanics-formula-symbols dt')).toHaveCount(3);
+ const overflow=await page.evaluate(()=>({viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+ expect(overflow.scroll).toBeLessThanOrEqual(overflow.viewport+2);
+});
