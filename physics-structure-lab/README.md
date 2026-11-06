@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.2
+# Physics Structure Lab — v3.3
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -60,3 +60,9 @@ Physics Structure Lab is an independent project and is not affiliated with, endo
 The momentum chapter now starts with a cart that changes its velocity when force acts for different durations. Learners inspect the **signed area under the net-force versus time graph**, first for constant force (rectangle), then for a linearly increasing force (triangle), before meeting the name "momentum". The earlier Newtonian relationship is rearranged to obtain **FΔt = mv − mv₀**; the recurring state combination **mv** is then *defined* as momentum p. Only after this does the chapter introduce combined systems and impulse cancellation in collisions. The real history of physics is a different research question: this sequence describes a pedagogical path from phenomena to mathematical representation, not historical discovery.
 
 The model is in Japanese and English, includes signed forces and velocities, uses constant mass in an inertial frame, shows ideal calculated outputs rather than measurement data, and compares force–time area to changes between the initial and final momentum. This is the first chapter reorganized under the updated explanation-design principle; the remaining mechanics chapters still require the same qualitative audit and user testing.
+
+## v3.3: Deriving representations from the phenomenon in all 12 chapters
+
+The chapter introduction now presents **a motivating physical contrast before formal definitions**. Eleven original, bilingual pathways have been added alongside the previously revised momentum chapter. Each explains the phenomenon, what to measure or draw, which earlier physical law or new empirical assumption is needed, the mathematical steps with commentary, what the resulting expression means, its validity conditions and later conceptual connections. Full derivations are displayed by default and can be collapsed on small screens.
+
+Examples: work–energy comes from force accumulated through **displacement**, complementing momentum as force accumulated through **time**; centripetal acceleration comes from **velocity-vector geometry** before forces are considered; torque emerges from **work per angular displacement**; inertial forces emerge from the **coordinate transformation** x′=x−X; coupled normal modes emerge from **sum and difference coordinates**. Lagrange and Hamilton acknowledge the additional mathematics of variations, integration by parts and Legendre transforms rather than treating these as obvious high-school algebra. The history of physics is not asserted to follow this teaching order. Independent novice learning and real-iPhone testing remain separate validation tasks.
