@@ -182,7 +182,6 @@ export function installJourneys(){
    const mergedData={notes:merged.notes,links:merged.links,revisits:merged.revisits};
    saveData(mergedData,true);data=mergedData;
    showLinks();showTimeline();showLegacy();showPath();
-   const added=Object.keys(mergedData).reduce((sum,key)=>sum+mergedData[key].length-data[key].length,0);
    const conflicts=merged.linksConflicts+merged.revisitsConflicts;
    status('journey-transfer-status',t('読み込みました。既存の記録は保持しています。','Imported without overwriting existing entries.')+' '+(conflicts?t('IDの衝突が '+conflicts+' 件あり、保護のためスキップしました。',conflicts+' conflicting ID(s) skipped for safety.'):''));
   }catch(error){
