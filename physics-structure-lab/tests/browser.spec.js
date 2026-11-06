@@ -101,3 +101,18 @@ test('installed application can reopen its bilingual textbook and inquiry labs w
  await expect(page.locator('#inquiry-result')).toContainText('Acceleration a');
  await context.setOffline(false);
 });
+
+test('browser Back and Forward return learners to previously explored concepts',async({page})=>{
+ await page.goto(base+'/#overview');
+ await page.locator('[data-goto="inquiry"]').first().click();
+ await expect(page).toHaveURL(/#inquiry$/);
+ await page.locator('[data-page="connections"]').click();
+ await expect(page).toHaveURL(/#connections$/);
+ await page.goBack();
+ await expect(page).toHaveURL(/#inquiry$/);
+ await expect(page.locator('h1')).toContainText('科学的な問い');
+ await page.goBack();
+ await expect(page).toHaveURL(/#overview$/);
+ await page.goForward();
+ await expect(page).toHaveURL(/#inquiry$/);
+});
