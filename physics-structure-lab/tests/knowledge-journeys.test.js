@@ -30,10 +30,11 @@ test('unverified learner hypotheses require deliberate opt-in to affect routes',
  assert.equal(proposed.edges[0].source,'learner');
 });
 test('invalid learner relations are rejected',()=>{
- for(const change of [{from:'ghost'},{to:'velocity'},{reason:''},{boundary:''},{type:'fiction'},{date:'bad-date'},{id:'bad id'}]){
+ for(const change of [{from:'ghost'},{to:'velocity'},{reason:''},{boundary:'x'.repeat(1201)},{type:'fiction'},{date:'bad-date'},{id:'bad id'}]){
   assert.equal(validateLearnerLink({...learner,...change}),false);
  }
  assert.equal(validateLearnerLink({}),false);
+ assert.equal(validateLearnerLink({...learner,boundary:''}),true,'A learner may not yet know where an analogy breaks down');
 });
 test('a dated change in understanding and a legacy observation are valid',()=>{
  assert.equal(validateRevisit(revisit),true);
