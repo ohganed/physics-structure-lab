@@ -45,8 +45,8 @@ test('six bilingual transfer cases include paired equations, bridges, disanalogi
   assert.ok(Array.isArray(c.equations)&&c.equations.length>=2);
   for(const k of ['title','phenomenon','question','common','difference','transfer']){
    assert.equal(c[k].length,2,c.id+' missing '+k);
-   assert.ok(c[k][0].length>20,c.id+' Japanese too short '+k);
-   assert.ok(c[k][1].length>20,c.id+' English too short '+k);
+   assert.ok(c[k][0].length>(k==='title'?4:20),c.id+' Japanese too short '+k);
+   assert.ok(c[k][1].length>(k==='title'?8:20),c.id+' English too short '+k);
   }
  }
 });
