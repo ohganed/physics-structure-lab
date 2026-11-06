@@ -168,3 +168,14 @@ test('mechanics explanations remain optional and usable at iPhone display width'
  await expect(page.locator('.mechanics-example-conclusion')).toBeVisible();
  await expect(page.locator('html')).toHaveAttribute('lang','ja');
 });
+
+test('a detailed explanation links directly to the relevant interactive model',async({page})=>{
+ await page.goto(base+'/#mechanics');
+ await expect(page.locator('.mechanics-try-lab')).toBeVisible();
+ await page.locator('.mechanics-try-lab [data-goto="forcelab"]').click();
+ await expect(page).toHaveURL(/#forcelab$/);
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="4"]').click();
+ await page.locator('.mechanics-try-lab [data-goto="advanced"]').click();
+ await expect(page).toHaveURL(/#advanced$/);
+});
