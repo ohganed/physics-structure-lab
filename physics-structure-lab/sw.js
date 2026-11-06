@@ -1,6 +1,6 @@
 /* Physics Structure Lab v2.4 - offline scientific textbook and reasoning labs.
    Review the cache version whenever static files change. */
-const CACHE_NAME = 'physics-structure-lab-offline-v2.4-20261106';
+const CACHE_NAME = 'physics-structure-lab-offline-v2.5-20261106';
 const APP_FILES = ['./','./index.html','./main.js','./physics.js','./definition-lab.js','./acceleration-lab.js','./mechanics-lab.js','./mechanics-data.js','./force-model.js','./force-lab.js','./conservation-lab.js','./conservation-model.js','./advanced-mechanics-model.js','./advanced-mechanics-lab.js','./analytical-lab.js','./kinematics-extensions.js','./kinematics-lab.js','./language.js','./english-pages.js','./mechanics-en.js','./knowledge-connections-data.js','./knowledge-connections.js','./knowledge-journeys-core.js','./knowledge-journeys.js','./transfer-cases.js','./transfer-models.js','./transfer-lab.js','./inquiry-core.js','./inquiry-lab.js','./inquiry-evidence.js','./inquiry-method-prompts.js','./styles.css','./icon.svg','./manifest.webmanifest'];
 const KATEX_ORIGIN = 'https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/';
 const KATEX_FILES = [
@@ -56,6 +56,21 @@ self.addEventListener('fetch', event => {
   if (!isLocal && !isMath) return;
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
+    // App files are network-first, cache-fallback. This allows newly released
+    // educational content to appear online even when an old worker controls a tab.
+    // Pinned KaTeX assets remain cache-first for repeatable offline formulas.
+    const bundled = isLocal && APP_FILES.some(file => new URL(file, self.registration.scope).pathname === url.pathname);
+    if (bundled) {
+      try {
+        const fresh = await fetch(request);
+        if (fresh.ok) {
+          await cache.put(request, fresh.clone());
+          return fresh;
+        }
+      } catch {
+        // A previously installed offline copy may still be usable.
+      }
+    }
     const saved = await cache.match(request, {ignoreSearch: isLocal});
     if (saved) return saved;
     try {
