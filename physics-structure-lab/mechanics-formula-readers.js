@@ -282,8 +282,8 @@ export const formulaReaders = {
     "symbols": [
       [
         "\\tau",
-        "選んだ軸に対するトルクの大きさ",
-        "Magnitude of torque about the selected axis",
+        "位置ベクトルと力の外積の大きさ",
+        "Magnitude of the force–lever-arm cross product",
         "N·m"
       ],
       [
@@ -308,8 +308,8 @@ export const formulaReaders = {
       "A force parallel to the lever arm gives zero torque; a perpendicular push maximizes magnitude."
     ],
     "scope": [
-      "式はトルクの大きさ。回転軸周りの符号や3次元での方向も必要なら別に決める。",
-      "This gives torque magnitude; axis orientation and signed components require additional care."
+      "式は外積によるトルクの大きさ。特定の軸まわりのトルクは、さらにその軸方向の成分を取る。",
+      "This gives cross-product magnitude. Torque about a chosen axis is the component along that axis."
     ]
   },
   "noninertial": {
