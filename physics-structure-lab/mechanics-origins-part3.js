@@ -75,6 +75,17 @@ export const mechanicsOriginsPart3={
       },
       {
         "question": [
+          "作用を少し変えたとき、どの項が現れるか",
+          "What terms appear when a candidate path varies?"
+        ],
+        "tex": "\\delta S=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}\\delta\\theta+\\frac{\\partial L}{\\partial\\dot\\theta}\\delta\\dot\\theta\\right)\\,dt",
+        "why": [
+          "Lは角度θと角速度θ̇の二つの変数を持つので、それぞれに対する微小な変化を足す。δθ̇はδθを時間で微分したもの。高校数学から先に進む追加の数学なので、既知と仮定しない。",
+          "Because L depends on two arguments, θ and θ̇, add the first-order contributions from both changes. Here δθ̇ is the time derivative of δθ. This variational notation requires an additional mathematical step beyond ordinary school algebra."
+        ]
+      },
+      {
+        "question": [
           "積分の部分積分から運動方程式へ",
           "Use integration by parts to obtain Euler–Lagrange"
         ],
@@ -169,6 +180,28 @@ export const mechanicsOriginsPart3={
         "why": [
           "このばねでは運動エネルギーと位置エネルギーの和に一致する。ただしすべての系でHが単純な全エネルギーとは限らない。",
           "For this spring, H equals K+U. In more general systems it is not automatically identical to a naive total-energy expression."
+        ]
+      },
+      {
+        "question": [
+          "二種類の変数を切り替えたとき、なぜ正準方程式が出るのか",
+          "Why do the canonical equations follow from changing variables?"
+        ],
+        "tex": "dH=\\dot q\\,dp-\\frac{\\partial L}{\\partial q}\\,dq",
+        "why": [
+          "H=pq̇−Lを微小に変え、積の微分を使う。p=∂L/∂q̇なのでdq̇の項が打ち消し合う。これがルジャンドル変換を用いる数学的な理由の一つ。",
+          "Differentiate H=pq̇−L and apply the product rule. Terms involving d q̇ cancel because p=∂L/∂q̇. This explains why the Legendre transformation is mathematically useful."
+        ]
+      },
+      {
+        "question": [
+          "同じdHを位置qと運動量pの関数として読み直す",
+          "Compare the differential of H as a function of q and p"
+        ],
+        "tex": "dH=\\frac{\\partial H}{\\partial q}\\,dq+\\frac{\\partial H}{\\partial p}\\,dp,\\quad\\dot p=\\frac{\\partial L}{\\partial q}",
+        "why": [
+          "同じ関数の微小変化を二通りで書く。ラグランジュ方程式からṗ=∂L/∂qとわかるため、dqとdpの係数を比較すれば正準方程式になる。",
+          "Write the same differential in terms of independent coordinates q and p. Euler–Lagrange gives ṗ=∂L/∂q; comparing coefficients of dq and dp then yields Hamilton’s equations."
         ]
       },
       {
