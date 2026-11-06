@@ -181,6 +181,9 @@ export function installInquiry(renderMath){
   for(const key of ['question','hypothesis','interpretation','nextQuestion']){
    const field=$('inquiry-'+key);field.value=draft[key];field.addEventListener('input',()=>{
     draft[key]=field.value;remember();
+    host.querySelectorAll('[data-inquiry-current="'+key+'"]').forEach(node=>{
+     node.textContent=tr('現在の書きかけ：','Current draft: ')+(draft[key]||tr('記録なし','Not recorded'));
+    });
    });
   }
   function current(){
@@ -418,6 +421,7 @@ export function installInquiry(renderMath){
      const heading=document.createElement('strong');heading.textContent=label;
      const earlier=document.createElement('p');earlier.textContent=row[key]||tr('記録なし','Not recorded');
      const current=document.createElement('p');current.className='inquiry-current-thought';
+     current.dataset.inquiryCurrent=key;
      current.textContent=tr('現在の書きかけ：','Current draft: ')+(draft[key]||tr('記録なし','Not recorded'));
      box.append(heading,earlier,current);details.append(box);
     }
