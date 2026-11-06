@@ -1,42 +1,48 @@
-# Physics Structure Lab v0.1
+# Physics Structure Lab — v1.8
 
-AI不要で利用できる、HTML/CSS/JavaScriptの物理学習教材（最初の題材：運動の記述）。
+**An independent bilingual physics-learning environment (日本語 / English).**  
+Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
 
-## 使い方
+Live application: https://physics-structure-lab.pages.dev/  
+Source repository: https://github.com/ohganed/physics-structure-lab
 
-ブラウザでサーバー経由で開きます（JavaScript ES Modules を利用するため、`file://` ではなくHTTPを使用）。
+## Educational purpose
+
+A detailed explanation is not the same as independent learning. The primary goal is for learners to connect concepts across topics, revisit earlier knowledge, build models, formulate hypotheses, notice the limits of analogies, and increasingly reason scientifically without external guidance. A concept may become clear later in another subject; passing a quiz is **not** a prerequisite for moving ahead.
+
+The typical learning structure is **phenomenon → choice of quantities → definitions → laws/assumptions → mathematical modeling → parameter experiments → transfer across domains → optional reflection**.
+
+## Study areas
+
+- **Mechanics, 12 chapters:** Newton's laws, friction, energy, momentum and collisions, circular motion, oscillations, gravity, rigid-body rotation, non-inertial frames, Lagrangian and Hamiltonian mechanics, and coupled systems.
+- **Interactive research labs:** physical definitions, acceleration, free-body diagrams, conservation, rotation/oscillation/orbits, projectiles/pulleys, and analytical mechanics.
+- **Knowledge Connections:** a bilingual curated concept network with explanations of both similarities and differences. Revisiting an older concept can bring up earlier learner observations.
+- **Discovery Workshop (つながり発見ラボ):** explore routes between concepts; propose personally discovered relations as *unverified learner hypotheses*; optionally record how your understanding changed over time; export/import dated journal entries as JSON. The boundary of an analogy may be recorded later.
+- **Transfer Lab (分野横断ラボ):** six introductory cross-domain studies: mechanics vs. LC circuits, gravitation vs. electrostatics, diffusion vs. heat conduction, oscillation vs. traveling waves, momentum vs. symmetry, and acceleration vs. chemical reaction rates.
+- **Japanese / English:** language switch, academic-English mechanics chapter prose, parallel reading, bilingual knowledge network, Discovery Workshop, and Transfer Lab. Some older specialized labs still contain Japanese text and are marked accordingly.
+
+The course is an evolving textbook, **not yet a complete university physics curriculum**. Some examples are conceptual bridges rather than complete treatments of their destination field.
+
+## Development and tests
+
+Only the contents of the nested `physics-structure-lab/` directory are published to Cloudflare Pages. Framework preset: None; build command blank; output directory: `physics-structure-lab` (relative to repository root).
+
+From the repository root:
 
 ```sh
 cd physics-structure-lab
+npm test
 npm run serve
 ```
 
-`http://localhost:4173/` を開いてください。テストは `npm test` です。依存パッケージのインストールは不要です。
+Open http://localhost:4173/ . No npm installation step is required for the existing minimal runtime. GitHub Actions runs Node syntax and scientific-model tests, plus bilingual-data, knowledge-graph, data-import and offline dependency checks. Automated tests do not replace browser, accessibility and scientific expert review.
 
-## 公開
+## Offline use and data
 
-1. このフォルダの内容をGitHubリポジトリにコミットします。
-2. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git を開き、対象リポジトリを選びます。
-3. Framework preset: `None`、Build command: `exit 0`、Build output directory: `.`（プロジェクトのルート）として公開します。
-4. ブランチ更新時に再公開されます。APIキーは不要です。
+A service worker caches core textbook files and KaTeX assets after installation. Internet may be required at first load; first-time offline and device-specific behavior still require manual checking. Learning observations are kept locally in browser storage. The Discovery Workshop offers **user-initiated JSON export/import** for moving them between devices; there is no automatic cloud sync. Avoid entering student identifiers or sensitive information, and review personal notes before sharing exported files.
 
-> Cloudflare Pages のプロジェクト作成と公開はまだ行っていません。GitHubにもまだこの新規プロジェクト用のリポジトリは作成されていません。
+Original observations are not overwritten by later insights. New links are explicitly labeled as **learner hypotheses**, not verified textbook facts. Import is additive with conflict protection.
 
-## 現在の収録範囲
+## Academic integrity
 
-- 現象と定義：距離・変位、速さ・速度、平均と瞬間、加速度
-- 公式の導出：1次元等加速度運動の3式とその仮定
-- 動的実験：速度、加速度、時間を変更したシミュレーションとグラフ
-- 出題構造研究：オリジナル2区間問題の出題者・解答者の比較、条件変更
-- 思考ノート：ブラウザの `localStorage` に保存
-- 科学史：任意の概念形成コラム
-
-これは大学の物理学全領域を収録した完成版ではありません。ほかの分野は未実装で、その旨を画面に表示しています。
-
-## データとプライバシー
-
-学習記録・思考ノートは端末内に保存し、外部に送信しません。ブラウザのデータを削除すると失われます。端末間同期・教師用管理画面・利用者認証は今後の開発対象です。学校の個人情報を入力する設計にはまだしていません。
-
-## 精度と物理モデル
-
-等加速度運動はSI単位を用いた1次元の理想化モデルです。入試研究室の例題も仮定を明示したオリジナル問題です。シミュレーションの物理計算は `physics.js` に分離し、Nodeテストで検証します。
+Physics Structure Lab is an independent project and is not affiliated with, endorsed by, or recommended by MIT or any other institution. See [Academic Quality Standard](../ACADEMIC_QUALITY_STANDARD.md) for the quality criteria and limitations.
