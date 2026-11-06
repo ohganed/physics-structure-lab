@@ -135,3 +135,36 @@ test('optional guidance is adjustable and earlier observations do not overwrite 
  await page.locator('#inquiry-mode').selectOption('open');
  await expect(page.locator('.inquiry-scaffold')).not.toHaveAttribute('open','');
 });
+
+test('all mechanics chapters expose detailed definitions, reasoning and worked examples in both languages',async({page})=>{
+ const failures=[];page.on('pageerror',e=>failures.push(e.message));
+ await page.goto(base+'/#mechanics');
+ await expect(page.locator('h1')).toContainText('力学');
+ await expect(page.locator('.mechanics-deep-intro summary').first()).toContainText('初めて学ぶ人へ');
+ await expect(page.locator('.mechanics-reading-prose p')).toHaveCount(2);
+ const glossary=page.locator('.mechanics-deep-intro details').nth(1);
+ await glossary.locator('summary').click();
+ await expect(glossary.locator('dt')).toHaveCount(4);
+ const example=page.locator('.mechanics-deep-example details');
+ await example.locator('summary').click();
+ await expect(example.locator('.mechanics-worked-steps li')).toHaveCount(3);
+ await expect(example).toContainText('右向き');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('.mechanics-deep-intro summary').first()).toContainText('Start here');
+ await expect(page.locator('.mechanics-reading-prose p')).toContainText(['A cart moving right','On a rough floor']);
+ await page.locator('[data-mech-chapter="4"]').click();
+ await expect(page.locator('.mechanics-topic h2')).toContainText('Circular');
+ await expect(page.locator('.mechanics-common-error')).toContainText('centrifugal');
+ expect(failures).toEqual([]);
+});
+test('mechanics explanations remain optional and usable at iPhone display width',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ await expect(page.locator('.mechanics-explain-details').first()).toBeVisible();
+ const example=page.locator('.mechanics-deep-example details');
+ await expect(example).not.toHaveAttribute('open','');
+ await example.locator('summary').click();
+ await expect(example).toHaveAttribute('open','');
+ await expect(page.locator('.mechanics-example-conclusion')).toBeVisible();
+ await expect(page.locator('html')).toHaveAttribute('lang','ja');
+});
