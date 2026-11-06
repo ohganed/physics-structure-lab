@@ -91,7 +91,7 @@ function overview() {
       <div class="module-item"><span class="module-number">3</span><div class="module-copy"><strong>等加速度運動の実験</strong><small>パラメータとグラフ</small></div><span class="tag ${store.completed.includes('lab') ? '' : 'gray'}">${store.completed.includes('lab') ? '実施済' : '未実施'}</span></div>
       <p class="muted">既読・未読は自分用の目印です。理解の確認で進行を制限しません。後から別の知識とつなげて読み直せます。</p>${button("connections","知識のつながりから読み直す →","secondary-btn")}</div>
       <div class="card"><h3>力学と科学的探究の全体像</h3><p>力と運動法則から、エネルギー、運動量、振動、剛体、解析力学まで12章を自由に移動できます。発展分野の詳細な証明は引き続き整備中です。</p>
-      ${button('mechanics','力学12章を見る →','secondary-btn')}
+      ${button('mechanics','力学12章を見る →','secondary-btn')} ${button('practice','力学演習・総合問題へ →','secondary-btn')}
       ${button('inquiry','自分で問いと実験を組み立てる →','secondary-btn')}
       ${button('journeys','以前の知識につなげる →','secondary-btn')}
       <p>理解は必ずしも1回の学習で完成しません。別の分野で学んだことから、過去の概念を新たな視点で読み直しましょう。</p></div></div>
