@@ -110,30 +110,45 @@ const translations = [
   {
     "name": "Momentum, Impulse and Collisions",
     "level": "High school → undergraduate",
-    "phenomenon": "During a brief collision, contact forces become large and velocities change quickly.",
-    "definition": "Momentum is mass times velocity; impulse is the time integral of force.",
-    "why": "Model short, intense interactions by comparing states before and after the event.",
-    "law": "The change of total momentum equals the impulse of the net external force.",
-    "conditions": "The system must be defined and external impulse assessed; kinetic energy need not be conserved.",
-    "setter": "Can the problem distinguish sticking from elastic rebound?",
-    "solver": "Define the two-object system; keep vector signs and impose the appropriate collision condition.",
-    "self": "Did I conserve each object's momentum separately?",
+    "phenomenon": "The same force acting longer changes a cart’s velocity more. Begin by asking how to represent a force accumulated over time, before naming momentum.",
+    "definition": "For constant force, signed area FΔt under a force–time graph is called impulse. Rearranging Newton’s law gives FΔt=mv−mv₀. Because mv appears in both states, define momentum p=mv as a useful quantity.",
+    "why": "This quantity summarizes why the accumulated action of force equals a difference between initial and final states. The physical motivation precedes the definition.",
+    "law": "For constant mass in an inertial frame, net impulse equals change in momentum. Paired internal impulses cancel within a two-body system; negligible net external impulse gives total-momentum conservation.",
+    "conditions": "Start from a one-dimensional constant-force, constant-mass model; general forces use signed area and integration. Combined-system momentum is conserved only when net external impulse is negligible.",
+    "setter": "Can learners explain why p=mv is useful by first observing the force–time area and its algebraic connection to a change between states?",
+    "solver": "Choose the object, read the force–time graph, derive the impulse–velocity relation, then apply it to a two-object system.",
+    "self": "Am I treating p=mv as a formula handed down for memorization, or a useful physical quantity motivated by a relationship?",
     "university": "Center-of-mass frames, restitution, and scattering theory.",
     "steps": [
       [
-        "Integrate the external force in time",
+        "See impulse as force–time area",
         null,
-        "Internal interaction forces cancel in the total-system balance."
+        "The signed rectangular area has height F and width Δt; call it impulse."
       ],
       [
-        "Neglect external impulse when justified",
+        "Connect acceleration to velocity change",
         null,
-        "Total momentum is then conserved."
+        "Substitute a=(v−v₀)/Δt into Newton’s law for constant mass and force."
       ],
       [
-        "Apply the sticking condition",
+        "Multiply both sides by time",
         null,
-        "For a perfectly inelastic collision both objects share one final velocity."
+        "The time accumulation becomes mv−mv₀, a difference between endpoint states."
+      ],
+      [
+        "Name the recurring combination",
+        null,
+        "Define p=mv so impulse is simply the change in p."
+      ],
+      [
+        "Combine impulses of two bodies",
+        null,
+        "Action–reaction contact impulses cancel; total momentum changes only through external impulse."
+      ],
+      [
+        "Extend from rectangles to changing forces",
+        null,
+        "Add small signed force–time areas; the limit is the net impulse integral."
       ]
     ],
     "problem": "A 2 kg object at 3 m/s sticks to a stationary 1 kg object. Final speed?",
