@@ -1,5 +1,6 @@
-/* English academic mechanics edition: authored prose, formulas shared with Japanese source. */
-export const mechanicsEnglish = [
+import { mechanicsChapters } from './mechanics-data.js';
+/* Authored English prose. Equations remain shared across languages. */
+const translations = [
   {
     "name": "Newton's Laws and Forces",
     "level": "High school → undergraduate",
@@ -7,11 +8,11 @@ export const mechanicsEnglish = [
     "definition": "Force is a vector describing interaction; acceleration is the time derivative of velocity.",
     "why": "Separate motion from its cause: a moving object does not necessarily require a net force.",
     "law": "In an inertial frame, Newton's second law relates net external force to acceleration for constant mass.",
-    "conditions": "Choose a system, draw all external forces, select axes, apply the law, and check signs.",
-    "setter": "Did I confuse the direction of velocity with the direction of force?",
-    "solver": "Variable-mass systems require momentum balance; constraints lead to generalized coordinates.",
-    "self": "A 2 kg cart experiences 6 N right and 2 N left. Find its acceleration.",
-    "university": "2 m/s² to the right: the net force is 4 N.",
+    "conditions": "Constant mass and inertial frame; static friction is not always at its maximum.",
+    "setter": "Can the learner correctly distinguish the object experiencing a force from the object exerting it?",
+    "solver": "Choose a system, draw all external forces, select axes, apply the law, and check signs.",
+    "self": "Did I confuse the direction of velocity with the direction of force?",
+    "university": "Variable-mass systems require momentum balance; constraints lead to generalized coordinates.",
     "steps": [
       [
         "Choose the cart as your system",
@@ -27,13 +28,10 @@ export const mechanicsEnglish = [
         "Solve for acceleration",
         null,
         "Valid for a constant-mass system."
-      ],
-      [
-        "Constant mass and inertial frame; static friction is not always at its maximum.",
-        null,
-        "Can the learner correctly distinguish the object experiencing a force from the object exerting it?"
       ]
-    ]
+    ],
+    "problem": "A 2 kg cart experiences 6 N right and 2 N left. Find its acceleration.",
+    "answer": "2 m/s² to the right: the net force is 4 N."
   },
   {
     "name": "Contact Forces, Friction and Inclines",
@@ -116,11 +114,11 @@ export const mechanicsEnglish = [
     "definition": "Momentum is mass times velocity; impulse is the time integral of force.",
     "why": "Model short, intense interactions by comparing states before and after the event.",
     "law": "The change of total momentum equals the impulse of the net external force.",
-    "conditions": "Define the two-object system; keep vector signs and impose the appropriate collision condition.",
-    "setter": "Did I conserve each object's momentum separately?",
-    "solver": "Center-of-mass frames, restitution, and scattering theory.",
-    "self": "A 2 kg object at 3 m/s sticks to a stationary 1 kg object. Final speed?",
-    "university": "2 m/s in the original direction.",
+    "conditions": "The system must be defined and external impulse assessed; kinetic energy need not be conserved.",
+    "setter": "Can the problem distinguish sticking from elastic rebound?",
+    "solver": "Define the two-object system; keep vector signs and impose the appropriate collision condition.",
+    "self": "Did I conserve each object's momentum separately?",
+    "university": "Center-of-mass frames, restitution, and scattering theory.",
     "steps": [
       [
         "Integrate the external force in time",
@@ -136,13 +134,10 @@ export const mechanicsEnglish = [
         "Apply the sticking condition",
         null,
         "For a perfectly inelastic collision both objects share one final velocity."
-      ],
-      [
-        "The system must be defined and external impulse assessed; kinetic energy need not be conserved.",
-        null,
-        "Can the problem distinguish sticking from elastic rebound?"
       ]
-    ]
+    ],
+    "problem": "A 2 kg object at 3 m/s sticks to a stationary 1 kg object. Final speed?",
+    "answer": "2 m/s in the original direction."
   },
   {
     "name": "Circular Motion and Centripetal Acceleration",
@@ -299,11 +294,11 @@ export const mechanicsEnglish = [
     "definition": "A non-inertial reference frame accelerates or rotates relative to an inertial frame.",
     "why": "Observed accelerations depend on the frame, so transformed equations need additional terms.",
     "law": "Apparent forces arise through coordinate transformations rather than new physical interactions.",
-    "conditions": "Name the reference frame before selecting the force terms.",
-    "setter": "Did I treat the force felt in the bus as a separate physical interaction?",
-    "solver": "Rotating frames, Foucault pendulum and Earth-based dynamics.",
-    "self": "A car accelerates right at 2 m/s². Apparent force on 2 kg in the car?",
-    "university": "4 N to the left.",
+    "conditions": "Translation without rotation; rotating frames additionally involve Coriolis and centrifugal terms.",
+    "setter": "Can the learner distinguish an apparent force from a Newton's-third-law reaction?",
+    "solver": "Name the reference frame before selecting the force terms.",
+    "self": "Did I treat the force felt in the bus as a separate physical interaction?",
+    "university": "Rotating frames, Foucault pendulum and Earth-based dynamics.",
     "steps": [
       [
         "Transform coordinates to the moving origin",
@@ -319,13 +314,10 @@ export const mechanicsEnglish = [
         "Rewrite Newton's second law",
         null,
         "An apparent force equal to minus mass times frame acceleration appears."
-      ],
-      [
-        "Translation without rotation; rotating frames additionally involve Coriolis and centrifugal terms.",
-        null,
-        "Can the learner distinguish an apparent force from a Newton's-third-law reaction?"
       ]
-    ]
+    ],
+    "problem": "A car accelerates right at 2 m/s². Apparent force on 2 kg in the car?",
+    "answer": "4 N to the left."
   },
   {
     "name": "Lagrangian Mechanics",
@@ -439,3 +431,4 @@ export const mechanicsEnglish = [
     ]
   }
 ];
+export const mechanicsEnglish = translations.map((entry,i)=>({...entry, key:mechanicsChapters[i].key,model:mechanicsChapters[i].model,steps:entry.steps.map((step,j)=>[step[0],mechanicsChapters[i].steps[j][1],step[2]])}));
