@@ -1,7 +1,7 @@
 import {rotor,oscillator,orbit} from './advanced-mechanics-model.js';
 const units={
  rotation:[['mass','質量 kg',2,.5,8,.5],['radius','半径 m',1,.5,4,.25],['force','力 N',4,0,15,.5],['angleDeg','力の角度 °',90,0,180,5]],
- oscillation:[['mass','質量 kg',2,.5,8,.5],['k','ばね定数 N/m',50,5,80,5],['amplitude','初期振幅 m',.3,0,1,.05],['damping','抵抗係数 kg/s',1,0,4,.25]],
+ oscillation:[['mass','質量 kg',2,.5,8,.5],['k','ばね定数 N/m',50,5,80,5],['amplitude','初期振幅 m',.3,0,1,.05],['damping','抵抗係数 kg/s',1,0,3,.25]],
  orbit:[['radius','地心距離 km',7000,6500,20000,100]]
 };
 const lessons={
