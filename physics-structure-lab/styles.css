@@ -206,3 +206,27 @@
 .knowledge-home-entry{margin:20px 0;padding:20px 24px}
 .knowledge-home-entry h2{margin:8px 0 12px}
 .knowledge-home-entry p{font-size:14px;line-height:1.85;color:var(--muted);margin-bottom:14px}
+
+/* Discovery Workshop: hypothesis links, conceptual routes, longitudinal interpretations */
+.journeys-page>section{margin-top:20px}
+.journey-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:14px 0}
+.journeys-page label{display:grid;gap:7px;font-size:13px;font-weight:650;margin:12px 0}
+.journeys-page select,.journeys-page textarea{font:inherit;background:#fff;border:1px solid #b4d0c2;border-radius:10px;padding:10px 12px;width:100%;min-width:0;color:var(--ink)}
+.journeys-page textarea{min-height:90px;line-height:1.65;resize:vertical}
+.journeys-page .journey-checkbox{display:flex;align-items:flex-start;gap:8px;font-weight:500}
+.journeys-page .journey-checkbox input{margin-top:2px;width:18px;height:18px;accent-color:var(--teal)}
+.journey-path{background:#f4f9f5;border:1px solid #d9e9dc;border-radius:13px;padding:12px;margin:15px 0}
+.journey-path-caption{font-size:13px;color:#436759}
+.journey-path-steps{list-style:decimal;margin:12px 0 12px 22px;padding:0}
+.journey-path-item{margin:0 0 12px;padding:9px 14px;background:white;border:1px solid #d7e6dd;border-radius:11px}
+.journey-path-item strong{display:block;color:#215846;font-size:14px;line-height:1.5}
+.journey-path-item small,.journey-source{display:block;color:#667c70;font-size:11px;margin-top:4px}
+.journey-path-item p,.journey-entry p{font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.journey-boundary{background:#f9f5ed;border-left:3px solid #cba76c;padding:7px 10px;color:#615541}
+.journey-entry{background:#f6faf6;border:1px solid #d9e8dd;padding:13px;border-radius:12px;margin:11px 0}
+.journey-entry strong{display:block;font-size:15px}
+.journey-now{background:#eaf4ee;padding:9px 12px;border-radius:8px}
+.journeys-page .journey-file-label{display:inline-flex;width:auto;margin:0;cursor:pointer;border:1px solid #b7d2c2;border-radius:10px;padding:10px 14px;color:var(--green);align-items:center;background:white}
+.journey-file-label input{position:absolute;width:1px;height:1px;opacity:0}
+.journey-file-label:focus-within{outline:3px solid #669c88;outline-offset:2px}
+@media(max-width:620px){.journey-controls{grid-template-columns:1fr}.journey-path{padding:9px}.journey-path-item{padding:9px}}
