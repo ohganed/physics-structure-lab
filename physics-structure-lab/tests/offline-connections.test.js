@@ -19,5 +19,7 @@ test('knowledge explorer is in navigation, is reachable from mechanics and respe
  assert.match(html,/data-page="journeys"/);
  assert.match(app,/setConnectionFocus/);
  assert.match(app,/focusMechanicsChapter/);
- assert.match(app,/!\['overview','phenomenon','mechanics','connections','journeys'\]\.includes\(page\)/);
+ const routed=app.match(/if\(english && !\[([^\]]+)\]\.includes\(page\)\)/);
+ assert.ok(routed,'English routing gate not found');
+ for(const page of ['connections','journeys','transfer'])assert.ok(routed[1].includes("'"+page+"'"),page+' treated as untranslated');
 });
