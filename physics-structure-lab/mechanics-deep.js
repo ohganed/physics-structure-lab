@@ -1,6 +1,7 @@
 /* Visible, optional, and non-gating detailed physics explanations for all twelve mechanics chapters. */
 import {deepMechanicsLessons} from './mechanics-deep-part1.js';
 import {advancedDeepMechanicsLessons} from './mechanics-deep-part2.js';
+import {formulaReaders} from './mechanics-formula-readers.js';
 export const deepLessons=Object.freeze({...deepMechanicsLessons,...advancedDeepMechanicsLessons});
 const escapeHTML=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
 const t=(pair,language='ja')=>pair?.[language==='en'?'en':'ja']||'';
@@ -41,4 +42,23 @@ export function deepRevisitHtml(key,language='ja'){
   +'<p>'+escapeHTML(t(lesson.revisit,language))+'</p>'
   +'<p class="muted">'+label(language,'この時点で完全に理解する必要はありません。ほかの分野を学んだ後、もう一度読んでみてください。','You do not have to master this idea at the first encounter. Return after learning something else.')+'</p>'
   +'</section>';
+}
+
+
+export function formulaReaderHtml(key,language='ja'){
+ const reader=formulaReaders[key];
+ if(!reader)return '';
+ const bilingual=(pair)=>pair?.[language==='en'?1:0]||'';
+ return '<section class="mechanics-formula-reader" aria-label="'+label(language,'数式の読み解き','Reading an equation')+'">'
+ +'<details class="mechanics-explain-details"><summary>'+label(language,'公式の記号を一つずつ読み、単位・限界を確かめる','Read each symbol, check units and test limiting cases')+'</summary>'
+ +'<div class="mechanics-formula-content"><p class="mechanics-formula-lead">'+escapeHTML(bilingual(reader.meaning))+'</p>'
+ +math(reader.expression)
+ +'<h4>'+label(language,'それぞれの記号が表すもの','What each symbol represents')+'</h4>'
+ +'<dl class="mechanics-formula-symbols">'+reader.symbols.map(([symbol,ja,en,unit])=>
+    '<div><dt>'+math(symbol)+'</dt><dd><strong>'+escapeHTML(language==='en'?en:ja)+'</strong><span>'+escapeHTML(unit)+'</span></dd></div>').join('')+'</dl>'
+ +'<h4>'+label(language,'単位は合っているか？','Do the units agree?')+'</h4><p>'+escapeHTML(bilingual(reader.unit))+'</p>'
+ +'<h4>'+label(language,'極端な条件でどうなる？','What happens in a limiting case?')+'</h4><p>'+escapeHTML(bilingual(reader.limit))+'</p>'
+ +'<h4>'+label(language,'どこまで使ってよい？','Where does this formula apply?')+'</h4><p>'+escapeHTML(bilingual(reader.scope))+'</p>'
+ +'<p class="muted">'+label(language,'この解説を理解しきることは、次の章に進む条件ではありません。','You are welcome to continue before fully understanding this explanation.')+'</p>'
+ +'</div></details></section>';
 }
