@@ -178,26 +178,48 @@ export function installInquiry(renderMath){
    const curve=inquiryCurve(c.id,draft.values,key);
    const graph=$('inquiry-curve'),w=620,h=250,left=60,right=585,top=22,bottom=212;
    const x0=curve.points[0].x,x1=curve.points.at(-1).x;
-   const dy=curve.ymax-curve.ymin;
-   const ymin=curve.ymin-(dy>1e-11?dy*.1:Math.max(1,Math.abs(curve.ymin)*.15));
-   const ymax=curve.ymax+(dy>1e-11?dy*.1:Math.max(1,Math.abs(curve.ymin)*.15));
+   // Only measurements with the same held-constant variables belong on this comparison plot.
+   const matching=(draft.observations||[]).map(obs=>{
+    const trial=draft.trials[obs.trialIndex];
+    if(!trial||!validateObservation(obs,draft.trials))return null;
+    const comparable=c.inputs.every(input=>input.key===key||Math.abs(trial.inputs[input.key]-draft.values[input.key])<1e-10);
+    return comparable?{obs,trial}:null;
+   }).filter(Boolean);
+   const allY=[...curve.points.map(p=>p.y)];
+   for(const {obs} of matching){
+    allY.push(obs.measured);
+    if(obs.uncertainty!==null){
+     allY.push(obs.measured-obs.uncertainty,obs.measured+obs.uncertainty);
+    }
+   }
+   const low=Math.min(...allY),high=Math.max(...allY),span=high-low;
+   const pad=span>1e-10?span*.1:Math.max(1,Math.abs(low)*.15);
+   const ymin=low-pad,ymax=high+pad;
    const sx=x=>left+(x-x0)/(x1-x0)*(right-left);
    const sy=y=>bottom-(y-ymin)/(ymax-ymin)*(bottom-top);
    const points=curve.points.map((p,i)=>(i?'L':'M')+sx(p.x).toFixed(2)+' '+sy(p.y).toFixed(2)).join(' ');
    const p=evaluateInquiry(c.id,draft.values),px=sx(draft.values[key]),py=sy(p.primary);
+   const observations=matching.map(({obs,trial})=>{
+    const x=sx(trial.inputs[key]),y=sy(obs.measured);
+    const line=obs.uncertainty===null?''
+     :'<path d="M'+x.toFixed(2)+' '+sy(obs.measured-obs.uncertainty).toFixed(2)+' V'+sy(obs.measured+obs.uncertainty).toFixed(2)+'" stroke="#416ea5" stroke-width="2"/>';
+    return line+'<circle class="inquiry-observed-marker" cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="5" fill="#416ea5" stroke="white" stroke-width="1.5"/>';
+   }).join('');
    graph.innerHTML='<rect x="0" y="0" width="'+w+'" height="'+h+'" fill="#f7fbf8" rx="10"/>'
      +'<path d="M'+left+' '+top+' V'+bottom+' H'+right+'" stroke="#86a899" fill="none" stroke-width="1.6"/>'
      +'<path d="'+points+'" stroke="#247762" fill="none" stroke-width="3"/>'
      +'<circle cx="'+px.toFixed(2)+'" cy="'+py.toFixed(2)+'" r="6" fill="#cc8e4b" stroke="white" stroke-width="2"/>'
+     +observations
      +'<g fill="#45685b" font-size="13"><text x="'+left+'" y="'+(bottom+22)+'" text-anchor="middle">'+number(x0)+'</text>'
      +'<text x="'+right+'" y="'+(bottom+22)+'" text-anchor="middle">'+number(x1)+'</text>'
-     +'<text x="'+(left-10)+'" y="'+(top+5)+'" text-anchor="end">'+number(curve.ymax)+'</text>'
-     +'<text x="'+(left-10)+'" y="'+(bottom)+'" text-anchor="end">'+number(curve.ymin)+'</text></g>';
+     +'<text x="'+(left-10)+'" y="'+(top+5)+'" text-anchor="end">'+number(high)+'</text>'
+     +'<text x="'+(left-10)+'" y="'+(bottom)+'" text-anchor="end">'+number(low)+'</text></g>';
    const label=local(c.inputs.find(i=>i.key===key).label);
    $('inquiry-curve-note').textContent=(curve.flat
-    ?tr('このモデルでは、','In this model, ')+label+tr('を変えても主要な予測値は変化しません。',' does not change the selected outcome.')
+    ?tr('このモデルでは、','In this model, ')+label+tr('を変えても主要な予測値は変化しません。',' does not change the selected model outcome.')
     :tr('横軸：','Horizontal axis: ')+label+tr('。他の条件は固定しています。','; all other parameters are held fixed.'))
-    +' '+tr('橙色の点は今の条件です。実測ではありません。','The orange point marks the current parameters. These are predictions, not measurements.');
+    +' '+tr('緑線はモデル予測、橙色点は現在の条件、青色点は学習者が入力した観測値（不確かさは縦線）です。観測値は検証済みデータではありません。','Green: model predictions; orange: current model condition; blue: learner-reported observations (vertical bars: reported uncertainty). Observations have not been verified.')
+    +(matching.length===0?tr(' 比較できる観測値はまだありません。',' No comparable observations have been entered.'):'');
   }
   function paint(){
    const v=current();draft.values=v.inputs;
@@ -250,7 +272,7 @@ export function installInquiry(renderMath){
    try{
     if(measuredRaw==='')throw new RangeError('Enter a measured value');
     draft.observations=appendObservation(draft.observations||[],entry,draft.trials);
-    remember();drawObservations();
+    remember();drawObservations();drawCurve();
     $('inquiry-observed-value').value='';$('inquiry-observed-uncertainty').value='';$('inquiry-observed-method').value='';
     $('inquiry-observation-status').textContent=tr('観測値として保存しました。モデルの計算値とは区別して記録します。','Saved as a learner-reported observation, separate from the model prediction.');
    }catch{
