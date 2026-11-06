@@ -350,3 +350,52 @@ test('the force-time visualization remains readable at iPhone viewport width',as
  const size=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
  expect(size.scroll).toBeLessThanOrEqual(size.width+2);
 });
+
+test('phenomenon-first narratives precede definitions throughout eleven mechanics chapters',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/#mechanics');
+ for(const index of [0,1,2,4,5,6,7,8,9,10,11]){
+  await page.locator('[data-mech-chapter="'+index+'"]').click();
+  const path=page.locator('#mechanics-origin-path');
+  await expect(path).toHaveCount(1);
+  await expect(path.locator('.mechanics-origin-premise')).toHaveCount(3);
+  await expect(path.locator('.mechanics-origin-steps li')).not.toHaveCount(0);
+  await expect(path.locator('.mechanics-origin-derivation')).toHaveAttribute('open','');
+  await expect(path).toContainText('成り立つ範囲');
+  await expect(path.locator('.katex').first()).toBeVisible();
+ }
+ await page.locator('[data-mech-chapter="3"]').click();
+ await expect(page.locator('#momentum-origin')).toHaveCount(1);
+ await expect(page.locator('#mechanics-origin-path')).toHaveCount(0);
+ expect(errors).toEqual([]);
+});
+test('mathematical reasoning pathways are bilingual and stay optional to explore',async({page})=>{
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="2"]').click();
+ await expect(page.locator('#mechanics-origin-path')).toContainText('力を受けながら');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('Why do squared speed');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('What does this representation now explain?');
+ await page.locator('.mechanics-origin-derivation summary').click();
+ await expect(page.locator('.mechanics-origin-derivation')).not.toHaveAttribute('open','');
+ await page.locator('[data-mech-chapter="9"]').click();
+ await expect(page.locator('#mechanics-origin-path')).toContainText('pendulum');
+});
+test('each mechanics mathematical explanation is contained within an iPhone-width viewport',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ const failed=[];
+ for(let i=0;i<12;i++){
+  await page.locator('[data-mech-chapter="'+i+'"]').click();
+  const m=await page.evaluate(()=>{
+   const width=document.documentElement.clientWidth,scroll=document.documentElement.scrollWidth;
+   const offenders=[...document.querySelectorAll('body *')].map(e=>({el:e,rect:e.getBoundingClientRect()}))
+    .filter(o=>o.rect.right>width+4&&o.rect.width>0&&o.rect.left<width)
+    .sort((a,b)=>b.rect.right-a.rect.right).slice(0,8)
+    .map(o=>({tag:o.el.tagName,cl:String(o.el.className).slice(0,90),right:Math.round(o.rect.right),width:Math.round(o.rect.width)}));
+   return {width,scroll,offenders};
+  });
+  if(m.scroll>m.width+2)failed.push({chapter:i,...m});
+ }
+ expect(failed).toEqual([]);
+});
