@@ -132,3 +132,14 @@
 .cons-bar-track>span{display:block;height:100%;background:#428b7d;width:0;transition:width .18s;border-radius:8px}
 #cons-diss-bar{background:#c08349}
 @media(max-width:600px){.cons-controls{grid-template-columns:1fr}}
+
+/* v0.9 advanced mechanics laboratories */
+.advanced-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+.advanced-controls label{display:grid;gap:6px;font-size:13px;font-weight:650}
+.advanced-controls input,#adv-seek{width:100%;accent-color:var(--teal)}
+.advanced-controls output{color:var(--teal);font-variant-numeric:tabular-nums}
+.advanced-step{border-top:1px solid var(--line);padding:14px 0 5px}
+.advanced-step strong{font-size:14px}
+#advanced-plot{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:13px}
+#adv-result{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media(max-width:600px){.advanced-controls{grid-template-columns:1fr}}
