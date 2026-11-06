@@ -5,6 +5,7 @@
  */
 import {connectionNodes,connectionEdges,connectionTypes,nodeById} from './knowledge-connections-data.js';
 import {validInvestigation} from './inquiry-core.js';
+import {validatePracticeNote} from './mechanics-practice-core.js';
 
 const ids=new Set(connectionNodes.map(n=>n.id));
 const types=new Set(Object.keys(connectionTypes));
@@ -33,15 +34,19 @@ export function validateLegacyNote(note){
 }
 export function normalizeNotebook(payload){
  if(!payload||typeof payload!=='object'||Array.isArray(payload)||
-  payload.kind!=='physics-structure-lab-knowledge-journal'||![1,2].includes(payload.version))throw new RangeError('Unsupported notebook format');
- const keys=payload.version===2?['notes','links','revisits','investigations']:['notes','links','revisits'];
+  payload.kind!=='physics-structure-lab-knowledge-journal'||![1,2,3].includes(payload.version))throw new RangeError('Unsupported notebook format');
+ const keys=payload.version===3?['notes','links','revisits','investigations','practice']:payload.version===2?['notes','links','revisits','investigations']:['notes','links','revisits'];
  for(const k of keys){
-  if(!Array.isArray(payload[k])||payload[k].length>500)throw new RangeError('Invalid notebook entries: '+k);
+  if(!Array.isArray(payload[k])||payload[k].length>(k==='practice'?2000:500))throw new RangeError('Invalid notebook entries: '+k);
  }
  if(!payload.notes.every(validateLegacyNote))throw new RangeError('Invalid observation in notebook');
  if(!payload.links.every(validateLearnerLink))throw new RangeError('Invalid learner-created relation');
  if(!payload.revisits.every(validateRevisit))throw new RangeError('Invalid reflection revision');
- if(payload.version===2&&!payload.investigations.every(validInvestigation))throw new RangeError('Invalid investigation in notebook');
+ if(payload.version>=2&&!payload.investigations.every(validInvestigation))throw new RangeError('Invalid investigation in notebook');
+ if(payload.version===3){
+  if(!payload.practice.every(validatePracticeNote))throw new RangeError('Invalid mechanics practice in notebook');
+  if(new Set(payload.practice.map(n=>n.id)).size!==payload.practice.length)throw new RangeError('Duplicate practice note IDs');
+ }
  return Object.fromEntries(keys.map(k=>[k,payload[k].map(x=>({...x}))]));
 }
 export function createNotebookExport(notes,links,revisits,date=new Date().toISOString()){
@@ -55,9 +60,14 @@ export function createUnifiedArchive(notes,links,revisits,investigations,date=ne
  normalizeNotebook(object);
  return object;
 }
+export function createComprehensiveArchive(notes,links,revisits,investigations,practice,date=new Date().toISOString()){
+ const object={kind:'physics-structure-lab-knowledge-journal',version:3,exportedAt:date,notes,links,revisits,investigations,practice};
+ normalizeNotebook(object);
+ return object;
+}
 export function mergeNotebooks(existing,incoming){
  const merged={};
- for(const key of ['notes','links','revisits','investigations']){
+ for(const key of ['notes','links','revisits','investigations','practice']){
   const initial=existing[key]||[],next=incoming[key]||[];
   const signature=item=>key==='notes'
     ? [item.concept,item.related||'',item.date||'',item.note].join('\u001f')
@@ -74,7 +84,7 @@ export function mergeNotebooks(existing,incoming){
    value.push({...item});seen.add(signatureValue);
    if(item.id)collisions.set(item.id,JSON.stringify(item));
   }
-  if(value.length>500)throw new RangeError('Notebook storage limit exceeded');
+  if(value.length>(key==='practice'?2000:500))throw new RangeError('Notebook storage limit exceeded');
   merged[key]=value;
   merged[key+'Skipped']=skipped;
   merged[key+'Conflicts']=conflicts;
