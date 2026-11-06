@@ -498,3 +498,16 @@
 .mechanics-origin-transfer{background:#f0f7f3}
 .mechanics-origin-result p,.mechanics-origin-boundary p,.mechanics-origin-transfer p{margin:3px 0}
 @media(max-width:560px){.mechanics-origin-path{padding:11px 10px}.mechanics-origin-path>h3{font-size:17px}.mechanics-origin-derivation{padding:10px}.mechanics-origin-steps{padding-left:22px}.mechanics-origin-steps h4{font-size:13px}.mechanics-origin-path p{font-size:13px}.mechanics-origin-result,.mechanics-origin-boundary,.mechanics-origin-transfer{padding:11px}}
+
+/* Ensure complex mathematical notation scrolls inside its own box, never widening the phone viewport. */
+.mechanics-layout,.mechanics-chapter-list,.mechanics-topic,.mechanics-origin-path,.mechanics-formula-reader,.mechanics-formula-content{min-width:0;max-width:100%;box-sizing:border-box}
+.mechanics-chapter-button{min-width:0;max-width:100%;box-sizing:border-box}
+.mechanics-chapter-button strong,.mechanics-chapter-button small{min-width:0;overflow-wrap:anywhere}
+.mechanics-topic .formula,.mechanics-topic .tex-display{max-width:100%;min-width:0;box-sizing:border-box;overflow-x:auto;overflow-y:hidden}
+.mechanics-topic .katex-display{max-width:100%;overflow-x:auto;overflow-y:hidden}
+.mechanics-origin-steps li{min-width:0;max-width:100%}
+.mechanics-origin-steps .katex-display>.katex{display:inline-block;max-width:none}
+.mechanics-formula-symbols,.mechanics-formula-symbols>div{min-width:0;max-width:100%;box-sizing:border-box}
+.mechanics-formula-symbols dt{min-width:0;max-width:100%;overflow-x:auto}
+@media(max-width:850px){.mechanics-layout{grid-template-columns:minmax(0,1fr)}.mechanics-chapter-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.mechanics-chapter-list{grid-template-columns:minmax(0,1fr)}}
