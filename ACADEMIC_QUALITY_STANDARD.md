@@ -53,3 +53,12 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 - Require bilingual curriculum completeness and identical mathematical expressions in both versions.
 - Review visible interaction, mobile layout, screen-reader semantics and offline behavior manually before claiming those tests passed.
 - Independent evidence and external academic feedback are required before any quality or institutional endorsement claim.
+
+## Learner-generated hypotheses and cross-domain transfer
+
+- A learner should be able to propose a concept connection without already knowing all limitations; unknown boundaries can be recorded honestly and revisited later.
+- Distinguish learner-authored conjectures from authored, scientifically reviewed textbook relations. Never present personal notes as established physics facts.
+- Curated knowledge paths show **a possible explanatory route**, not mathematical proof, prerequisite ordering, or validated knowledge transfer.
+- When mathematical structure appears in different fields, show both the shared mathematical relation and the different physical units, systems, boundary conditions, and failure modes.
+- Export/import must be user-initiated, local-only, versioned and validated; never silently overwrite prior dated observations.
+- Measure educational success through authentic independent reasoning and longitudinal evidence rather than quiz pass thresholds, streaks or time-on-app.
