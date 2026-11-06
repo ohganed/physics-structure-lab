@@ -54,7 +54,7 @@ export function mergeNotebooks(existing,incoming){
   const initial=existing[key]||[],next=incoming[key]||[];
   const signature=item=>key==='notes'
     ? [item.concept,item.related||'',item.date||'',item.note].join('\u001f')
-    : [item.id,item.date, key==='links'?item.reason:item.now].join('\u001f');
+    : JSON.stringify(item);
   const seen=new Set(initial.map(signature));
   // A colliding ID with different content is not overwritten. It is reported.
   const collisions=new Map(initial.filter(x=>x.id).map(x=>[x.id,JSON.stringify(x)]));
