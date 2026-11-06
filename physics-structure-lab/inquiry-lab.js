@@ -239,20 +239,98 @@ export function installInquiry(renderMath){
    draft.trials.push(current());remember();drawTrials();
    $('inquiry-status').textContent=tr('モデルの予測を記録しました。','Model prediction captured.');
   });
+  $('inquiry-observation-form').addEventListener('submit',event=>{
+   event.preventDefault();
+   const index=Number($('inquiry-observed-trial').value);
+   const measuredRaw=$('inquiry-observed-value').value.trim();
+   const uncertaintyRaw=$('inquiry-observed-uncertainty').value.trim();
+   const entry={id:observationId(),trialIndex:index,measured:Number(measuredRaw),
+    uncertainty:uncertaintyRaw===''?null:Number(uncertaintyRaw),
+    method:$('inquiry-observed-method').value.trim(),date:new Date().toISOString(),source:'learner-reported'};
+   try{
+    if(measuredRaw==='')throw new RangeError('Enter a measured value');
+    draft.observations=appendObservation(draft.observations||[],entry,draft.trials);
+    remember();drawObservations();
+    $('inquiry-observed-value').value='';$('inquiry-observed-uncertainty').value='';$('inquiry-observed-method').value='';
+    $('inquiry-observation-status').textContent=tr('観測値として保存しました。モデルの計算値とは区別して記録します。','Saved as a learner-reported observation, separate from the model prediction.');
+   }catch{
+    $('inquiry-observation-status').textContent=tr('試行・測定値・不確かさを確認してください。','Check trial, measured value, and uncertainty.');
+   }
+  });
+  function createRecord(){
+   return {id:recordId(),date:new Date().toISOString(),scenario:draft.scenario,
+    trials:draft.trials.map(t=>({...t,inputs:{...t.inputs}})),
+    observations:(draft.observations||[]).map(o=>({...o})),
+    ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(k=>[k,draft[k]]))};
+  }
+  function archiveSnapshot(){
+   if(records.length>=500)return false;
+   const nextRecord=createRecord();
+   if(!validInvestigation(nextRecord))return false;
+   const next=[...records,nextRecord];
+   if(!writeRecords(next))return false;
+   records=next;return true;
+  }
   $('inquiry-clear-trials').addEventListener('click',()=>{
-   // Preserve original observations and interpretation; only clear the temporary trial comparison.
-   draft.trials=[];remember();drawTrials();
-   $('inquiry-status').textContent=tr('今回の試行を新しくしました。問い・仮説・以前の記録は残っています。','Trial set cleared. Questions, hypotheses, and saved investigations are preserved.');
+   // Observations reference trial indices: archive before clearing them, never leave orphaned data.
+   const heldObservations=(draft.observations||[]).length;
+   if(heldObservations&&!archiveSnapshot()){
+    $('inquiry-status').textContent=tr('観測値を含む研究を保存できないため、試行は消していません。','Trials were kept because a snapshot containing observations could not be saved.');
+    return;
+   }
+   draft.trials=[];draft.observations=[];remember();drawTrials();drawHistory();
+   $('inquiry-status').textContent=heldObservations
+    ?tr('観測値付きの研究を日付付きで保管してから、試行を新しくしました。','A dated snapshot with observations was saved before resetting trials.')
+    :tr('試行だけを新しくしました。以前の研究記録は残っています。','Trial set restarted; saved investigations remain available.');
   });
   $('inquiry-save').addEventListener('click',()=>{
-   if(records.length>=500){$('inquiry-status').textContent=tr('保存上限に達しました。','Saved investigation limit reached.');return;}
-   const record={id:recordId(),date:new Date().toISOString(),scenario:draft.scenario,
-    trials:draft.trials.map(t=>({...t,inputs:{...t.inputs}})),
-    ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(k=>[k,draft[k]]))};
-   if(!validInvestigation(record)){ $('inquiry-status').textContent=tr('保存内容を確認できませんでした。','Record validation failed.');return; }
-   const next=[...records,record];if(!writeRecords(next)){$('inquiry-status').textContent=tr('この端末に保存できませんでした。','Could not save on this device.');return;}
-   records=next;drawHistory();$('inquiry-status').textContent=tr('日付付きの研究記録を保存しました。以前の記録は上書きしていません。','Saved a dated snapshot without overwriting older investigations.');
+   if(!archiveSnapshot()){$('inquiry-status').textContent=tr('研究記録を保存できませんでした。保存上限や端末の空き容量を確認してください。','Could not save. Check storage limits and available device space.');return;}
+   drawHistory();$('inquiry-status').textContent=tr('日付付きで保存しました。以前の記録は上書きしていません。','Saved a dated snapshot without overwriting older investigations.');
   });
+  function drawObservations(){
+   const select=$('inquiry-observed-trial'),previous=select.value;
+   select.replaceChildren();
+   draft.trials.forEach((trial,i)=>{
+    const opt=document.createElement('option');opt.value=String(i);
+    opt.textContent=tr('試行 ','Trial ')+(i+1)+' · '+c.inputs.map(x=>local(x.label)+': '+number(trial.inputs[x.key])).join(', ');
+    select.append(opt);
+   });
+   select.disabled=draft.trials.length===0;
+   $('inquiry-observation-form').querySelector('[type="submit"]').disabled=draft.trials.length===0;
+   if(draft.trials.length){
+    select.value=[...select.options].some(o=>o.value===previous)?previous:String(draft.trials.length-1);
+   }
+   const unit=draft.trials.length?draft.trials[Number(select.value)]?.primaryUnit:'';
+   $('inquiry-observed-unit').textContent=unit?'('+unit+')':'';
+   const list=$('inquiry-observation-list');list.replaceChildren();
+   const entries=draft.observations||[];
+   if(!draft.trials.length){
+    const msg=document.createElement('p');msg.className='muted';
+    msg.textContent=tr('まずモデルの試行を記録してください。観測値の入力は任意です。','Capture a model trial first. Entering observations is optional.');
+    list.append(msg);
+   }
+   entries.forEach(obs=>{
+    const trial=draft.trials[obs.trialIndex];
+    if(!trial||!validateObservation(obs,draft.trials))return;
+    const comparison=compareObservation(obs,trial),card=document.createElement('article');card.className='inquiry-observation-entry';
+    const label=document.createElement('strong');
+    label.textContent=tr('学習者が入力した観測値 · 試行 ','Learner-reported observation · Trial ')+(obs.trialIndex+1);
+    const values=document.createElement('p');
+    values.textContent=tr('モデル予測：','Model prediction: ')+number(comparison.modelValue)+' '+comparison.unit
+      +tr(' / 観測値：',' / Reported value: ')+number(comparison.observedValue)+' '+comparison.unit
+      +tr(' / 差（観測−予測）：',' / Difference (observed−predicted): ')+number(comparison.discrepancy)+' '+comparison.unit;
+    card.append(label,values);
+    const quality=document.createElement('p');quality.className='muted';
+    quality.textContent=obs.uncertainty===null
+      ?tr('不確かさは未記入。','Measurement uncertainty not provided.')
+      :tr('申告された不確かさ ±','Reported uncertainty ±')+number(obs.uncertainty)+' '+comparison.unit;
+    card.append(quality);
+    if(obs.method){
+     const method=document.createElement('p');method.textContent=tr('測定条件：','Method: ')+obs.method;card.append(method);
+    }
+    list.append(card);
+   });
+  }
   function drawTrials(){
    const list=$('inquiry-trial-list');list.replaceChildren();
    if(!draft.trials.length){const p=document.createElement('p');p.className='muted';p.textContent=tr('試行はまだありません。まず条件を選び、記録してみましょう。','No trials yet. Choose parameters and capture a model prediction.');list.append(p);}
@@ -280,6 +358,7 @@ export function installInquiry(renderMath){
      :tr('変えた変数：','Changed variable: ')+local(c.inputs.find(i=>i.key===cmp.changed[0]).label)+' / '+tr('予測値の差：','Predicted difference: ')+number(cmp.change)+' '+b.primaryUnit;
     panel.append(note);
    }
+   drawObservations();
   }
   function drawHistory(){
    const list=$('inquiry-history');list.replaceChildren();
@@ -287,7 +366,7 @@ export function installInquiry(renderMath){
    if(!matching.length){const p=document.createElement('p');p.className='muted';p.textContent=tr('このテーマの記録はまだありません。','No saved investigations for this topic yet.');list.append(p);}
    for(const row of matching){
     const entry=document.createElement('article');entry.className='inquiry-history-entry';
-    const title=document.createElement('strong');title.textContent=dateText(row.date)+' · '+row.trials.length+tr('試行',' trials');
+    const title=document.createElement('strong');title.textContent=dateText(row.date)+' · '+row.trials.length+tr('試行',' trials')+((row.observations||[]).length?' / '+row.observations.length+tr('観測',' observations'):'');
     const desc=document.createElement('p');desc.textContent=row.question||row.hypothesis||tr('自由研究の記録','Open investigation');
     entry.append(title,desc);
     if(row.interpretation){
@@ -296,8 +375,9 @@ export function installInquiry(renderMath){
     const reopen=document.createElement('button');reopen.type='button';reopen.className='secondary-btn';
     reopen.textContent=tr('この時の考えを読み返す','Revisit this earlier state');
     reopen.addEventListener('click',()=>{
-     draft={scenario:row.scenario,mode:draft.mode,values:row.trials.at(-1)?.inputs||initialInputs(c),
+     draft={scenario:row.scenario,mode:draft.mode,displayMode:draft.displayMode,values:row.trials.at(-1)?.inputs||initialInputs(c),
       trials:row.trials.map(t=>({...t,inputs:{...t.inputs}})),
+      observations:(row.observations||[]).map(o=>({...o})),
       ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(k=>[k,row[k]]))};
      remember();attach();host.scrollIntoView({block:'start'});
     });
@@ -305,6 +385,10 @@ export function installInquiry(renderMath){
    }
   }
   if(typeof renderMath==='function')renderMath(host);
+  $('inquiry-observed-trial').addEventListener('change',()=>{
+   const t=draft.trials[Number($('inquiry-observed-trial').value)];
+   $('inquiry-observed-unit').textContent=t?'('+t.primaryUnit+')':'';
+  });
   paint();applyReveal();drawTrials();drawHistory();
  }
  mode.addEventListener('change',()=>{draft.mode=mode.value;remember();attach();});
