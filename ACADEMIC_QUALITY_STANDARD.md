@@ -15,6 +15,16 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 8. Connect high-school concepts to university mechanics without treating the former as disposable.
 9. Present historical development as optional context, never a mandatory gate.
 
+## Knowledge Connections: understanding can mature over time
+- Concepts should be interconnected rather than isolated units that must be mastered on first encounter.
+- Never gate progression with a mandatory mastery threshold. Diagnostic exercises, reflection and quizzes are optional learning aids, not entry requirements.
+- Give each conceptual connection two independently authored explanations: how the ideas illuminate one another, and where the analogy or inference breaks down.
+- Reintroduce earlier concepts naturally in later units; explain what the new context reveals that was invisible at the first encounter.
+- Support learner-created links and dated observations without deleting or overwriting earlier interpretations.
+- Do not infer metacognitive skill from a quiz score or a count of visited concepts. Prefer evidence of changed explanations and voluntary use of ideas in unfamiliar contexts.
+- Curated concept links, learner observations and navigation should remain available offline, and share concept IDs across Japanese and English editions.
+- The educational objective is increasing capacity for independent scientific reasoning rather than accumulating completed chapter badges.
+
 ## Bilingual policy
 - Japanese and English are both authored learning editions. Avoid relying on machine translation at runtime.
 - Every published new chapter should have parallel Japanese and English explanations.
