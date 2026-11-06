@@ -5,7 +5,7 @@ import { mechanicsPage, installMechanics, focusMechanicsChapter } from './mechan
 import { connectionsPage, installConnections, setConnectionFocus } from './knowledge-connections.js';
 import { journeysPage, installJourneys, setJourneyStart } from './knowledge-journeys.js';
 import { transferPage, installTransferLab, setTransferCase } from './transfer-lab.js';
-import { inquiryPage, installInquiry } from './inquiry-lab.js';
+import { inquiryPage, installInquiry, focusInquiryScenario } from './inquiry-lab.js';
 import { forceLabPage, installForceLab } from './force-lab.js';
 import { conservationLabPage, installConservationLab } from './conservation-lab.js';
 import { advancedMechanicsPage, installAdvancedMechanics } from './advanced-mechanics-lab.js';
@@ -73,7 +73,7 @@ function overview() {
   return `<div class="page">
     <section class="hero"><div><div class="eyebrow">LEARN TO THINK LIKE A PHYSICIST</div><h1>現象から、物理を考える。</h1><p>定義はなぜ必要なのか。法則をどう選ぶのか。複雑な問題の背後にある思考まで、ひとつながりに学ぶ。</p>${button('phenomenon','第1章を始める →')}</div>
     <div class="hero-art" aria-hidden="true"><svg viewBox="0 0 340 235" fill="none"><circle cx="179" cy="120" r="79" stroke="#6ba898" stroke-dasharray="6 7" opacity=".75"/><circle cx="179" cy="120" r="42" stroke="#80b6a8" opacity=".8"/><path d="M40 180 Q110 -15 310 62" stroke="#c4e3d8" stroke-width="2.5"/><path d="M45 205 Q149 48 320 113" stroke="#8cc7b4" stroke-width="2"/><circle cx="175" cy="83" r="13" fill="#dbb17e"/><path d="M175 83L245 128" stroke="#c9e2d6" stroke-width="2"/><path d="M245 128L234 115M245 128L230 126" stroke="#c9e2d6" stroke-width="2"/><circle cx="179" cy="120" r="4" fill="white"/><path d="M30 217H325M30 217V12" stroke="#75aa9c" stroke-width="1" opacity=".65"/><path d="M45 217Q100 213 145 188T245 69T320 20" stroke="#e1bd8e" stroke-width="2" opacity=".8"/></svg></div></section>
-    <section class="knowledge-home-entry card"><div class="eyebrow">KNOWLEDGE CONNECTIONS</div><h2>理解は、別の分野で深まる。</h2><p>新しい知識との出会いで、以前学んだ概念が違って見えてくる。知識のつながりを自由に探し、後から気づいたことを残せます。</p>${button('connections','知識のつながりを探索する →','secondary-btn')} ${button('transfer','別の分野へ広げる →','secondary-btn')}</section>
+    <section class="knowledge-home-entry card"><div class="eyebrow">KNOWLEDGE CONNECTIONS</div><h2>理解は、別の分野で深まる。</h2><p>新しい知識との出会いで、以前学んだ概念が違って見えてくる。知識のつながりを自由に探し、後から気づいたことを残せます。</p>${button('connections','知識のつながりを探索する →','secondary-btn')} ${button('transfer','別の分野へ広げる →','secondary-btn')} ${button('inquiry','科学的な問いを自分で育てる →','secondary-btn')}</section>
     <div class="section-head"><h2>学びの入り口</h2><p>まずは「力学・運動の記述」から</p></div>
     <div class="grid">
       <article class="card"><div class="feature-icon">◉</div><span class="tag">01 / CONCEPT</span><h3>現象と定義</h3><p>位置や速度は、なぜ必要なのか。式の手前にある観察と判断から始める。</p>${button('phenomenon','定義を考える →','card-action')}</article>
@@ -88,8 +88,12 @@ function overview() {
       <div class="module-item"><span class="module-number">1</span><div class="module-copy"><strong>位置・変位・座標</strong><small>現象・定義・モデル</small></div><span class="tag ${store.completed.includes('phenomenon') ? '' : 'gray'}">${store.completed.includes('phenomenon') ? '既読' : '未学習'}</span></div>
       <div class="module-item"><span class="module-number">2</span><div class="module-copy"><strong>速度・加速度</strong><small>法則と公式の導出</small></div><span class="tag ${store.completed.includes('derivation') ? '' : 'gray'}">${store.completed.includes('derivation') ? '既読' : '未学習'}</span></div>
       <div class="module-item"><span class="module-number">3</span><div class="module-copy"><strong>等加速度運動の実験</strong><small>パラメータとグラフ</small></div><span class="tag ${store.completed.includes('lab') ? '' : 'gray'}">${store.completed.includes('lab') ? '実施済' : '未実施'}</span></div>
-      <div class="mini-progress"><span style="width:${Math.min(100,done/4*100)}%"></span></div><small class="muted">基本活動 ${Math.min(done,4)} / 4 達成（記録は端末内）</small></div>
-      <div class="card"><h3>今後の教科書構成</h3><div class="module-item"><span class="module-number">2</span><div class="module-copy"><strong>力と運動方程式</strong><small>法則の意味と適用範囲</small></div><span class="tag gray">準備中</span></div><div class="module-item"><span class="module-number">3</span><div class="module-copy"><strong>仕事・エネルギー・保存則</strong><small>多体系へ</small></div><span class="tag gray">準備中</span></div><div class="module-item"><span class="module-number">4</span><div class="module-copy"><strong>振動・回転・解析力学</strong><small>大学物理へ接続</small></div><span class="tag gray">準備中</span></div><p>力学から始め、電磁気・熱統計・波動・量子・相対論へ拡張します。未収録の教材は明示します。</p></div></div>
+      <p class="muted">既読・未読は自分用の目印です。理解の確認で進行を制限しません。後から別の知識とつなげて読み直せます。</p>${button("connections","知識のつながりから読み直す →","secondary-btn")}</div>
+      <div class="card"><h3>力学と科学的探究の全体像</h3><p>力と運動法則から、エネルギー、運動量、振動、剛体、解析力学まで12章を自由に移動できます。発展分野の詳細な証明は引き続き整備中です。</p>
+      ${button('mechanics','力学12章を見る →','secondary-btn')}
+      ${button('inquiry','自分で問いと実験を組み立てる →','secondary-btn')}
+      ${button('journeys','以前の知識につなげる →','secondary-btn')}
+      <p>理解は必ずしも1回の学習で完成しません。別の分野で学んだことから、過去の概念を新たな視点で読み直しましょう。</p></div></div>
   </div>`;
 }
 
@@ -221,6 +225,8 @@ setLanguage(getLanguage());
 document.querySelector('#language-select').value=getLanguage();
 
 document.addEventListener('click', e => {
+  const specificInquiry=e.target.closest('[data-open-inquiry]');
+  if(specificInquiry){focusInquiryScenario(specificInquiry.dataset.openInquiry);navigate('inquiry');return;}
   const newTransfer=e.target.closest('[data-open-transfer]');
   if(newTransfer){setTransferCase(newTransfer.dataset.openTransfer);navigate('transfer');return;}
   const newJourney = e.target.closest('[data-start-journey]');
