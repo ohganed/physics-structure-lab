@@ -143,3 +143,9 @@
 #advanced-plot{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:13px}
 #adv-result{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 @media(max-width:600px){.advanced-controls{grid-template-columns:1fr}}
+
+/* Japanese-English course switch, preserving existing responsive layout */
+.language-picker{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--green)}
+.language-picker select{border:1px solid #b3c8ba;background:#fff;color:var(--green);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700;max-width:120px}
+.i18n-notice{background:#fff7e8;border:1px solid #e1cba0;border-radius:12px;padding:14px 18px;margin:14px auto 0;max-width:1040px;color:#655230;font-size:13px;line-height:1.75}
+@media(max-width:760px){.language-picker span{display:none}.language-picker select{max-width:100px;font-size:12px}.topbar-right{gap:8px}.topbar .edition{display:none}}
