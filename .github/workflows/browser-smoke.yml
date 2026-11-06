@@ -1,0 +1,35 @@
+name: Physics Lab browser smoke tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium-ui:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: physics-structure-lab
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install ephemeral Playwright runner
+        run: npm install --no-save --no-package-lock @playwright/test
+      - name: Install Chromium and dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Start the app and verify HTTP
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/physics-lab-http.log 2>&1 &
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/physics-lab-http.log
+          exit 1
+      - name: Exercise physics learning flows in Chromium
+        run: npx playwright test tests/browser.spec.js --reporter=line --workers=1
