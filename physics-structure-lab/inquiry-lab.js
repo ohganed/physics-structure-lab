@@ -1,6 +1,7 @@
 import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation,inquiryCurve} from './inquiry-core.js';
 import {getLanguage} from './language.js';
 import {validateObservation,compareObservation,appendObservation} from './inquiry-evidence.js';
+import {promptsFor} from './inquiry-method-prompts.js';
 
 const DRAFT_KEY='physics-structure-lab-inquiry-draft-v1';
 const WORKSPACES_KEY='physics-structure-lab-inquiry-workspaces-v1';
@@ -72,10 +73,23 @@ export function inquiryPage(){
 }
 function contentFor(c,mode){
  const guided=mode==='guided',open=mode==='open';
+ const prompts=promptsFor(c.id);
+ const keys=mode==='light'?['system','isolate']:['system','measure','isolate','challenge'];
+ const titles={
+  system:tr('対象・座標を選ぶ','Choose a system and frame'),
+  measure:tr('何を観測する？','What would you measure?'),
+  isolate:tr('1つの変数だけを変える','Isolate one changing variable'),
+  challenge:tr('モデルを疑う','Question the model')
+ };
+ const promptSection=prompts?'<details class="inquiry-scaffold" '+(guided?'open':'')+'>'
+  +'<summary>'+tr('考えるときの手掛かり（いつでも閉じられます）','Optional reasoning prompts (can be hidden at any time)')+'</summary>'
+  +keys.map(key=>'<div class="inquiry-scaffold-step"><strong>'+titles[key]+'</strong><p>'+esc(local(prompts[key]))+'</p></div>').join('')
+  +'</details>':'';
  return '<section class="card inquiry-study">'
   +'<div class="eyebrow">INVESTIGATION · '+esc(c.id.toUpperCase())+'</div><h2>'+esc(local(c.title))+'</h2>'
   +'<h3>'+tr('① 現象を考える','① Observe the phenomenon')+'</h3><p>'+esc(local(c.phenomenon))+'</p>'
   +(guided?'<div class="callout"><strong>'+tr('考えるための問い','A question to begin with')+'</strong><p>'+esc(local(c.prompt))+'</p></div>':'')
+  +promptSection
   +'<label class="inquiry-writing">'+tr('自分が調べたい問い（空欄でも進めます）','Your question (optional)')
   +'<textarea id="inquiry-question" rows="2" maxlength="2000" placeholder="'+tr('何を変えると何が変わる？','What changes when I vary…?')+'"></textarea></label>'
   +(!open?'<p class="inquiry-hint">'+tr('最初は正しい予想でなくても構いません。','Your initial idea does not have to be correct.')+'</p>':'')
