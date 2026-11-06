@@ -230,3 +230,26 @@
 .journey-file-label input{position:absolute;width:1px;height:1px;opacity:0}
 .journey-file-label:focus-within{outline:3px solid #669c88;outline-offset:2px}
 @media(max-width:620px){.journey-controls{grid-template-columns:1fr}.journey-path{padding:9px}.journey-path-item{padding:9px}}
+
+/* Cross-domain reasoning: common mathematical structure and limits of analogy */
+.transfer-layout{display:grid;grid-template-columns:minmax(175px,245px) minmax(0,1fr);gap:18px;align-items:start}
+.transfer-case-list{display:grid;gap:8px;position:sticky;top:14px}
+.transfer-case-button{padding:12px;text-align:left;border:1px solid #d6e4d9;background:#f8faf7;border-radius:12px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer}
+.transfer-case-button.active{border-color:#70a590;background:#e2f1e6;color:#185642}
+.transfer-case-button:focus-visible{outline:3px solid #528c78;outline-offset:2px}
+.transfer-page .card h3{margin:20px 0 9px}
+.transfer-page .formula{overflow-x:auto;max-width:100%;font-size:clamp(15px,1.8vw,22px)}
+.transfer-page #transfer-explanation{padding:12px 0;border-top:1px solid var(--line);margin-top:18px}
+.transfer-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.transfer-compare>div{padding:13px;background:#f0f8f3;border:1px solid #d9e9dd;border-radius:12px}
+.transfer-compare>div+div{background:#fcf8ef;border-color:#ead8bd}
+.transfer-compare h3{margin:0 0 8px!important;font-size:15px}
+.transfer-compare p{font-size:13px;line-height:1.9}
+.transfer-experiment{margin-top:20px;padding:16px;background:#f4f9f5;border:1px solid #d4e4d8;border-radius:12px}
+.transfer-experiment>p{font-size:13px;color:var(--muted)}
+.transfer-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:14px}
+.transfer-value{padding:12px;background:#fff;border:1px solid #dde9df;border-radius:11px}
+.transfer-value strong{display:block;font-size:12px;color:#567268}
+.transfer-value span{display:block;margin-top:6px;font-size:16px;color:#1c5c4a;font-weight:800;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media(max-width:900px){.transfer-layout{grid-template-columns:1fr}.transfer-case-list{position:static;display:flex;overflow-x:auto;gap:8px;padding-bottom:8px}.transfer-case-button{flex:0 0 190px}}
+@media(max-width:590px){.transfer-compare,.transfer-values{grid-template-columns:1fr}}
