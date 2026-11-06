@@ -54,7 +54,7 @@ export function journeysPage(){
   +'<form id="journey-link-form"><div class="journey-controls"><label>'+t('概念A','Concept A')+'<select id="journey-from" required>'+options+'</select></label><label>'+t('概念B','Concept B')+'<select id="journey-to" required>'+options+'</select></label></div>'
   +'<label>'+t('どのような関係だと思う？','What kind of relation?')+'<select id="journey-type">'+types+'</select></label>'
   +'<label>'+t('つながると思った理由','Why do you think they connect?')+'<textarea id="journey-reason" rows="3" maxlength="1200" required></textarea></label>'
-  +'<label>'+t('同一視できない点・成立条件','Where does the analogy fail? / Assumptions')+'<textarea id="journey-boundary" rows="3" maxlength="1200" required></textarea></label>'
+  +'<label>'+t('同一視できない点・成立条件（まだ分からなければ空欄でOK）','Where does the analogy fail? (optional, can remain unknown)')+'<textarea id="journey-boundary" rows="3" maxlength="1200"></textarea></label>'
   +'<button class="primary-btn" type="submit">'+t('仮説として保存','Save as a hypothesis')+'</button><p id="journey-link-status" role="status"></p></form>'
   +'<h3>'+t('自分が提案したつながり','My proposed connections')+'</h3><div id="journey-links"></div></section>'
   +'<section class="card"><h2>'+t('③ 時間を経て理解が変わったことを残す','③ Notice how your understanding evolves')+'</h2>'
@@ -92,7 +92,7 @@ export function installJourneys(){
    addItem(li,'strong','',name(path.nodes[i])+' → '+name(path.nodes[i+1]));
    const hypoth=edge.source==='learner';addItem(li,'small','journey-source',hypoth?t('学習者の仮説（未検証）','Learner hypothesis (unverified)'):t('教材で用意したつながり','Curated textbook link'));
    addItem(li,'p','',hypoth?edge.reason:(en()?edge.en:edge.ja));
-   addItem(li,'p','journey-boundary',t('注意：','Limitation: ')+(hypoth?edge.boundary:(en()?edge.limitEn:edge.limitJa)));
+   addItem(li,'p','journey-boundary',t('注意：','Limitation: ')+(hypoth?(edge.boundary||t('まだ検討していない','Not investigated yet')):(en()?edge.limitEn:edge.limitJa)));
   });
  }
  function showLinks(){
@@ -103,7 +103,7 @@ export function installJourneys(){
    addItem(card,'strong','',name(link.from)+' ↔ '+name(link.to));
    addItem(card,'small','journey-source',t('学習者の仮説（未検証）','Learner hypothesis (unverified)')+' · '+formatDate(link.date));
    addItem(card,'p','',link.reason);
-   addItem(card,'p','journey-boundary',t('条件・違い：','Boundary: ')+link.boundary);
+   addItem(card,'p','journey-boundary',t('条件・違い：','Boundary: ')+(link.boundary||t('まだ検討していない','Not investigated yet')));
    const button=addItem(card,'button','secondary-btn',t('この関係を経路で調べる','Explore this connection'));
    button.type='button';button.addEventListener('click',()=>{
     $('journey-start').value=link.from;$('journey-end').value=link.to;$('journey-include').checked=true;showPath();$('journey-path').scrollIntoView({block:'start',behavior:'smooth'});
@@ -145,7 +145,7 @@ export function installJourneys(){
   event.preventDefault();
   const link={id:id(),from:$('journey-from').value,to:$('journey-to').value,type:$('journey-type').value,
    reason:$('journey-reason').value.trim(),boundary:$('journey-boundary').value.trim(),date:new Date().toISOString()};
-  if(!validateLearnerLink(link)){status('journey-link-status',t('異なる概念を選び、理由と条件の両方を入力してください。','Choose distinct concepts and provide both reasoning and limitations.'));return;}
+  if(!validateLearnerLink(link)){status('journey-link-status',t('異なる概念を選び、つながると思った理由を書いてください。','Choose distinct concepts and explain why you think they connect.'));return;}
   if(data.links.length>=500){status('journey-link-status',t('保存上限です。JSONを書き出して保管してください。','Storage limit reached. Export your journal.'));return;}
   data.links.push(link);
   if(!saveOwn()){data.links.pop();status('journey-link-status',t('保存できませんでした。','Could not save.'));return;}
