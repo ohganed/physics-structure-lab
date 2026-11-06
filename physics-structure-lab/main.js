@@ -1,5 +1,6 @@
 import { motionAt, twoStageTrain, approximatelyEqual } from './physics.js';
 import { definitionLabHtml, installDefinitionLab } from './definition-lab.js';
+import { accelerationLabHtml, installAccelerationLab } from './acceleration-lab.js';
 
 const content = document.querySelector('#app-content');
 const nav = document.querySelector('#nav');
@@ -85,6 +86,7 @@ function phenomenon() {
     <div class="grid two"><section class="card"><div class="eyebrow">OBSERVE</div><h2>車が右へ進んでいる</h2><p>何をもって「動いている」と言えるのでしょうか？ 道路上の目印に対する車の<strong>位置</strong>が、時間とともに変化しています。</p><div class="callout"><strong>観察からの問い</strong><p>位置を測るには基準点と正方向が必要です。進む距離だけでなく「どちらへ」を表すには、符号や方向が必要になります。</p></div><p>「車が速く進む」とは何が大きいことなのでしょう。5 m進むのに1秒かかった場合と10秒かかった場合を比較しましょう。</p></section>
     <section class="card"><div class="eyebrow">WHY THIS DEFINITION?</div><h2>平均速度を定義する</h2><span class="formula tex-display" data-tex="\\bar{v}=\\dfrac{\\Delta x}{\\Delta t}">v̄ = Δx / Δt</span><p>変位 Δx を、経過時間 Δt で割ります。時間の長さが違う観察を、単位時間あたりの変化として比較できるからです。</p><div class="callout warm"><strong>定義と法則を区別する</strong><p>「平均速度＝変位÷時間」は定義です。「加速度が一定なら速度が時間に比例して変化する」は、定義と<strong>等加速度という仮定</strong>から導く関係です。</p></div></section></div>
     ${definitionLabHtml()}
+    <div class="button-row">${button('acceleration','次へ：加速度の意味を探究 →','secondary-btn')}</div>
     <div class="section-head"><h2>似ている概念を区別する</h2></div>
     <div class="definition-list"><div class="definition"><strong>道のり（distance）と変位（displacement）</strong><p>道のりは進んだ経路の長さです。変位は出発点と到着点の位置の差です。出発点へ戻ると、道のりは正でも変位は0になります。</p></div>
     <div class="definition"><strong>速さ（speed）と速度（velocity）</strong><p>速さは向きを持たない量で、平均の速さは道のり÷時間です。1次元の速度は向きを正負で表し、平均速度は変位÷時間です。</p></div>
@@ -162,7 +164,7 @@ function historyPage() {
   </div>`;
 }
 
-const pages = { overview, phenomenon, derivation, lab, exam, reflection, history: historyPage };
+const pages = { overview, phenomenon, acceleration: accelerationLabHtml, derivation, lab, exam, reflection, history: historyPage };
 function navigate(page, push = true) {
   if (!pages[page]) page = 'overview';
   stopAnimation(); stopAnimation = () => {};
@@ -172,6 +174,7 @@ function navigate(page, push = true) {
   if (push && location.hash !== `#${page}`) history.replaceState(null, '', `#${page}`);
   window.scrollTo({ top: 0, behavior: 'instant' });
   if (page === 'phenomenon') stopAnimation = installDefinitionLab();
+  if (page === 'acceleration') stopAnimation = installAccelerationLab();
   if (page === 'derivation') installDepth();
   if (page === 'lab') stopAnimation = installLab();
   if (page === 'exam') installExam();
