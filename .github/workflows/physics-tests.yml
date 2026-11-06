@@ -19,7 +19,7 @@ jobs:
           node-version: '22'
       - name: Verify JavaScript syntax
         run: |
-          for f in main.js physics.js definition-lab.js acceleration-lab.js mechanics-data.js mechanics-lab.js force-model.js force-lab.js; do
+          for f in main.js physics.js definition-lab.js acceleration-lab.js mechanics-data.js mechanics-lab.js force-model.js force-lab.js conservation-model.js conservation-lab.js; do
             node --check "$f"
           done
       - name: Run physics and mechanics unit tests
