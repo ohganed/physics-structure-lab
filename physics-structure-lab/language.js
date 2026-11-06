@@ -16,6 +16,7 @@ export const navigationLabels={
  mechanics:['力学12章','12 Mechanics Chapters'],
  connections:['知識のつながり','Knowledge Connections'],
  journeys:['つながり発見ラボ','Discovery Workshop'],
+ transfer:['分野横断ラボ','Transfer Lab'],
  forcelab:['力と作用図','Forces & Free-Body Diagrams'],
  conservation:['保存則研究室','Conservation Lab'],
  advanced:['回転・振動・軌道','Rotation, Oscillation & Orbits'],
