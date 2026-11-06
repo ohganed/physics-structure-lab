@@ -3,6 +3,7 @@ import { definitionLabHtml, installDefinitionLab } from './definition-lab.js';
 import { accelerationLabHtml, installAccelerationLab } from './acceleration-lab.js';
 import { mechanicsPage, installMechanics } from './mechanics-lab.js';
 import { forceLabPage, installForceLab } from './force-lab.js';
+import { conservationLabPage, installConservationLab } from './conservation-lab.js';
 
 const content = document.querySelector('#app-content');
 const nav = document.querySelector('#nav');
@@ -166,7 +167,7 @@ function historyPage() {
   </div>`;
 }
 
-const pages = { overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, forcelab: forceLabPage, derivation, lab, exam, reflection, history: historyPage };
+const pages = { overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, forcelab: forceLabPage, conservation: conservationLabPage, derivation, lab, exam, reflection, history: historyPage };
 function navigate(page, push = true) {
   if (!pages[page]) page = 'overview';
   stopAnimation(); stopAnimation = () => {};
@@ -179,6 +180,7 @@ function navigate(page, push = true) {
   if (page === 'acceleration') stopAnimation = installAccelerationLab();
   if (page === 'mechanics') stopAnimation = installMechanics(renderPhysicsMath);
   if (page === 'forcelab') stopAnimation = installForceLab();
+  if (page === 'conservation') stopAnimation = installConservationLab();
   if (page === 'derivation') installDepth();
   if (page === 'lab') stopAnimation = installLab();
   if (page === 'exam') installExam();
