@@ -84,3 +84,15 @@ Create an internationally useful, Japanese-English physics textbook, not merely 
 - Reopening historical records must not silently overwrite the current unfinished inquiry. Show earlier and current reasoning side by side.
 - Browser Back/Forward navigation should preserve the natural exploration history across scientific topics and concept connections.
 - Keep a real-browser smoke suite alongside mathematical unit tests, including Japanese and English modes, mobile widths, local data persistence and offline reopening. Mark any untested device or platform explicitly.
+
+## Independent-study explanation quality
+- Start with an observable phenomenon in everyday language and state the question before introducing specialized terms.
+- Explain the meaning, units, direction, and reference point or frame for each physical quantity.
+- Distinguish empirical law, definition, derived result, approximation, and assumption.
+- Provide stepwise mathematical derivation and at least one worked example with interpretation and dimensional or sign checks.
+- Make the reasons behind each calculation step accessible; avoid treating final equations as self-explanatory.
+- Explicitly correct common conceptual confusions without treating a wrong initial hypothesis as failure.
+- Link reading to a relevant interactive experiment, state the model's validity conditions, and introduce a reason to reconsider the concept in another field later.
+- Author Japanese and English explanations at comparable intellectual depth; do not rely solely on direct word-for-word translation.
+- Keep detailed reading optional, accessible, and collapsible on small screens. No quiz or reading step is a gate.
+- Automated completeness checks cannot establish human comprehensibility: validate with real beginners and accessibility reviews.
