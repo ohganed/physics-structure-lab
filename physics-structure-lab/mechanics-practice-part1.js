@@ -105,7 +105,7 @@ export const practiceProblemsPart1 = [
       {
         "tex": "\\sum F_x=ma_x=0",
         "why": [
-          "加速度は0。",
+          "合力が0なので加速度は0になる。",
           "Acceleration is zero."
         ]
       },
@@ -681,7 +681,7 @@ export const practiceProblemsPart1 = [
     "chapter": "oscillation",
     "type": "numeric",
     "title": [
-      "理想ばねの周期",
+      "理想ばねの振動周期",
       "Ideal spring period"
     ],
     "situation": [
@@ -721,7 +721,7 @@ export const practiceProblemsPart1 = [
       {
         "tex": "\\omega_0=\\sqrt{k/m}=\\sqrt{50/2}=5\\ \\mathrm{rad/s}",
         "why": [
-          "角振動数。",
+          "質量とばね定数から角振動数を求める。",
           "Angular frequency."
         ]
       },
