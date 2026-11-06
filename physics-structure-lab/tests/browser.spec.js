@@ -320,3 +320,33 @@ test('unified knowledge backup includes original mechanics reflections and survi
  await page.goto(base+'/#practice');
  await expect(page.locator('#practice-history')).toContainText('force diagram');
 });
+
+test('momentum is introduced through force-time area before the named quantity in Japanese and English',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="3"]').click();
+ const lesson=page.locator('#momentum-origin');
+ await expect(lesson).toBeVisible();
+ await expect(lesson.locator('.momentum-origin-step')).toHaveCount(6);
+ await expect(lesson.locator('.momentum-origin-step').first()).toContainText('同じ強さで長く押したら');
+ await expect(page.locator('#mo-impulse')).toContainText('8 N·s');
+ await expect(page.locator('#mo-momentum-difference')).toContainText('8 N·s');
+ await page.locator('#mo-duration').fill('4');
+ await expect(page.locator('#mo-impulse')).toContainText('16 N·s');
+ await page.locator('[name="mo-profile"][value="ramp"]').check();
+ await expect(page.locator('#mo-impulse')).toContainText('8 N·s');
+ await page.locator('#mo-force').fill('-4');
+ await expect(page.locator('#mo-impulse')).toContainText('-8 N·s');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#momentum-origin')).toContainText('What if the same push lasts longer');
+ await expect(page.locator('#mo-impulse')).toContainText('8 N·s');
+ expect(errors).toEqual([]);
+});
+test('the force-time visualization remains readable at iPhone viewport width',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="3"]').click();
+ await expect(page.locator('#mo-chart')).toBeVisible();
+ const size=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+ expect(size.scroll).toBeLessThanOrEqual(size.width+2);
+});
