@@ -1,11 +1,13 @@
 import {connectionNodes,connectionTypes,nodeById} from './knowledge-connections-data.js';
 import {getLanguage} from './language.js';
 import {validInvestigation} from './inquiry-core.js';
-import {shortestConceptPath,validateLearnerLink,validateRevisit,validateLegacyNote,createUnifiedArchive,normalizeNotebook,mergeNotebooks} from './knowledge-journeys-core.js';
+import {validatePracticeNote} from './mechanics-practice-core.js';
+import {shortestConceptPath,validateLearnerLink,validateRevisit,validateLegacyNote,createComprehensiveArchive,normalizeNotebook,mergeNotebooks} from './knowledge-journeys-core.js';
 
 const STORE='physics-structure-lab-journeys-v1';
 const LEGACY='physics-structure-lab-connection-notes-v1';
 const INQUIRY='physics-structure-lab-inquiry-records-v1';
+const PRACTICE='physics-mechanics-practice-v1';
 const en=()=>getLanguage()==='en';
 const t=(ja,eng)=>en()?eng:ja;
 const name=id=>{const n=nodeById(id);return n?(en()?n.en:n.ja):id;};
@@ -22,14 +24,16 @@ function readData(){
   notes:Array.isArray(notes)?notes.filter(validateLegacyNote).slice(0,500):[],
   links:Array.isArray(obj.links)?obj.links.filter(validateLearnerLink).slice(0,500):[],
   revisits:Array.isArray(obj.revisits)?obj.revisits.filter(validateRevisit).slice(0,500):[],
-  investigations:Array.isArray(safeParse(INQUIRY,[]))?safeParse(INQUIRY,[]).filter(validInvestigation).slice(0,500):[]
+  investigations:Array.isArray(safeParse(INQUIRY,[]))?safeParse(INQUIRY,[]).filter(validInvestigation).slice(0,500):[],
+  practice:Array.isArray(safeParse(PRACTICE,[]))?safeParse(PRACTICE,[]).filter(validatePracticeNote).slice(0,2000):[]
  };
 }
-function saveData(data,saveLegacy=false,saveInvestigations=false){
- const safe=createUnifiedArchive(data.notes,data.links,data.revisits,data.investigations||[]);
+function saveData(data,saveLegacy=false,saveInvestigations=false,savePractice=false){
+ const safe=createComprehensiveArchive(data.notes,data.links,data.revisits,data.investigations||[],data.practice||[]);
  const changes=[[STORE,JSON.stringify({version:1,links:safe.links,revisits:safe.revisits})]];
  if(saveLegacy)changes.push([LEGACY,JSON.stringify(safe.notes)]);
  if(saveInvestigations)changes.push([INQUIRY,JSON.stringify(safe.investigations)]);
+ if(savePractice)changes.push([PRACTICE,JSON.stringify(safe.practice)]);
  const originals=changes.map(([key])=>[key,localStorage.getItem(key)]);
  try{
   for(const [key,value] of changes)localStorage.setItem(key,value);
@@ -70,7 +74,7 @@ export function journeysPage(){
   +'<label>'+t('今はこう考えている','What I think now')+'<textarea id="journey-now" maxlength="1800" rows="3" required></textarea></label>'
   +'<button type="submit" class="primary-btn">'+t('理解の変化を記録する','Record this change in understanding')+'</button><p id="journey-revisit-status" role="status"></p></form>'
   +'<h3>'+t('理解の熟成の記録','A timeline of changing ideas')+'</h3><div id="journey-timeline"></div></section>'
-  +'<section class="card"><h2>'+t('④ 記録を持ち出す・戻す','④ Export or import your learning journal')+'</h2><p>'+t('知識の気づきと科学的探究ラボの記録を一つのJSONにまとめます。別端末への移動に利用できます。以前のJSON形式も読み込めます。記録は上書きせず、衝突するIDを保護します。','Export one JSON archive with knowledge notes, learner links, and Scientific Inquiry Lab records. Older JSON exports remain importable. Import preserves existing entries and rejects ID conflicts.')+'</p>'
+  +'<section class="card"><h2>'+t('④ 記録を持ち出す・戻す','④ Export or import your learning journal')+'</h2><p>'+t('知識の気づき・科学的探究ラボ・力学演習の記録を一つのJSONにまとめます。別端末への移動に利用できます。以前のJSON形式も読み込めます。記録は上書きせず、衝突するIDを保護します。','Export one JSON archive with knowledge notes, learner links, Scientific Inquiry Lab records and mechanics practice. Older JSON exports remain importable. Import preserves existing entries and rejects ID conflicts.')+'</p>'
   +'<div class="button-row"><button id="journey-export" type="button" class="secondary-btn">'+t('JSONとして書き出す','Export JSON')+'</button><label class="journey-file-label">'+t('JSONを読み込む','Import JSON')+'<input type="file" id="journey-import" accept=".json,application/json"></label></div>'
   +'<p id="journey-transfer-status" role="status"></p><p class="muted">'+t('アプリから外部サーバーへ記録を送信しません。保存したJSONには自分で書いた文章が含まれます。共有時には内容に注意してください。','The app does not send your notes to a server. Exported JSON contains your own writing; check its contents before sharing it.')+'</p></section></div>';
 }
@@ -174,7 +178,8 @@ export function installJourneys(){
  $('journey-export').addEventListener('click',()=>{
   try{
    data.investigations=Array.isArray(safeParse(INQUIRY,[]))?safeParse(INQUIRY,[]).filter(validInvestigation):[];
-   const json=JSON.stringify(createUnifiedArchive(data.notes,data.links,data.revisits,data.investigations),null,2);
+   data.practice=Array.isArray(safeParse(PRACTICE,[]))?safeParse(PRACTICE,[]).filter(validatePracticeNote):[];
+   const json=JSON.stringify(createComprehensiveArchive(data.notes,data.links,data.revisits,data.investigations,data.practice),null,2);
    const blob=new Blob([json],{type:'application/json;charset=utf-8'});
    const url=URL.createObjectURL(blob),a=document.createElement('a');
    a.href=url;a.download='physics-knowledge-journal-'+new Date().toISOString().slice(0,10)+'.json';
@@ -185,14 +190,14 @@ export function installJourneys(){
  $('journey-import').addEventListener('change',async event=>{
   const file=event.target.files?.[0];if(!file)return;
   try{
-   if(file.size>1024*1024)throw new RangeError('File too large');
+   if(file.size>12*1024*1024)throw new RangeError('File too large');
    const incoming=normalizeNotebook(JSON.parse(await file.text()));
    const merged=mergeNotebooks(data,incoming);
-   const mergedData={notes:merged.notes,links:merged.links,revisits:merged.revisits,investigations:merged.investigations};
-   saveData(mergedData,true,true);data=mergedData;
+   const mergedData={notes:merged.notes,links:merged.links,revisits:merged.revisits,investigations:merged.investigations,practice:merged.practice};
+   saveData(mergedData,true,true,true);data=mergedData;
    showLinks();showTimeline();showLegacy();showPath();
-   const conflicts=merged.linksConflicts+merged.revisitsConflicts+merged.investigationsConflicts;
-   status('journey-transfer-status',t('読み込みました。探究記録 '+merged.investigations.length+' 件を含みます。既存の記録は保持しています。','Imported. Your archive now contains '+merged.investigations.length+' inquiry records; existing entries were preserved.')+' '+(conflicts?t('IDの衝突が '+conflicts+' 件あり、保護のためスキップしました。',conflicts+' conflicting ID(s) skipped for safety.'):''));
+   const conflicts=merged.linksConflicts+merged.revisitsConflicts+merged.investigationsConflicts+merged.practiceConflicts;
+   status('journey-transfer-status',t('読み込みました。探究記録 '+merged.investigations.length+' 件・力学演習 '+merged.practice.length+' 件を含みます。既存の記録は保持しています。','Imported '+merged.investigations.length+' inquiry and '+merged.practice.length+' mechanics records; existing entries were preserved.')+' '+(conflicts?t('IDの衝突が '+conflicts+' 件あり、保護のためスキップしました。',conflicts+' conflicting ID(s) skipped for safety.'):''));
   }catch(error){
    status('journey-transfer-status',t('ファイルを読み込めませんでした。対応するJSON形式・サイズ・内容を確認してください。','Import failed. Check the file format, size, and journal data.'));
   }finally{event.target.value='';}
