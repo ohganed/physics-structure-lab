@@ -61,3 +61,31 @@
 .acc-results small{display:block;color:#55756a;font-size:12px}
 .acc-results strong{display:block;font-size:clamp(15px,2vw,22px);margin-top:8px;color:var(--green);font-variant-numeric:tabular-nums}
 @media(max-width:600px){.acc-controls{grid-template-columns:1fr}.acc-results{grid-template-columns:1fr}.acc-player{gap:7px}}
+
+/* Structured mechanics curriculum and three-perspective learning */
+.mechanics-layout{display:grid;grid-template-columns:minmax(190px,240px) minmax(0,1fr);gap:18px;align-items:start}
+.mechanics-chapter-list{display:grid;gap:6px;position:sticky;top:18px;max-height:80vh;overflow:auto}
+.mechanics-chapter-button{display:flex;align-items:center;gap:10px;padding:11px;text-align:left;border:1px solid var(--line);background:white;border-radius:12px;color:var(--ink)}
+.mechanics-chapter-button.active{background:var(--light);border-color:#a8ccba;color:var(--green)}
+.mechanics-chapter-button.is-done .mechanics-index{background:#d9efe4;color:#19644f}
+.mechanics-chapter-button strong{font-size:12px;display:block;line-height:1.5}
+.mechanics-chapter-button small{display:block;color:var(--muted);font-size:10px}
+.mechanics-index{font-weight:800;font-size:13px;color:var(--teal)}
+.mechanics-topic h3{margin:25px 0 9px}
+.mechanics-topic>p{font-size:14px;color:#536e63}
+.mechanics-equation-step{border-top:1px solid var(--line);padding:14px 0 4px}
+.mechanics-equation-step strong{font-size:13px}
+.mechanics-equation-step p{font-size:13px;color:var(--muted)}
+.mechanics-equation-step .formula{font-size:clamp(17px,2vw,25px);overflow-x:auto}
+.mechanics-parameter-grid{display:grid;grid-template-columns:1fr;gap:8px;padding:14px 2px}
+.mechanics-parameter-grid label{font-weight:700;font-size:12px}
+.mechanics-parameter-grid input{width:100%;accent-color:var(--teal)}
+.mechanics-output{background:var(--light);padding:14px;border-radius:12px}
+.mechanics-output strong{color:var(--green);font-size:17px}
+.mechanics-output p{font-size:13px;color:#4b675b;margin:6px 0 0}
+.mechanics-perspectives{display:grid;gap:8px}
+.mechanics-perspectives section{border:1px solid var(--line);padding:12px;border-radius:11px;background:#f9fbf8}
+.mechanics-perspectives h3{margin:0 0 8px;font-size:14px}
+.mechanics-perspectives p{font-size:13px;line-height:1.8;margin:0}
+@media(max-width:850px){.mechanics-layout{grid-template-columns:1fr}.mechanics-chapter-list{position:static;grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}}
+@media(max-width:520px){.mechanics-chapter-list{grid-template-columns:1fr}.mechanics-topic{padding:17px}}
