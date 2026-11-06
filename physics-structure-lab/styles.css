@@ -149,3 +149,9 @@
 .language-picker select{border:1px solid #b3c8ba;background:#fff;color:var(--green);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700;max-width:120px}
 .i18n-notice{background:#fff7e8;border:1px solid #e1cba0;border-radius:12px;padding:14px 18px;margin:14px auto 0;max-width:1040px;color:#655230;font-size:13px;line-height:1.75}
 @media(max-width:760px){.language-picker span{display:none}.language-picker select{max-width:100px;font-size:12px}.topbar-right{gap:8px}.topbar .edition{display:none}}
+
+/* Optional parallel reading of Japanese and academic English */
+.parallel-language{border:1px solid #bfd8cd;background:#f6faf8;border-radius:12px;padding:12px 16px;margin:17px 0}
+.parallel-language summary{cursor:pointer;color:var(--green);font-size:13px;font-weight:750}
+.parallel-language h3{font-size:16px;margin:13px 0 6px}
+.parallel-language p{font-size:13px;line-height:1.85;margin:8px 0;color:#496b5c}
