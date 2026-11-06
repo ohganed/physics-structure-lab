@@ -1,3 +1,4 @@
+import {validateObservation} from './inquiry-evidence.js';
 /* Scientific Inquiry Lab — idealized numerical predictions, not measurements. */
 export const inquiryScenarios = [
  {id:'cart',concept:'force',title:['力と速度：押さないと止まる？','Force and motion: must an object be pushed to keep moving?'],
@@ -135,6 +136,11 @@ export function validInvestigation(record){
   if(typeof record[key]!=='string'||record[key].length>2000)return false;
  }
  if(!Array.isArray(record.trials)||record.trials.length>40)return false;
+ if(record.observations!==undefined){
+  if(!Array.isArray(record.observations)||record.observations.length>60)return false;
+  if(!record.observations.every(o=>validateObservation(o,record.trials)))return false;
+  if(new Set(record.observations.map(o=>o.id)).size!==record.observations.length)return false;
+ }
  try{
   for(const t of record.trials){
    if(!t||typeof t!=='object'||t.scenario!==record.scenario)return false;
