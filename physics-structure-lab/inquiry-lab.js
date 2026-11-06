@@ -1,5 +1,6 @@
 import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation,inquiryCurve} from './inquiry-core.js';
 import {getLanguage} from './language.js';
+import {validateObservation,compareObservation,appendObservation} from './inquiry-evidence.js';
 
 const DRAFT_KEY='physics-structure-lab-inquiry-draft-v1';
 const WORKSPACES_KEY='physics-structure-lab-inquiry-workspaces-v1';
@@ -16,7 +17,7 @@ let requestedScenario=null;
 export function focusInquiryScenario(id){if(scenarioById(id))requestedScenario=id;}
 
 function initialDraft(){
- return {scenario:'cart',mode:'guided',displayMode:'predict',values:initialInputs(inquiryScenarios[0]),trials:[],question:'',hypothesis:'',interpretation:'',nextQuestion:''};
+ return {scenario:'cart',mode:'guided',displayMode:'predict',values:initialInputs(inquiryScenarios[0]),trials:[],observations:[],question:'',hypothesis:'',interpretation:'',nextQuestion:''};
 }
 function readJSON(key,fallback){
  try{const obj=JSON.parse(localStorage.getItem(key)||'null');return obj??fallback;}catch{return fallback;}
@@ -26,11 +27,13 @@ function normalizeDraft(raw){
  const c=scenarioById(raw.scenario);
  const values={...initialInputs(c),...(raw.values&&typeof raw.values==='object'?raw.values:{})};
  try{evaluateInquiry(c.id,values);}catch{return initialDraft();}
+ const trials=Array.isArray(raw.trials)?raw.trials.filter(t=>{
+  try{if(t.scenario!==c.id)return false;const expected=evaluateInquiry(c.id,t.inputs);return Math.abs(t.primary-expected.primary)<1e-7&&Math.abs(t.secondary-expected.secondary)<1e-7;}catch{return false;}
+ }).slice(0,40):[];
+ const observations=Array.isArray(raw.observations)?raw.observations.filter(o=>validateObservation(o,trials)).slice(0,60):[];
  return {
   scenario:c.id,mode:['guided','light','open'].includes(raw.mode)?raw.mode:'guided',displayMode:raw.displayMode==='live'?'live':'predict',values,
-  trials:Array.isArray(raw.trials)?raw.trials.filter(t=>{
-   try{if(t.scenario!==c.id)return false;const expected=evaluateInquiry(c.id,t.inputs);return Math.abs(t.primary-expected.primary)<1e-7&&Math.abs(t.secondary-expected.secondary)<1e-7;}catch{return false;}
-  }).slice(0,40):[],
+  trials,observations,
   ...Object.fromEntries(['question','hypothesis','interpretation','nextQuestion'].map(key=>[key,typeof raw[key]==='string'?raw[key].slice(0,2000):'']))
  };
 }
@@ -52,6 +55,7 @@ function readRecords(){
 }
 function writeRecords(rows){try{localStorage.setItem(RECORD_KEY,JSON.stringify(rows));return true;}catch{return false;}}
 function recordId(){return 'inq-'+(typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+'-'+Math.random().toString(36).slice(2));}
+function observationId(){return recordId().replace(/^inq-/,'obs-');}
 const paramControls=c=>c.inputs.map(x=>
   '<label class="inquiry-input-label">'+esc(local(x.label))+' <output id="inquiry-output-'+x.key+'">'+x.initial+'</output>'
   +'<input type="range" data-inquiry-input="'+x.key+'" min="'+x.min+'" max="'+x.max+'" step="'+x.step+'" value="'+x.initial+'"></label>').join('');
@@ -93,6 +97,16 @@ function contentFor(c,mode){
   +'<label>'+tr('変化させる変数','Vary one parameter')+' <select id="inquiry-graph-param">'+c.inputs.map(i=>'<option value="'+i.key+'">'+esc(local(i.label))+'</option>').join('')+'</select></label>'
   +'<svg id="inquiry-curve" viewBox="0 0 620 250" role="img" aria-label="'+tr('変数を一つずつ変えて計算した予測値のグラフ','Predicted output plotted against one varying input')+'"></svg>'
   +'<p id="inquiry-curve-note" class="muted"></p></div>'
+  +'<h3>'+tr('自分で測った値も記録する（任意）','Record your own measured values (optional)')+'</h3>'
+  +'<p class="inquiry-observation-disclaimer">'+tr('下の値は学習者が入力した観測値であり、アプリが検証した実測結果ではありません。上の計算値はモデル予測です。両者を区別して比較します。','Values entered below are learner-reported observations, not independently verified measurements. Predictions above come from the model. Keep the two distinct.')+'</p>'
+  +'<form id="inquiry-observation-form" class="inquiry-observation-form">'
+  +'<label>'+tr('どの試行の条件で測定したか','Conditions (captured trial)')+'<select id="inquiry-observed-trial" required></select></label>'
+  +'<label>'+tr('測定した値','Observed value')+' <span id="inquiry-observed-unit"></span><input type="number" id="inquiry-observed-value" step="any" required></label>'
+  +'<label>'+tr('測定の不確かさ（同じ単位、省略可）','Measurement uncertainty (same unit, optional)')+'<input type="number" id="inquiry-observed-uncertainty" min="0" step="any"></label>'
+  +'<label>'+tr('測定方法・条件・注意（任意）','Method, conditions or caveats (optional)')+'<textarea id="inquiry-observed-method" maxlength="500" rows="2"></textarea></label>'
+  +'<button type="submit" class="secondary-btn">'+tr('観測値を記録する','Record the observation')+'</button>'
+  +'<p id="inquiry-observation-status" role="status"></p></form>'
+  +'<div id="inquiry-observation-list"></div>'
   +'<h3>'+tr('③ 試行を比較する','③ Compare trials')+'</h3>'
   +'<div id="inquiry-trial-list"></div><div class="inquiry-comparison" id="inquiry-comparison"></div>'
   +'<details class="inquiry-interpretation"><summary>'+tr('モデルの式と、考えを広げるためのヒントを見る（任意）','Show equations and reasoning prompts (optional)')+'</summary>'
