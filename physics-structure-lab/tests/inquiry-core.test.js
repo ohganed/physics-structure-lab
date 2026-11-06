@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation} from '../inquiry-core.js';
+import {inquiryScenarios,scenarioById,evaluateInquiry,compareInquiryTrials,validInvestigation,inquiryCurve} from '../inquiry-core.js';
 const near=(actual,expected,tol=1e-9)=>assert.ok(Math.abs(actual-expected)<tol,'Expected '+expected+', got '+actual);
 const params=id=>Object.fromEntries(scenarioById(id).inputs.map(i=>[i.key,i.initial]));
 const record={id:'inq-correct-scientific-record',scenario:'fall',date:'2026-11-06T03:00:00.000Z',
@@ -79,4 +79,19 @@ test('invalid model input cannot be stored as evidence',()=>{
  manipulated.trials[0].primary+=1;
  assert.equal(validInvestigation(manipulated),false,'Tampered result must not become model evidence');
  assert.equal(validInvestigation({...record,hypothesis:'',trials:[]}),true,'Hypotheses and trial history may be incomplete');
+});
+
+test('one-variable curves reveal invariances and nonlinear scaling',()=>{
+ const fall=inquiryCurve('fall',{mass:2,height:10},'mass');
+ assert.equal(fall.flat,true);
+ const spring=inquiryCurve('spring',{mass:2,amplitude:.5},'amplitude');
+ assert.equal(spring.flat,true);
+ const circular=inquiryCurve('circular',{speed:6,radius:3},'speed');
+ assert.equal(circular.flat,false);
+ near(circular.points.at(-1).y/circular.points[0].y,(15/1)**2);
+ const cart=inquiryCurve('cart',{force:6,mass:2},'force');
+ near(cart.points[0].y,-12/2);
+ near(cart.points.at(-1).y,12/2);
+ assert.throws(()=>inquiryCurve('cart',{force:6,mass:2},'unknown'));
+ assert.throws(()=>inquiryCurve('fall',{mass:2,height:10},'mass',1));
 });
