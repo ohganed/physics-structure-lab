@@ -75,6 +75,8 @@ test('self-reported measurements remain separate from predictions and persist th
  await page.locator('#inquiry-observation-form [type=submit]').click();
  await expect(page.locator('#inquiry-observation-list')).toContainText('学習者が入力した観測値');
  await expect(page.locator('#inquiry-observation-list')).toContainText('0.3');
+ await expect(page.locator('.inquiry-observed-marker')).toHaveCount(1);
+ await expect(page.locator('#inquiry-curve-note')).toContainText('検証済みデータではありません');
  await page.locator('#inquiry-save').click();
  await page.reload();
  await expect(page.locator('#inquiry-observation-list')).toContainText('6.2');
