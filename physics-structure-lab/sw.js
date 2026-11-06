@@ -1,7 +1,7 @@
 /* Physics Structure Lab v0.2 - offline reading and simulation.
    Review the cache version whenever static files change. */
-const CACHE_NAME = 'physics-structure-lab-offline-v0.7-20261106';
-const APP_FILES = ['./','./index.html','./main.js','./physics.js','./definition-lab.js','./acceleration-lab.js','./mechanics-lab.js','./mechanics-data.js','./force-model.js','./force-lab.js','./styles.css','./icon.svg','./manifest.webmanifest'];
+const CACHE_NAME = 'physics-structure-lab-offline-v0.8-20261106';
+const APP_FILES = ['./','./index.html','./main.js','./physics.js','./definition-lab.js','./acceleration-lab.js','./mechanics-lab.js','./mechanics-data.js','./force-model.js','./force-lab.js','./conservation-lab.js','./conservation-model.js','./styles.css','./icon.svg','./manifest.webmanifest'];
 const KATEX_ORIGIN = 'https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/';
 const KATEX_FILES = [
   KATEX_ORIGIN + 'katex.min.css',
