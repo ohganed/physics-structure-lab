@@ -38,16 +38,16 @@ export function definitionLabHtml() {
    <svg id="def-track" viewBox="0 0 680 155" role="img" aria-label="位置の変化と出発点、折り返し地点、終了地点を示す動く図">
     <line x1="40" y1="111" x2="640" y2="111" stroke="#9dbbb0" stroke-width="2"/>
     <g stroke="#a6bbb2" fill="#526a60" font-size="12" text-anchor="middle">
-      <line x1="222" y1="105" x2="222" y2="121" stroke-width="2"/>
-      <text x="222" y="138">0 m</text>
+      <line x1="240" y1="105" x2="240" y2="121" stroke-width="2"/>
+      <text x="240" y="138">0 m</text>
     </g>
-    <line id="def-outward" x1="222" y1="49" x2="440" y2="49" stroke="#2b76b8" stroke-width="6" stroke-linecap="round"/>
-    <line id="def-return" x1="440" y1="72" x2="222" y2="72" stroke="#c48646" stroke-width="6" stroke-linecap="round"/>
+    <line id="def-outward" x1="240" y1="49" x2="440" y2="49" stroke="#2b76b8" stroke-width="6" stroke-linecap="round"/>
+    <line id="def-return" x1="440" y1="72" x2="240" y2="72" stroke="#c48646" stroke-width="6" stroke-linecap="round"/>
     <g font-size="12" font-weight="700" fill="#244a44">
       <text x="20" y="17">青：前半　橙：後半</text>
       <text id="def-turn-label" x="440" y="35" text-anchor="middle">折返 12 m</text>
-      <text id="def-end-label" x="222" y="92" text-anchor="middle">終了 0 m</text>
-      <circle id="def-marker" cx="222" cy="111" r="11" fill="#194d4b" stroke="white" stroke-width="3"/>
+      <text id="def-end-label" x="240" y="92" text-anchor="middle">終了 0 m</text>
+      <circle id="def-marker" cx="240" cy="111" r="11" fill="#194d4b" stroke="white" stroke-width="3"/>
     </g>
    </svg>
    <div class="definition-player">
