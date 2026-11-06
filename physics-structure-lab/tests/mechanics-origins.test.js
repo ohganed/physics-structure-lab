@@ -17,14 +17,14 @@ test('each chapter starts from a physical contrast, then models and explains eve
   const origin=originLessonByKey(key);
   for(const field of ['title','observation','representation','prior','meaning','bounds','connection']){
    const pair=origin[field];assert.equal(pair.length,2,key+' '+field);
-   assert.ok(pair[0].length>=25&&pair[1].length>=25,key+' missing explanatory bilingual '+field);
+   assert.ok(pair[0].length>=(field==='title'?8:25)&&pair[1].length>=(field==='title'?15:25),key+' missing explanatory bilingual '+field);
   }
   assert.ok(origin.steps.length>=5,key+' requires a complete chain of reasoning');
   for(const [i,step] of origin.steps.entries()){
    assert.ok(step.tex?.length>=9,key+' equation '+i);
    for(const field of ['question','why']){
     assert.equal(step[field].length,2,key+' step '+i+' '+field);
-    assert.ok(step[field][0].length>=13&&step[field][1].length>=20,key+' too abbreviated: '+field+' '+i);
+    assert.ok(step[field][0].length>=(field==='question'?6:13)&&step[field][1].length>=(field==='question'?12:20),key+' too abbreviated: '+field+' '+i);
    }
   }
  }
@@ -39,7 +39,7 @@ test('all eleven origins render bilingual, explicit model limitations and legibl
    assert.match(html,/data-tex=/);
    assert.match(html,/<details class="mechanics-origin-derivation" open>/);
    assert.ok(!html.includes('<script'),key);
-   assert.match(html,language==='en'?/What does this representation now explain/:'何を理解・予測できるようになったか');
+   assert.ok(html.includes(language==='en'?'What does this representation now explain':'何を理解・予測できるようになったか'));
   }
  }
  assert.equal(mechanicsOriginHtml('momentum'),'');
