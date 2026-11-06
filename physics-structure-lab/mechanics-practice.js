@@ -1,4 +1,5 @@
 import {mechanicsChapters} from './mechanics-data.js';
+import {mechanicsEnglish} from './mechanics-en.js';
 import {getLanguage} from './language.js';
 import {practiceSectionIds,problemsForChapter,getPracticeProblem,compareNumericAnswer,validatePracticeNote,normalizePracticeArchive,makePracticeArchive,mergePracticeNotes} from './mechanics-practice-core.js';
 
@@ -9,7 +10,7 @@ const t=(ja,en)=>language()==='en'?en:ja;
 const b=pair=>pair?.[language()==='en'?1:0]||'';
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
 const tex=s=>'<div class="formula tex-display" data-tex="'+esc(s)+'">'+esc(s)+'</div>';
-const label=id=>id==='synthesis'?t('総合・分野横断','Cross-chapter synthesis'):(mechanicsChapters.find(c=>c.key===id)?.name||id);
+const label=id=>id==='synthesis'?t('総合・分野横断','Cross-chapter synthesis'):((language()==='en'?mechanicsEnglish:mechanicsChapters).find(c=>c.key===id)?.name||id);
 const pageDate=date=>new Date(date).toLocaleString(language()==='en'?'en-US':'ja-JP',{dateStyle:'medium',timeStyle:'short'});
 let section='force',problemId='force-net';
 export function focusPracticeChapter(id){if(practiceSectionIds.includes(id)){section=id;problemId=problemsForChapter(id)[0]?.id||problemId;}}
@@ -81,7 +82,7 @@ export function installMechanicsPractice(renderMath){
  const safeStore=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}};
  const setStatus=(id,text)=>{$(id).textContent=text;};
  function saveDraft(){
-  if(!problemId)return;
+  if(!problemId||!$('practice-response'))return;
   drafts[problemId]={
    response:$('practice-response')?.value||'',
    reflection:$('practice-reflection')?.value||'',
