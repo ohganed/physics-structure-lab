@@ -243,7 +243,7 @@ export const practiceProblemsPart2 = [
       {
         "tex": "\\tau=rF\\sin\\varphi",
         "why": [
-          "外積の大きさ。",
+          "位置ベクトルと力の外積からトルクの大きさを求める。",
           "Magnitude of the cross product."
         ]
       },
@@ -314,7 +314,7 @@ export const practiceProblemsPart2 = [
       {
         "tex": "F_{\\mathrm{app},x}=-2(2)=-4\\ \\rm N",
         "why": [
-          "左向き4 N。",
+          "右正なのでマイナスとなり、左向き4 N。",
           "4 N to the left."
         ]
       }
@@ -721,7 +721,7 @@ export const practiceProblemsPart2 = [
       {
         "tex": "\\omega_-=\\sqrt{(8+6)/2}=\\sqrt7\\approx2.646\\ \\rm rad/s",
         "why": [
-          "数値を代入。",
+          "質量と二つのばね定数の値を式に代入する。",
           "Substitute the values."
         ]
       }
