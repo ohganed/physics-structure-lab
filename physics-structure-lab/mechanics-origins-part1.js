@@ -2,8 +2,8 @@
 export const mechanicsOriginsPart1={
   "force": {
     "title": [
-      "力とは何を説明するために必要なのか",
-      "What does force help us explain?"
+      "力と速度の変化について",
+      "Forces and changes in velocity"
     ],
     "observation": [
       "押した台車は速さが変わる。しかし滑らかなレールでは、手を離しても進み続ける。「運動すること」と「運動が変わること」は、同じ現象ではない。",
@@ -89,8 +89,8 @@ export const mechanicsOriginsPart1={
   },
   "friction": {
     "title": [
-      "滑らない箱は、摩擦について何を教えてくれるか",
-      "What does a resting block reveal about friction?"
+      "斜面の箱と静止摩擦について",
+      "A block on a slope and static friction"
     ],
     "observation": [
       "少し傾いた板の箱は静止しているが、板を急にすると滑り始める。重力が大きくなったのではない。滑ろうとする方向の成分が変わる。",
@@ -176,85 +176,107 @@ export const mechanicsOriginsPart1={
   },
   "energy": {
     "title": [
-      "なぜ速度の二乗と、力が働いた距離を結び付けるのか",
-      "Why do squared speed and force through distance belong together?"
+      "仕事と運動エネルギーについて",
+      "Work and kinetic energy"
     ],
     "observation": [
-      "同じ力で物体を押す場合でも、短い距離と長い距離では最終速度が異なる。今度は「何秒押したか」でなく「何m進む間に押したか」に注目する。",
-      "Pushing with the same force over short and long distances can yield different final speeds. Focus on distance during the push, rather than duration."
+      "質量が同じ台車に、進む向きへ一定の力を加える場面を考えます。1 mだけ押した場合と、5 m押した場合。押す力は同じでも、最後の速さには違いが出ます。力が作用していた距離に注目してみましょう。",
+      "Imagine applying the same constant force along the motion of a cart. Compare pushing it through 1 m and 5 m. The force is identical, but its final speed differs. The distance over which the force acts seems relevant."
     ],
     "representation": [
-      "横軸に位置x、縦軸に進行方向の合力を取る。面積FΔxは、力が移動に沿って行った仕事という新しい見方を与える。",
-      "Plot net force along the path against position x. Signed area FΔx motivates the physical quantity work."
+      "横軸に台車の位置x、縦軸に進む向きの合力Fを取ると、一定の力では長方形が描けます。高さがF、横幅がΔxですから、面積はFΔx。時間についての面積FΔtとは異なり、今回は力と移動距離の組み合わせになります。",
+      "Plot net force F along the displacement against position x. A constant force gives a rectangle of height F and width Δx; its signed area is FΔx. Unlike the force–time area FΔt, this combines force with displacement."
     ],
     "prior": [
-      "一定の力、質量一定、一次元の等加速度運動から始める。速度v=v₀+at、変位Δx=(v+v₀)Δt/2という既知の関係だけでも導出できる。",
-      "Start with constant force and mass in one-dimensional motion. Familiar relations v=v₀+at and Δx=(v+v₀)Δt/2 suffice without calculus."
+      "この面積と速度の関係は、これまでに学んだF=maと等加速度運動の式を使って調べられます。質量と合力を一定とし、右向きを正にした直線運動を考えます。",
+      "We can examine the relation between this area and velocity using F=ma and constant-acceleration kinematics. Assume constant mass and net force, with right positive in one-dimensional motion."
     ],
     "steps": [
       {
         "question": [
-          "同じ時間を2つの運動学の式から消す",
-          "Eliminate time from two kinematics relations"
+          "速度の変化と時間",
+          "Velocity change and time"
         ],
-        "tex": "v^2-v_0^2=2a\\Delta x",
+        "tex": "v-v_0=a\\Delta t",
         "why": [
-          "v−v₀=aΔtとΔx=(v+v₀)Δt/2を掛け合わせると時間が消える。",
-          "Combine v−v₀=aΔt and Δx=(v+v₀)Δt/2 to eliminate elapsed time."
+          "加速度aが一定のとき、速度の変化はa×経過時間です。ここでは、速度を符号付きで扱っています。",
+          "For constant acceleration, velocity change equals acceleration multiplied by elapsed time. Velocities are signed."
         ]
       },
       {
         "question": [
-          "力が働いた距離を掛けてみる",
-          "Multiply net force by the displacement"
+          "台車が進んだ距離",
+          "Distance travelled by the cart"
         ],
-        "tex": "F_{\\rm net}\\Delta x=ma\\Delta x=\\frac12m(v^2-v_0^2)",
+        "tex": "\\Delta x=\\frac{v_0+v}{2}\\Delta t",
         "why": [
-          "運動方程式F=maを代入すると、力×距離が速度の二乗を含む差に変わる。",
-          "Using F=ma, force through displacement becomes a difference involving squared velocities."
+          "等加速度運動では速度–時間グラフが直線になります。その下の台形の面積が変位で、平均速度は最初と最後の速度の平均です。",
+          "For constant acceleration, velocity versus time is a straight line. The trapezoidal area gives displacement, so average velocity is the mean of the endpoint velocities."
         ]
       },
       {
         "question": [
-          "同じ形の量が2回登場したことを読む",
-          "Recognize the recurring state combination"
+          "時間を消してみる",
+          "Eliminating the time"
         ],
-        "tex": "F_{\\rm net}\\Delta x=\\frac12mv^2-\\frac12mv_0^2",
+        "tex": "2a\\Delta x=(v+v_0)(v-v_0)=v^2-v_0^2",
         "why": [
-          "初めと最後の状態にそれぞれmv²/2という同じ形が現れた。",
-          "The combination mv²/2 appears for both initial and final states."
+          "二つの式を組み合わせてΔtを消します。右辺で使ったのは、(A+B)(A−B)=A²−B²という高校数学の因数分解です。",
+          "Combine the two equations to eliminate Δt. The algebra uses the difference of squares: (A+B)(A−B)=A²−B²."
         ]
       },
       {
         "question": [
-          "便利な組み合わせに名前を付ける",
-          "Give the recurring combination a name"
+          "力と変位を組み合わせる",
+          "Combining force and displacement"
         ],
-        "tex": "K=\\frac12mv^2,\\qquad W_{\\rm net}=\\Delta K",
+        "tex": "F\\Delta x=ma\\Delta x=\\frac12m(v^2-v_0^2)",
         "why": [
-          "Kを運動エネルギーと呼べば、仕事がその変化に等しいと簡潔に書ける。",
-          "Define kinetic energy K so net work is simply the change in K."
+          "運動方程式F=maからaを力と質量で表します。左辺は、さきほどの力–位置グラフの面積FΔxです。",
+          "Use Newton's law F=ma. The left side is the force–position graph area FΔx considered above."
         ]
       },
       {
         "question": [
-          "重力の仕事と高さを結び付ける",
-          "Represent gravity’s work through height"
+          "最初と最後の状態を分けて書く",
+          "Separating the initial and final terms"
+        ],
+        "tex": "F\\Delta x=\\frac12mv^2-\\frac12mv_0^2",
+        "why": [
+          "同じ形の½mv²が、最初と最後の速度に対応して現れました。力が作用した距離に関係する左辺が、二つの時点の量の差として書けています。",
+          "The same form ½mv² appears at the initial and final states. An accumulated effect of force through displacement is expressed as the difference between two endpoint quantities."
+        ]
+      },
+      {
+        "question": [
+          "K = ½mv² について",
+          "About K = ½mv²"
+        ],
+        "tex": "K=\\frac12mv^2,\\qquad F\\Delta x=K-K_0",
+        "why": [
+          "½mv²を運動エネルギーKと呼びます。力がした仕事をW=FΔxと表せば、W=ΔKです。これで、押している間の細かな時間変化を求めなくても、最初と最後の速さを比較できます。",
+          "Call ½mv² the kinetic energy K. Writing the work done by the force as W=FΔx gives W=ΔK. We can now compare endpoint speeds without reconstructing every instant during the push."
+        ]
+      },
+      {
+        "question": [
+          "高さによる違い",
+          "Height and gravitational work"
         ],
         "tex": "W_g=mg(y_0-y)=-\\Delta U,\\qquad U=mgy",
         "why": [
-          "一様重力の仕事が初めと終わりの高さの差だけで決まるので、位置エネルギーUを導入すると便利になる。",
-          "Gravity’s work depends on endpoint height difference, motivating gravitational potential energy U."
+          "一定の重力の下では、重力がした仕事は出発点と到着点の高さで決まります。mgyを位置エネルギーUとして扱うと、位置の変化と速さの変化を一緒に整理できます。",
+          "In a uniform gravitational field, work done by gravity depends on the initial and final heights. Using U=mgy organizes changes in position and speed together."
         ]
       }
     ],
     "meaning": [
-      "力積では力×時間からmvが現れた。ここでは力×距離からmv²/2が現れる。違いは公式を暗記する前に物理量の由来を考える鍵になる。",
-      "Force through time motivated mv; force through displacement motivates mv²/2. These quantities emerge from different ways of representing a physical interaction."
+      "運動量では力が働いた時間を考え、今回は力が働いた距離を考えました。同じF=maから、時間と結び付けるとmvの変化、距離と結び付けると½mv²の変化が現れます。二つの量は似た言葉で片付けられません。",
+      "The force–time approach gave the change in mv. Here, force through displacement gives the change in ½mv². Both begin with F=ma, but the different quantities answer different questions."
     ],
     "bounds": [
-      "初めの代数は一定加速度運動。力が位置で変化すれば経路に沿った積分が必要。摩擦などの仕事があればK+Uは一般に保存しない。",
-      "The algebra first assumes constant acceleration. Variable force requires path integration. Dissipative work can change K+U."
+      "この導出では、一定質量、一定合力、一次元の等加速度運動を考えています。力の向きと変位の向きが逆なら仕事は負です。力が位置とともに変化する場合はF–x図の面積を積分し、保存力以外の仕事がある場合はK+Uをそのまま保存量としません。",
+      "The derivation uses a constant-mass body with constant net force in one dimension. Work is negative if force opposes displacement. A varying force requires area integration, and non-conservative work can change K+U."
     ],
     "connection": [
       "衝突では運動量が保存しても運動エネルギーが保存しないことがある。別の量だからこそ違いが生じる。",
@@ -263,8 +285,8 @@ export const mechanicsOriginsPart1={
   },
   "circular": {
     "title": [
-      "速さが一定なのに加速度が生じる式を図形からつくる",
-      "Derive acceleration from geometry despite constant speed"
+      "円運動と加速度について",
+      "Circular motion and acceleration"
     ],
     "observation": [
       "糸の先の物体を同じ速さで回しても、進行方向は瞬間ごとに変わる。糸が切れればその瞬間の接線方向に進む。速度という矢印の向きが変わるのに注目する。",
