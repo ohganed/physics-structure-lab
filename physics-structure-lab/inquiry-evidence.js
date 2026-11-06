@@ -13,7 +13,7 @@ export function validateObservation(obs,trials){
  return finite(trials[obs.trialIndex]?.primary);
 }
 export function compareObservation(obs,trial){
- if(!trial||!validateObservation(obs,[...Array(obs.trialIndex).fill({primary:0}),trial]))throw new RangeError('Invalid learner observation or trial');
+ if(!trial||!obs||!validateObservation({...obs,trialIndex:0},[trial]))throw new RangeError('Invalid learner observation or trial');
  const discrepancy=obs.measured-trial.primary;
  return {
   modelValue:trial.primary,observedValue:obs.measured,discrepancy,
