@@ -1,6 +1,7 @@
 import {connectionNodes,connectionEdges,connectionTypes,nodeById,relatedEdges} from './knowledge-connections-data.js';
 import {getLanguage} from './language.js';
 import {transferCases} from './transfer-cases.js';
+import {inquiryScenarios} from './inquiry-core.js';
 
 const NOTE_KEY='physics-structure-lab-connection-notes-v1';
 const FOCUS_KEY='physics-structure-lab-connection-focus-v1';
@@ -108,7 +109,7 @@ export function installConnections(renderMath){
   +'<div class="knowledge-filter-row"><label for="knowledge-filter">'+say('関係の種類','Relation type')+'</label><select id="knowledge-filter"><option value="all">'+say('すべてを見る','Show all')+'</option>'+Object.entries(connectionTypes).map(([key,val])=>'<option value="'+key+'" '+(key===filter?'selected':'')+'>'+escapeHTML(val[getLanguage()==='en'?1:0])+'</option>').join('')+'</select></div>'
   +'<div class="knowledge-relations">'+(shown.length?shown.map(e=>relativeEdgeHtml(e,focus)).join(''):'<p>'+say('この種類のつながりはありません。','No relationships in this category.')+'</p>')+'</div>'
   +'<section class="knowledge-revisit"><h3>'+say('他の概念で残した気づきを思い出す','Revisit insights from related concepts')+'</h3><div id="knowledge-related-notes"></div></section>'
-  +'<div class="knowledge-jump">'+transferCases.filter(c=>c.concept===focus).map(c=>'<button class="secondary-btn" type="button" data-open-transfer="'+escapeHTML(c.id)+'">'+say('別分野での見え方：','Transfer into another field: ')+escapeHTML(say(c.title[0],c.title[1]))+' →</button>').join(' ')+'<button type="button" class="primary-btn" data-start-journey="'+escapeHTML(focus)+'">'+say('この概念から、自分のつながりを発見 →','Explore your own links from this concept →')+'</button> <button type="button" class="secondary-btn" data-open-chapter="'+escapeHTML(n.chapter)+'">'+say('関連する力学の章を読む →','Read the connected mechanics chapter →')+'</button></div>'
+  +'<div class="knowledge-jump">'+inquiryScenarios.filter(s=>s.concept===focus).map(s=>'<button type="button" class="secondary-btn" data-open-inquiry="'+escapeHTML(s.id)+'">'+say('この概念を使って予測・実験 →','Investigate and predict with this concept →')+'</button>').join(' ')+transferCases.filter(c=>c.concept===focus).map(c=>'<button class="secondary-btn" type="button" data-open-transfer="'+escapeHTML(c.id)+'">'+say('別分野での見え方：','Transfer into another field: ')+escapeHTML(say(c.title[0],c.title[1]))+' →</button>').join(' ')+'<button type="button" class="primary-btn" data-start-journey="'+escapeHTML(focus)+'">'+say('この概念から、自分のつながりを発見 →','Explore your own links from this concept →')+'</button> <button type="button" class="secondary-btn" data-open-chapter="'+escapeHTML(n.chapter)+'">'+say('関連する力学の章を読む →','Read the connected mechanics chapter →')+'</button></div>'
   +'<section class="knowledge-journal"><h3>'+say('後から気づいたことを残す（任意）','Record a connection you noticed (optional)')+'</h3>'
   +'<p>'+say('以前の考えを消す必要はありません。時間がたってから読み返し、考え方の変化を見つけられます。採点も進行制限もありません。','Keep old thoughts instead of overwriting them. Revisit them later to notice how your understanding changes. There is no score or gate.')+'</p>'
   +'<form id="knowledge-note-form"><label for="knowledge-note-text">'+say('自由記述','Your observation')+'</label><textarea id="knowledge-note-text" rows="3" maxlength="2500" placeholder="'+say('例：円運動を学んだら、速度の「向き」が前より重要に思えた。','Example: After circular motion, the direction of velocity matters more to me.')+'"></textarea>'
