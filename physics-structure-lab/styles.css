@@ -118,3 +118,17 @@
 .force-thinking p{font-size:13px;line-height:1.8}
 @media(max-width:900px){.force-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.force-thinking{grid-template-columns:1fr}}
 @media(max-width:600px){.force-control-grid,.force-fbd-grid{grid-template-columns:1fr}}
+
+/* Conservation: explicitly compare conserved versus dissipated physical quantities */
+.conservation-page>section{margin-top:18px}
+.cons-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin:18px 0}
+.cons-controls label{display:grid;gap:8px;font-size:13px;font-weight:700}
+.cons-controls input{width:100%;accent-color:var(--teal)}
+.cons-controls output{font-variant-numeric:tabular-nums;color:var(--teal)}
+.cons-bars{display:grid;gap:13px;margin:18px 0}
+.cons-bars>div{font-size:13px;font-weight:600}
+.cons-bars strong{font-size:13px;color:var(--green)}
+.cons-bar-track{height:18px;background:#e6eee9;border-radius:8px;overflow:hidden;margin:5px 0}
+.cons-bar-track>span{display:block;height:100%;background:#428b7d;width:0;transition:width .18s;border-radius:8px}
+#cons-diss-bar{background:#c08349}
+@media(max-width:600px){.cons-controls{grid-template-columns:1fr}}
