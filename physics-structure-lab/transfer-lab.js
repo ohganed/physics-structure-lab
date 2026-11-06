@@ -61,6 +61,7 @@ function widgetHtml(kind){
 export function installTransferLab(renderMath){
  const $=id=>document.getElementById(id),host=$('transfer-detail');if(!host)return()=>{};
  function show(c){
+  pendingTransferCase=c.id;
   host.innerHTML=caseContent(c);
   document.querySelectorAll('[data-transfer-case]').forEach(button=>button.classList.toggle('active',button.dataset.transferCase===c.id));
   const button=$('transfer-reveal'),explanation=$('transfer-explanation');
