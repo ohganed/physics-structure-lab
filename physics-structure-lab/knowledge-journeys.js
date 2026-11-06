@@ -10,6 +10,7 @@ const name=id=>{const n=nodeById(id);return n?(en()?n.en:n.ja):id;};
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const opts=()=>connectionNodes.map(n=>'<option value="'+n.id+'">'+escape(name(n.id))+'</option>').join('');
 let pendingStart=null;
+let lastStart='velocity',lastEnd='circular',lastInclude=false;
 export function setJourneyStart(id){if(nodeById(id))pendingStart=id;}
 function safeParse(key,fallback){try{const parsed=JSON.parse(localStorage.getItem(key)||'null');return parsed??fallback;}catch{return fallback;}}
 function readData(){
@@ -72,9 +73,9 @@ export function journeysPage(){
 export function installJourneys(){
  const $=id=>document.getElementById(id);
  if(!$('journey-start'))return()=>{};
- let data=readData(),focus=nodeById(pendingStart)?.id||'velocity';
+ let data=readData(),focus=nodeById(pendingStart)?.id||lastStart;
  pendingStart=null;
- const first=focus;$('journey-start').value=first;$('journey-end').value=first==='circular'?'velocity':'circular';$('journey-from').value=first;$('journey-to').value=first==='circular'?'velocity':'circular';$('journey-concept').value=first;
+ const first=focus;$('journey-start').value=first;$('journey-end').value=lastEnd===first?(first==='circular'?'velocity':'circular'):lastEnd;$('journey-include').checked=lastInclude;$('journey-from').value=first;$('journey-to').value=first==='circular'?'velocity':'circular';$('journey-concept').value=first;
  const status=(id,message)=>{$(id).textContent=message;};
  const id=()=>typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():('psl-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2));
  const addItem=(parent,tag,className,content)=>{
@@ -106,7 +107,8 @@ export function installJourneys(){
    addItem(card,'p','journey-boundary',t('条件・違い：','Boundary: ')+(link.boundary||t('まだ検討していない','Not investigated yet')));
    const button=addItem(card,'button','secondary-btn',t('この関係を経路で調べる','Explore this connection'));
    button.type='button';button.addEventListener('click',()=>{
-    $('journey-start').value=link.from;$('journey-end').value=link.to;$('journey-include').checked=true;showPath();$('journey-path').scrollIntoView({block:'start',behavior:'smooth'});
+    $('journey-start').value=link.from;$('journey-end').value=link.to;$('journey-include').checked=true;
+    lastStart=link.from;lastEnd=link.to;lastInclude=true;showPath();$('journey-path').scrollIntoView({block:'start',behavior:'smooth'});
    });
   }
  }
@@ -132,7 +134,9 @@ export function installJourneys(){
  function saveOwn(){
   try{saveData(data);return true;}catch{return false;}
  }
- ['journey-start','journey-end','journey-include'].forEach(k=>$(k).addEventListener('change',showPath));
+ ['journey-start','journey-end','journey-include'].forEach(k=>$(k).addEventListener('change',()=>{
+  lastStart=$('journey-start').value;lastEnd=$('journey-end').value;lastInclude=$('journey-include').checked;showPath();
+ }));
  $('journey-concept').addEventListener('change',()=>{showLegacy();$('journey-legacy').value='';});
  $('journey-legacy').addEventListener('change',()=>{
   const selected=$('journey-legacy').value;
