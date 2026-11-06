@@ -451,3 +451,26 @@
 .mechanics-practice-preview p{font-size:14px;line-height:1.8}
 @media(max-width:900px){.practice-layout{grid-template-columns:1fr}.practice-chapters{position:static;display:flex;max-height:none;overflow-x:auto;padding:0 0 9px;gap:8px}.practice-chapter-button{flex:0 0 175px}.practice-problem-card{padding:16px}}
 @media(max-width:560px){.practice-chapter-button{flex-basis:150px;font-size:12px}.practice-problem-button{min-width:146px}.practice-problem-card{padding:12px}.practice-solution{padding:11px}.practice-solution-steps{padding-left:24px}.practice-answer-row input{max-width:125px}.practice-note-intro{padding:12px}}
+
+/* Momentum origin — conceptual mathematics before a memorized definition. */
+.momentum-origin{border:1px solid #c8e0d1;border-radius:15px;background:#fbfdfb;padding:18px;margin:18px 0 22px;min-width:0}
+.momentum-origin-purpose{font-size:16px!important;font-weight:750;color:#285e49;background:#e8f5ed;padding:12px 15px;border-radius:11px;line-height:1.8}
+.momentum-origin-step{border-top:1px solid #dce9e0;padding:10px 0}
+.momentum-origin-step:first-of-type{border-top:0}
+.momentum-origin-step h3{font-size:17px;margin:12px 0;color:#245e45;line-height:1.55}
+.momentum-origin-step p{line-height:2;font-size:15px;overflow-wrap:anywhere}
+.momentum-origin-step .formula{max-width:100%;overflow-x:auto;padding:10px 6px}
+.momentum-origin-experiment{margin:16px 0;background:#f2f9f4;border:1px solid #d0e6d7;border-radius:13px;padding:15px}
+.momentum-origin-experiment h4{margin:0 0 10px;font-size:15px}
+.momentum-origin-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 16px;margin:13px 0}
+.momentum-origin-controls>label{font-size:12px;line-height:1.6;font-weight:700;display:grid;gap:5px;min-width:0}
+.momentum-origin-controls input[type=range]{width:100%;accent-color:#2b8c69}
+.momentum-origin-controls output{font-size:13px;color:#2c7051;font-weight:750;font-variant-numeric:tabular-nums}
+.momentum-origin-controls fieldset{grid-column:1/-1;border:1px solid #c8ddd0;border-radius:10px;display:flex;gap:12px;flex-wrap:wrap;padding:10px}
+.momentum-origin-controls legend{font-size:12px;font-weight:700;padding:0 5px}
+.momentum-origin-controls fieldset label{font-size:12px;line-height:1.7}
+.momentum-origin-controls fieldset input{accent-color:#2b8c69}
+#mo-chart{display:block;width:100%;height:auto;max-height:300px;border-radius:10px;margin:12px 0}
+.momentum-origin-observations{padding:9px 13px;background:white;border:1px solid #d7e6db;border-radius:10px}
+.momentum-origin-observations p{font-size:13px;line-height:1.9;margin:7px 0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media(max-width:600px){.momentum-origin{padding:11px}.momentum-origin-step h3{font-size:15px}.momentum-origin-step p{font-size:14px}.momentum-origin-experiment{padding:10px}.momentum-origin-controls{grid-template-columns:minmax(0,1fr)}}
