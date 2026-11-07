@@ -533,3 +533,19 @@
 .incline-results>div strong{font-size:16px;color:#295f45;font-variant-numeric:tabular-nums}
 .incline-results p{grid-column:1/-1;margin:2px 0;font-size:13px;line-height:1.8}
 @media(max-width:550px){.incline-textbook>h3{font-size:17px}.incline-reading-section h4{font-size:15px}.incline-reading-section p{font-size:14px;line-height:1.95}.incline-inputs{grid-template-columns:minmax(0,1fr)}.incline-interactive{padding:12px}.incline-results>div strong{font-size:14px}}
+
+/* Long-form worked physics within the existing mechanics chapter screen. */
+.mechanics-worked-article{min-width:0;margin:24px 0;border-top:1px solid #dce7de;padding-top:18px}
+.mechanics-worked-article h3{font-size:19px;line-height:1.5;color:#2d6249;margin:8px 0 12px}
+.mechanics-worked-article>p{font-size:15px;line-height:1.95;margin:8px 0 17px;overflow-wrap:anywhere}
+.mechanics-worked-conditions{padding:13px;background:#f2f8f4;border-left:3px solid #98c9ac;border-radius:0 9px 9px 0}
+.mechanics-worked-solution{border:1px solid #d6e5db;border-radius:12px;padding:14px 16px;background:#fcfefd;min-width:0}
+.mechanics-worked-solution h4{font-size:15px;margin:3px 0 12px;color:#326a51}
+.mechanics-worked-list{padding:0 0 0 27px;margin:0}
+.mechanics-worked-list>li{padding:11px 0;border-bottom:1px solid #e0eee4}
+.mechanics-worked-list>li:last-child{border-bottom:0}
+.mechanics-worked-list .formula{max-width:100%;overflow-x:auto;overflow-y:hidden;box-sizing:border-box}
+.mechanics-worked-list li p{font-size:14px;color:#4c6257;line-height:1.9;margin:8px 0}
+.mechanics-worked-reading{border:1px solid #cee3d4;background:#f1f8f2;border-radius:11px;padding:13px}
+.mechanics-worked-limits{padding:11px;border:1px solid #e9e0bf;background:#fcf9f0;border-radius:11px}
+@media(max-width:550px){.mechanics-worked-article h3{font-size:17px}.mechanics-worked-article>p{font-size:14px}.mechanics-worked-solution{padding:10px}.mechanics-worked-list{padding-left:22px}.mechanics-worked-list li p{font-size:13px}}
