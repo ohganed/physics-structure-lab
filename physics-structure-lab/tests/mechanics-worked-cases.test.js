@@ -39,7 +39,7 @@ test('the worked studies include different phenomena and not eleven copies of on
  assert.match(a.rotation.story[0],/円盤/);
  assert.match(a.lagrange.story[0],/糸/);
  assert.match(a.hamilton.story[0],/右へ動いている/);
- assert.match(a.coupled.story[0],/行き来/);
+ assert.match(a.coupled.story[0],/移ったり戻ったり/);
  assert.ok(new Set(keys.flatMap(k=>a[k].steps.map(s=>s.math))).size>=48);
 });
 test('representative numerical examples agree with independent physical calculations',()=>{
