@@ -27,6 +27,7 @@ export function inclineTextbookHtml(language='ja'){
  +'</div>'
  +'<svg id="incline-diagram" role="img" viewBox="0 0 560 310" aria-label="'+(en?'Inclined block and forces':'斜面の箱と力の方向')+'"></svg>'
  +'<div id="incline-results" class="incline-results" aria-live="polite"></div>'
+ +'<p class="muted">'+(en?'Force arrows are drawn in proportion to each other. Gravity and contact forces are shown from one point to make their vector directions easy to compare.':'力の矢印の長さは互いの大きさに比例して描きます。方向を比較しやすいよう、同じ点から示しています。')+'</p>'
  +'<p class="muted">'+(en?'The model assumes a block starting from rest, a rigid plane, and μk ≤ μs. Contact behavior can be more complicated in real experiments.':'静止から考え始める箱、変形しない板、μk ≤ μsを仮定したモデルです。実際の接触面の挙動は、さらに複雑になる場合があります。')+'</p>'
  +'</section></article>';
 }
@@ -48,6 +49,7 @@ export function installInclineTextbook(root,language='ja'){
   const tipX=80+270*co,tipY=248-270*si;
   const cx=80+142*co-18*si,cy=248-142*si-18*co;
   const c=v.canRemainAtRest?'#2d7d5c':'#ad6543';
+  const arrowScale=88/v.weight;
   function arrow(dx,dy,color,label){
    return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+dx)+'" y2="'+(cy+dy)+'" stroke="'+color+'" stroke-width="3" marker-end="url(#inclineArrow)"/>'
     +'<text x="'+(cx+dx+6)+'" y="'+(cy+dy-6)+'" font-size="15" fill="'+color+'">'+label+'</text>';
@@ -56,9 +58,9 @@ export function installInclineTextbook(root,language='ja'){
    +'<path d="M80 248 L'+tipX+' '+tipY+' L'+tipX+' 248 Z" fill="#ecf3ed" stroke="#a3bbad" stroke-width="2"/>'
    +'<path d="M80 248 L'+tipX+' '+tipY+'" fill="none" stroke="#477960" stroke-width="4"/>'
    +'<g transform="translate('+cx+' '+cy+') rotate('+(-thetaDegrees)+')"><rect x="-24" y="-31" width="48" height="31" rx="5" fill="#e6b783" stroke="#8b674d" stroke-width="2"/></g>'
-   +arrow(0,83,'#ac5e51','mg')
-   +arrow(-65*si,-65*co,'#2b806c','N')
-   +arrow(58*co,-58*si,'#426da5',en?'friction':'摩擦')
+   +arrow(0,v.weight*arrowScale,'#ac5e51','mg')
+   +arrow(-v.normal*arrowScale*si,-v.normal*arrowScale*co,'#2b806c','N')
+   +(v.friction>0.05?arrow(v.friction*arrowScale*co,-v.friction*arrowScale*si,'#426da5',en?'friction':'摩擦'):'')
    +'<text x="88" y="272" font-size="15" fill="#345b49">θ='+val(thetaDegrees)+'°</text>'
    +'<text x="306" y="285" font-size="16" font-weight="700" fill="'+c+'">'+(en?(v.canRemainAtRest?'Can remain at rest':'Slides downslope'):(v.canRemainAtRest?'静止できる':'斜面下向きに滑る'))+'</text>';
   root.querySelector('#incline-results').innerHTML=
