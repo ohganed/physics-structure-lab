@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.6
+# Physics Structure Lab — v3.6.1
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -80,3 +80,7 @@ The existing mechanics chapter-selection screen is unchanged. Inside **02 Contac
 ## v3.6: Substantive chapters 01–12, unchanged entrance
 
 The chapter-selecting screen is unchanged on desktop and iPhone. Inside the chapter body there is now actual expanded textbook material: the detailed eight-section treatment and physical-model diagram for Chapter 02, plus eleven original in-depth numerical or conceptual worked studies elsewhere. Topics include apparent weight in an elevator; force–distance and car braking; momentum and energy in a sticking collision; banking of circular roads; small-angle versus large-angle pendulums; circular orbital and escape speeds; rolling disk versus hoop; apparent forces in an accelerating train; Atwood's machine through a Lagrangian coordinate; a harmonic oscillator phase-space ellipse; and beating of two coupled normal modes. Each starts from a physical scene, lists model assumptions, shows every major intermediate mathematical step with explanatory bilingual prose, interprets the answer and states limitations. No test gates or progress forcing are attached. The study material is cached for offline navigation and covered by unit and Chromium browser tests.
+
+### iPhone chapter selection
+
+The chapter overview and its twelve original selection buttons have **not been redesigned**. On a narrow screen, tapping a chapter now scrolls to its lesson below the long list, so the new body is visible immediately rather than appearing hidden beneath all chapters. Initial navigation still shows the chapter overview as before.
