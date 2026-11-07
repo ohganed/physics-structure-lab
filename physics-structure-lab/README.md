@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.4
+# Physics Structure Lab — v3.5
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -72,3 +72,7 @@ Examples: work–energy comes from force accumulated through **displacement**, c
 The force–time impulse relationship `FΔt=mv−mv₀` is our model for explanatory **style**, not a requirement that every physics topic has the same discovery order. An ordinary phenomenon is described, useful quantities are measured or drawn, and familiar mathematical relations are combined step by step. The resulting expression is interpreted before its customary name or use is discussed. Headings are quiet topics such as “Work and kinetic energy” rather than pedagogical proclamations or scripted eureka moments.
 
 In the work–energy chapter, the algebra now explicitly uses velocity–time trapezoid area for displacement and the identity `(v+v₀)(v−v₀)=v²−v₀²` before obtaining `FΔx=½mv²−½mv₀²`. Terms are introduced as needed in a flowing explanation. Phenomenon, representation and existing-law prose are kept readable without stage-number headings. The derivation and all model assumptions remain available in Japanese and English, and learner progress is not gated.
+
+## v3.5: Chapter 02 reading material
+
+The existing mechanics chapter-selection screen is unchanged. Inside **02 Contact, Friction and Inclines**, the textbook body now contains eight original bilingual explanatory sections: how normal contact forces arise, coordinate decomposition of gravity, why static friction must adjust to equilibrium, its empirical maximum, kinetic friction after sliding begins, numerical comparisons at 20° and 30°, frictional energy transfer, and how to estimate μs from a real tipping-board experiment. Each includes explanatory algebra, assumptions and common model limitations. A responsive force-vector incline diagram lets learners change angle, mass and friction coefficients, displaying the calculated net force, available maximum friction, predicted static/sliding regime and downhill acceleration. These are **model calculations**, not reported experimental measurements. UI and equation modules are included in the offline PWA cache.
