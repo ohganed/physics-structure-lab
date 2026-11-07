@@ -443,3 +443,30 @@ test('the detailed incline chapter is readable at iPhone width without horizonta
  const x=await page.evaluate(()=>({viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
  expect(x.scroll).toBeLessThanOrEqual(x.viewport+2);
 });
+
+test('all twelve mechanics selections now open written textbook material inside the existing entrance',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/#mechanics');
+ for(let i=0;i<12;i++){
+  await page.locator('[data-mech-chapter="'+i+'"]').click();
+  if(i===1){
+   await expect(page.locator('#incline-textbook .incline-reading-section')).toHaveCount(8);
+   await expect(page.locator('#incline-diagram')).toBeVisible();
+  }else{
+   await expect(page.locator('#mechanics-worked-article')).toBeVisible();
+   const count=await page.locator('#mechanics-worked-article .mechanics-worked-list li').count();
+   expect(count).toBeGreaterThanOrEqual(4);
+  }
+  await expect(page.locator('.mechanics-topic h2')).toBeVisible();
+ }
+ expect(errors).toEqual([]);
+});
+test('substantive worked studies remain available in the existing English reading mode',async({page})=>{
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="10"]').click();
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#mechanics-worked-article')).toContainText('A spring state in position and momentum');
+ await expect(page.locator('#mechanics-worked-article .mechanics-worked-list li')).toHaveCount(5);
+ await page.locator('[data-mech-chapter="1"]').click();
+ await expect(page.locator('#incline-textbook')).toContainText('The limit of static friction');
+});
