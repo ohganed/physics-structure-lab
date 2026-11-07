@@ -205,7 +205,7 @@ export const mechanicsOriginsPart1={
       },
       {
         "question": [
-          "台車の変位",
+          "台車が移動したときの変位",
           "Displacement of the cart"
         ],
         "tex": "\\Delta x=\\frac{v_0+v}{2}\\Delta t",
