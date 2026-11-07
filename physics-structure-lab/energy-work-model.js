@@ -8,7 +8,7 @@ export function brakingModel({mass,initialSpeed,brakingForce}) {
   }
   const initialEnergy=mass*initialSpeed*initialSpeed/2;
   const distance=initialEnergy/brakingForce;
-  const acceleration=-brakingForce/mass;
+  const acceleration=initialSpeed===0?0:-brakingForce/mass;
   const time=mass*initialSpeed/brakingForce;
   const work=-brakingForce*distance;
   const impulse=-brakingForce*time;
