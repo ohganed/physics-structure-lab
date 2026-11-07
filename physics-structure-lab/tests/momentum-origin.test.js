@@ -55,6 +55,15 @@ test('bilingual lesson starts with phenomenon, not an unexplained definition',()
   assert.match(html,/id="mo-force"/);assert.match(html,/value="ramp"/);
   assert.match(html,/data-tex="F=ma/);assert.match(html,/data-tex="p=mv/);
  }
- assert.ok(ja.indexOf('同じ強さで長く押したら')<ja.indexOf('同じ mv が2回現れる'));
- assert.ok(en.indexOf('What if the same push lasts longer')<en.indexOf('combination mv appears twice'));
+ assert.ok(ja.indexOf('台車を押す時間')<ja.indexOf('運動量 p=mv について'));
+ assert.ok(en.indexOf('Duration of a push')<en.indexOf('About momentum p=mv'));
+});
+
+test('the momentum narrative uses no congratulatory announcements or historical fiction',()=>{
+ const ja=momentumOriginHtml('ja'),en=momentumOriginHtml('en');
+ assert.ok(!ja.includes('ここで初めて'));
+ assert.ok(!ja.includes('公式を先に覚えず'));
+ assert.ok(!ja.includes('暗記してから'));
+ assert.ok(!ja.includes('発見順序'));
+ assert.ok(!en.includes('memorizing a definition'));
 });
