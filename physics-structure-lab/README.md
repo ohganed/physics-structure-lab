@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.3.1
+# Physics Structure Lab — v3.4
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -66,3 +66,9 @@ The model is in Japanese and English, includes signed forces and velocities, use
 The chapter introduction now presents **a motivating physical contrast before formal definitions**. Eleven original, bilingual pathways have been added alongside the previously revised momentum chapter. Each explains the phenomenon, what to measure or draw, which earlier physical law or new empirical assumption is needed, the mathematical steps with commentary, what the resulting expression means, its validity conditions and later conceptual connections. Full derivations are displayed by default and can be collapsed on small screens.
 
 Examples: work–energy comes from force accumulated through **displacement**, complementing momentum as force accumulated through **time**; centripetal acceleration comes from **velocity-vector geometry** before forces are considered; torque emerges from **work per angular displacement**; inertial forces emerge from the **coordinate transformation** x′=x−X; coupled normal modes emerge from **sum and difference coordinates**. Lagrange and Hamilton acknowledge the additional mathematics of variations, integration by parts and Legendre transforms rather than treating these as obvious high-school algebra. The history of physics is not asserted to follow this teaching order. Independent novice learning and real-iPhone testing remain separate validation tasks.
+
+## v3.4: Direct, restrained explanatory prose
+
+The force–time impulse relationship `FΔt=mv−mv₀` is our model for explanatory **style**, not a requirement that every physics topic has the same discovery order. An ordinary phenomenon is described, useful quantities are measured or drawn, and familiar mathematical relations are combined step by step. The resulting expression is interpreted before its customary name or use is discussed. Headings are quiet topics such as “Work and kinetic energy” rather than pedagogical proclamations or scripted eureka moments.
+
+In the work–energy chapter, the algebra now explicitly uses velocity–time trapezoid area for displacement and the identity `(v+v₀)(v−v₀)=v²−v₀²` before obtaining `FΔx=½mv²−½mv₀²`. Terms are introduced as needed in a flowing explanation. Phenomenon, representation and existing-law prose are kept readable without stage-number headings. The derivation and all model assumptions remain available in Japanese and English, and learner progress is not gated.
