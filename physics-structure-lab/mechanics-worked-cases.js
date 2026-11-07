@@ -158,7 +158,7 @@ export const mechanicsWorkedCases={
   },
   "circular": {
     "title": [
-      "傾いたカーブの角度",
+      "傾いたカーブを走るときの角度",
       "The angle of a banked curve"
     ],
     "story": [
@@ -328,7 +328,7 @@ export const mechanicsWorkedCases={
   },
   "rotation": {
     "title": [
-      "坂を転がる円盤と輪",
+      "同じ坂を転がる円盤と輪",
       "A disk and a hoop rolling downhill"
     ],
     "story": [
