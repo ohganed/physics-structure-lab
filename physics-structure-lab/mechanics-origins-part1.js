@@ -83,8 +83,8 @@ export const mechanicsOriginsPart1={
       "Distinguish the definition of acceleration from an empirical dynamical law. Here mass is constant and the frame is inertial."
     ],
     "connection": [
-      "等速円運動を学ぶと、速さが変わらないのに加速度がある場合を発見できる。",
-      "Circular motion later reveals acceleration without any change in speed."
+      "円運動では、速さが変わらなくても速度の向きが変わります。その場合、加速度はどの方向にあるのでしょうか。",
+      "In circular motion, velocity direction changes while speed can stay fixed. The acceleration then has a definite inward direction."
     ]
   },
   "friction": {
@@ -205,13 +205,13 @@ export const mechanicsOriginsPart1={
       },
       {
         "question": [
-          "台車が進んだ距離",
-          "Distance travelled by the cart"
+          "台車の変位",
+          "Displacement of the cart"
         ],
         "tex": "\\Delta x=\\frac{v_0+v}{2}\\Delta t",
         "why": [
-          "等加速度運動では速度–時間グラフが直線になります。その下の台形の面積が変位で、平均速度は最初と最後の速度の平均です。",
-          "For constant acceleration, velocity versus time is a straight line. The trapezoidal area gives displacement, so average velocity is the mean of the endpoint velocities."
+          "等加速度運動では速度–時間グラフが直線になります。その下の台形の符号付き面積が変位です。平均速度は最初と最後の速度の平均になります。",
+          "For constant acceleration, velocity versus time is a straight line. Its signed trapezoidal area is displacement, and average velocity is the mean of the endpoint velocities."
         ]
       },
       {
