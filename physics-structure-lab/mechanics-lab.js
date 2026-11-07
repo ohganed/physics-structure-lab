@@ -124,7 +124,7 @@ export function installMechanics(remarkMath){
  const english=getLanguage()==='en';
  const chapters=english?mechanicsEnglish:mechanicsChapters;
  let completed=[];try{completed=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(completed))completed=[];}catch{}
- function show(index){
+ function show(index,fromChapterTap=false){
   selectedChapterIndex=index;
   const c=chapters[index];box.innerHTML=chapterHtml(c,index);
   document.querySelectorAll('[data-mech-chapter]').forEach((b,i)=>{b.classList.toggle('active',i===index);b.classList.toggle('is-done',completed.includes(i));});
@@ -143,6 +143,7 @@ export function installMechanics(remarkMath){
    out.append(strong,note);
   }
   x.addEventListener('input',update);y.addEventListener('input',update);update();
+  if(fromChapterTap&&window.matchMedia('(max-width: 850px)').matches)box.scrollIntoView({block:'start',behavior:'auto'});
   document.getElementById('mech-reveal').addEventListener('click',()=>document.getElementById('mech-answer').classList.toggle('hide'));
   document.getElementById('mech-complete').addEventListener('click',()=>{
    if(!completed.includes(index)){completed.push(index);try{localStorage.setItem(key,JSON.stringify(completed));}catch{}}
@@ -151,7 +152,7 @@ export function installMechanics(remarkMath){
   });
  }
  const buttons=[...document.querySelectorAll('[data-mech-chapter]')];
- buttons.forEach(button=>button.addEventListener('click',()=>{show(Number(button.dataset.mechChapter));}));
+ buttons.forEach(button=>button.addEventListener('click',()=>{show(Number(button.dataset.mechChapter),true);}));
  show(selectedChapterIndex);
  return ()=>{};
 }
