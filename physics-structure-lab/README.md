@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.6.2
+# Physics Structure Lab — v3.7.0
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -84,3 +84,12 @@ The chapter-selecting screen is unchanged on desktop and iPhone. Inside the chap
 ### iPhone chapter selection
 
 The chapter overview and its twelve original selection buttons have **not been redesigned**. On a narrow screen, tapping a chapter now scrolls to its lesson below the long list, so the new body is visible immediately rather than appearing hidden beneath all chapters. Initial navigation still shows the chapter overview as before.
+
+
+## v3.7: Newton's laws — single bodies and combined systems
+
+Chapter 01 now contains nine substantial, originally authored Japanese-English reading sections about: selecting the system and drawing force diagrams; inertial frames and Newton's first law; mass and the empirical second law; third-law contact pairs versus balanced forces; separate equations for two touching carts; elimination of internal forces; contact forces and the pushed mass; reversing which cart receives the external push; motion over time; measurements and limitations.
+
+A new two-cart contact-force investigation offers three sliders (mass A, mass B, externally applied force) and a switch between pushing A to the right and pushing B to the left. It displays separate contact-force arrows, signed acceleration, net forces on each cart, and the system-level force balance. The example mA=2 kg, mB=3 kg, F=10 N produces acceleration magnitude 2 m/s², but contact force 6 N when pushing A versus 4 N when pushing B. The model assumes horizontally contacting rigid bodies, no friction and maintained contact. Results are calculated model predictions, not verified measurements.
+
+The prior chapter-chooser interface, other mechanics chapters, practice records, and language switch remain unchanged. New modules are precached for offline study and an automated numerical/bilingual test file has been added. Live-device validation and independent novice-learning review remain necessary.
