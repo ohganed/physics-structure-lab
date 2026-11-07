@@ -116,8 +116,8 @@ export const mechanicsOriginsPart3={
       "Assumes an ideal undamped pendulum with fixed pivot and inextensible massless string, plus suitable variational boundary conditions. Variations and integration by parts require mathematical scaffolding beyond ordinary algebra."
     ],
     "connection": [
-      "ニュートンの力の式と同じ運動を、エネルギーと拘束に注目する別の表現で再発見できる。さらにハミルトン力学では変数を変えてもう一度組み直す。",
-      "The same motion reappears from energy and constraints. Hamiltonian mechanics reorganizes the description once again."
+      "振り子の運動は、ニュートンの力の式でも、拘束とエネルギーから構成したラグランジアンでも記述できます。ハミルトン力学では同じ運動を位置と正準運動量で表します。",
+      "The pendulum can be described using Newtonian forces or a Lagrangian built from constraints and energy. Hamiltonian mechanics expresses that motion through position and canonical momentum."
     ]
   },
   "hamilton": {
@@ -228,8 +228,8 @@ export const mechanicsOriginsPart3={
       }
     ],
     "meaning": [
-      "ハミルトン力学は、別の公式の暗記ではない。位置だけでは足りないという問題から状態を考え、速度と共役なpを用いて運動を表す方法だと理解できる。",
-      "Hamiltonian mechanics is not a separate formula to memorize. It reorganizes a complete state of position and conjugate momentum into equations of evolution."
+      "同じ位置にいても、右へ動く物体と左へ動く物体は次に異なる位置へ進みます。位置qと運動量pの組を使うと、その状態と時間変化を二本の一階方程式で表せます。",
+      "Two bodies at the same position but moving in opposite directions evolve differently. Position q and canonical momentum p together provide a state governed by two first-order equations."
     ],
     "bounds": [
       "ここでは正則なルジャンドル変換が可能な線形ばねを使う。正準運動量の単位・意味は座標や相互作用によって変わり得る。正準方程式の一般的導出は変分法と数学的な正準構造に基づく。",
