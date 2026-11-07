@@ -549,3 +549,6 @@
 .mechanics-worked-reading{border:1px solid #cee3d4;background:#f1f8f2;border-radius:11px;padding:13px}
 .mechanics-worked-limits{padding:11px;border:1px solid #e9e0bf;background:#fcf9f0;border-radius:11px}
 @media(max-width:550px){.mechanics-worked-article h3{font-size:17px}.mechanics-worked-article>p{font-size:14px}.mechanics-worked-solution{padding:10px}.mechanics-worked-list{padding-left:22px}.mechanics-worked-list li p{font-size:13px}}
+
+/* Preserve the chapter list while revealing the selected chapter after a mobile tap. */
+#mechanics-detail{scroll-margin-top:86px}
