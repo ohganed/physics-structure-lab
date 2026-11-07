@@ -28,7 +28,7 @@ test('double force halves distance and time, with same initial kinetic energy',(
 });
 test('zero starting speed and invalid inputs',()=>{
  const x=brakingModel({mass:1000,initialSpeed:0,brakingForce:4000});
- close(x.distance,0);close(x.time,0);close(x.work,0);
+ close(x.distance,0);close(x.time,0);close(x.work,0);close(x.acceleration,0);
  for(const bad of [
   {mass:0,initialSpeed:20,brakingForce:4000},
   {mass:1000,initialSpeed:-1,brakingForce:4000},
