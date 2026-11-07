@@ -39,7 +39,7 @@ test('all eleven origins render bilingual, explicit model limitations and legibl
    assert.match(html,/data-tex=/);
    assert.match(html,/<details class="mechanics-origin-derivation" open>/);
    assert.ok(!html.includes('<script'),key);
-   assert.ok(html.includes(language==='en'?'What does this representation now explain':'何を理解・予測できるようになったか'));
+   assert.ok(html.includes(language==='en'?'What the relation tells us':'式が表していること'));
   }
  }
  assert.equal(mechanicsOriginHtml('momentum'),'');
@@ -49,7 +49,7 @@ test('experimental laws are distinguished from definitions and their derivation 
  assert.match(mechanicsOrigins.force.prior[0],/定義からは決まらない/);
  assert.match(mechanicsOrigins.friction.steps[3].why[0],/近似/);
  assert.match(mechanicsOrigins.gravitation.prior[0],/物理法則/);
- assert.match(mechanicsOrigins.energy.steps[2].tex,/mv/);
+ assert.match(mechanicsOrigins.energy.steps[4].tex,/mv/);
  assert.match(mechanicsOrigins.rotation.steps[3].tex,/tau/);
  assert.match(mechanicsOrigins.noninertial.steps[4].tex,/app/);
  assert.match(mechanicsOrigins.oscillation.steps[4].tex,/omega/);
@@ -65,4 +65,19 @@ test('analytical mechanics retains intermediate variation and canonical-derivati
  assert.ok(hamilton.steps.length>=8);
  assert.ok(hamilton.steps.some(s=>s.tex.includes('dH=')));
  assert.ok(hamilton.steps.some(s=>s.tex.includes('\\frac{\\partial H}')));
+});
+
+test('chapter headings are quiet topics, while mathematical reasons stay in the paragraphs',()=>{
+ for(const key of keys){
+  const lesson=mechanicsOrigins[key];
+  assert.ok(!/[!?！？]/.test(lesson.title[0]),key+' Japanese title is too rhetorical');
+  assert.ok(!/[!?！？]/.test(lesson.title[1]),key+' English title is too rhetorical');
+  const html=mechanicsOriginHtml(key,'ja');
+  assert.ok(!html.includes('ここで初めて'),key+' pushes a scripted discovery');
+  assert.ok(!html.includes('暗記ではありません'),key+' makes an unnecessary declaration');
+  assert.ok(!html.includes('物理学史における発見順序'),key+' repeats meta-instructions inside the lesson');
+ }
+ assert.match(mechanicsOrigins.energy.steps[5].question[0],/K = ½mv² について/);
+ const sequence=mechanicsOrigins.energy.steps.map(s=>s.tex);
+ assert.ok(sequence.indexOf('v-v_0=a\\Delta t')<sequence.findIndex(s=>s.includes('mv^2')));
 });
