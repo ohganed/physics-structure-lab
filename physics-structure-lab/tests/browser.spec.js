@@ -470,3 +470,17 @@ test('substantive worked studies remain available in the existing English readin
  await page.locator('[data-mech-chapter="1"]').click();
  await expect(page.locator('#incline-textbook')).toContainText('The limit of static friction');
 });
+
+test('iPhone chapter selection jumps past the existing chapter list to the lesson itself',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ const before=await page.evaluate(()=>window.scrollY);
+ await page.locator('[data-mech-chapter="1"]').click();
+ const position=await page.locator('#mechanics-detail').evaluate(e=>({top:e.getBoundingClientRect().top,height:e.getBoundingClientRect().height}));
+ expect(position.top).toBeGreaterThanOrEqual(0);
+ expect(position.top).toBeLessThan(200);
+ expect(position.height).toBeGreaterThan(800);
+ expect(await page.evaluate(()=>window.scrollY)).toBeGreaterThan(before);
+ await expect(page.locator('#mechanics-detail h2')).toContainText('摩擦');
+ await expect(page.locator('#incline-textbook')).toHaveCount(1);
+});
