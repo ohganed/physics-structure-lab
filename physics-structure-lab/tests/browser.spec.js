@@ -432,7 +432,7 @@ test('the selected friction chapter has substantial explanatory body and realist
  await expect(page.locator('#incline-results')).toContainText('静止');
  await page.locator('#language-select').selectOption('en');
  await expect(page.locator('#incline-textbook')).toContainText('Static friction');
- await expect(page.locator('#incline-results')).toContainText('Can remain at rest');
+ await expect(page.locator('#incline-results')).toContainText('model remains at rest');
  expect(errors).toEqual([]);
 });
 test('the detailed incline chapter is readable at iPhone width without horizontal overflow',async({page})=>{
