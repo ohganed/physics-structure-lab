@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {brakingModel} from '../energy-work-model.js';
+import {energyTextbookHtml} from '../energy-textbook.js';
 const close=(actual,expected)=>assert.ok(Math.abs(actual-expected)<1e-9,actual+' versus '+expected);
 test('constant braking force: work, impulse, stopping distance and time',()=>{
  const x=brakingModel({mass:1000,initialSpeed:20,brakingForce:4000});
@@ -34,4 +35,20 @@ test('zero starting speed and invalid inputs',()=>{
   {mass:1000,initialSpeed:20,brakingForce:0},
   {mass:Infinity,initialSpeed:20,brakingForce:4000}
  ])assert.throws(()=>brakingModel(bad),RangeError);
+});
+
+test('chapter 03 has substantial authored reading in Japanese and English',()=>{
+ const ja=energyTextbookHtml('ja'),en=energyTextbookHtml('en');
+ for(const html of [ja,en]){
+  assert.equal((html.match(/class="incline-reading-section"/g)||[]).length,9);
+  assert.ok((html.match(/class="incline-reading-equation"/g)||[]).length>=20);
+  assert.match(html,/id="energy-work-diagram"/);
+  assert.match(html,/id="energy-work-results"/);
+  assert.match(html,/id="energy-speed"/);
+  assert.ok(!html.includes('<script'));
+ }
+ assert.match(ja,/台車を押す/);
+ assert.match(ja,/力積/);
+ assert.match(en,/trapezoid area/);
+ assert.match(en,/Impulse has units/);
 });
