@@ -511,3 +511,25 @@
 .mechanics-formula-symbols dt{min-width:0;max-width:100%;overflow-x:auto}
 @media(max-width:850px){.mechanics-layout{grid-template-columns:minmax(0,1fr)}.mechanics-chapter-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.mechanics-chapter-list{grid-template-columns:minmax(0,1fr)}}
+
+/* Chapter 02: readable explanation, worked equations, and force diagram. */
+.incline-textbook{border-top:1px solid #d4e6da;margin:28px 0 18px;padding-top:17px;min-width:0}
+.incline-textbook>h3{font-size:19px;color:#255d47;margin:12px 0 20px}
+.incline-reading-section{padding:15px 0;border-top:1px solid #e2ece5;min-width:0}
+.incline-reading-section h4{font-size:16px;color:#285e47;line-height:1.6;margin:0 0 11px}
+.incline-reading-section p{font-size:15px;line-height:2.0;margin:7px 0 16px;overflow-wrap:anywhere}
+.incline-reading-equation{padding:8px 10px 11px;margin:11px 0;border-left:3px solid #9cc8af;background:#f5faf6;border-radius:0 9px 9px 0;min-width:0}
+.incline-reading-equation small{font-size:12px;color:#426c56}
+.incline-reading-equation .formula{max-width:100%;overflow-x:auto;overflow-y:hidden;padding:10px 2px}
+.incline-interactive{border:1px solid #cbded1;background:#f3f9f4;border-radius:13px;padding:17px}
+.incline-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:15px 0}
+.incline-inputs label{display:grid;gap:5px;font-size:13px;font-weight:720;min-width:0}
+.incline-inputs input[type=range]{width:100%;accent-color:#38866b}
+.incline-inputs output{font-size:13px;color:#336f50;font-weight:700;font-variant-numeric:tabular-nums}
+#incline-diagram{width:100%;height:auto;display:block;max-height:310px;background:white;border-radius:12px;margin:13px 0}
+.incline-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.incline-results>div{display:flex;flex-direction:column;gap:4px;padding:11px;background:white;border:1px solid #d6e5d8;border-radius:10px}
+.incline-results>div span{font-size:12px;color:#5b7464}
+.incline-results>div strong{font-size:16px;color:#295f45;font-variant-numeric:tabular-nums}
+.incline-results p{grid-column:1/-1;margin:2px 0;font-size:13px;line-height:1.8}
+@media(max-width:550px){.incline-textbook>h3{font-size:17px}.incline-reading-section h4{font-size:15px}.incline-reading-section p{font-size:14px;line-height:1.95}.incline-inputs{grid-template-columns:minmax(0,1fr)}.incline-interactive{padding:12px}.incline-results>div strong{font-size:14px}}
