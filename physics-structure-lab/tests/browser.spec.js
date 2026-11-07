@@ -484,3 +484,20 @@ test('iPhone chapter selection jumps past the existing chapter list to the lesso
  await expect(page.locator('#mechanics-detail h2')).toContainText('摩擦');
  await expect(page.locator('#incline-textbook')).toHaveCount(1);
 });
+
+test('chapter 03 shows bilingual work-energy derivations and a live distance model',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="2"]').click();
+ await expect(page.locator('#energy-textbook')).toBeVisible();
+ await expect(page.locator('#energy-textbook .incline-reading-section')).toHaveCount(10);
+ await expect(page.locator('#energy-textbook .incline-reading-equation')).toHaveCount(24);
+ await expect(page.locator('#energy-work-results')).toContainText('50 m');
+ await page.locator('#energy-speed').fill('25');
+ await expect(page.locator('#energy-work-results')).toContainText('78.13 m');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#energy-textbook h3')).toContainText('Work, energy and conservation');
+ await expect(page.locator('#energy-work-results')).toContainText('Stopping distance');
+ expect(errors).toEqual([]);
+});
