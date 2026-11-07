@@ -143,7 +143,13 @@ export function installMechanics(remarkMath){
    out.append(strong,note);
   }
   x.addEventListener('input',update);y.addEventListener('input',update);update();
-  if(fromChapterTap&&window.matchMedia('(max-width: 850px)').matches)box.scrollIntoView({block:'start',behavior:'auto'});
+  if(fromChapterTap&&window.matchMedia('(max-width: 850px)').matches){
+   const documentRoot=document.documentElement;
+   const previousScrollBehavior=documentRoot.style.scrollBehavior;
+   documentRoot.style.scrollBehavior='auto';
+   box.scrollIntoView({block:'start',behavior:'auto'});
+   documentRoot.style.scrollBehavior=previousScrollBehavior;
+  }
   document.getElementById('mech-reveal').addEventListener('click',()=>document.getElementById('mech-answer').classList.toggle('hide'));
   document.getElementById('mech-complete').addEventListener('click',()=>{
    if(!completed.includes(index)){completed.push(index);try{localStorage.setItem(key,JSON.stringify(completed));}catch{}}
