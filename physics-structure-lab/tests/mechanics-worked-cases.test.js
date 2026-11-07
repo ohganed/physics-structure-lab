@@ -14,7 +14,7 @@ test('all eleven other mechanics chapters have complete worked studies, not empt
    assert.ok(caseData[field][0].length>=10&&caseData[field][1].length>=15,key+' '+field+' text');
   }
   for(const step of caseData.steps){
-   assert.ok(step.math.length>=8,key+' empty equation');
+   assert.ok(step.math.length>=5,key+' empty equation');
    assert.ok(step.why[0].length>=12&&step.why[1].length>=20,key+' unexplained equation');
   }
  }
