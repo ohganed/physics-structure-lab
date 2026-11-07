@@ -412,3 +412,34 @@ test('work and kinetic energy are explained without a scripted definition-first 
  await page.locator('#language-select').selectOption('en');
  await expect(page.locator('#mechanics-origin-path')).toContainText('About K = ½mv²');
 });
+
+test('the selected friction chapter has substantial explanatory body and realistic model calculations',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="1"]').click();
+ const body=page.locator('#incline-textbook');
+ await expect(body).toBeVisible();
+ await expect(body.locator('.incline-reading-section')).toHaveCount(8);
+ await expect(body).toContainText('静止摩擦');
+ await expect(body).toContainText('限界角');
+ await expect(body).toContainText('2.35');
+ await expect(page.locator('#incline-diagram')).toBeVisible();
+ await expect(page.locator('#incline-results')).toContainText('静止');
+ await page.locator('#incline-theta').fill('30');
+ await expect(page.locator('#incline-results')).toContainText('滑走時の加速度');
+ await expect(page.locator('#incline-results')).toContainText('2.354');
+ await page.locator('#incline-static').fill('0.8');
+ await expect(page.locator('#incline-results')).toContainText('静止');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#incline-textbook')).toContainText('Static friction');
+ await expect(page.locator('#incline-results')).toContainText('Can remain at rest');
+ expect(errors).toEqual([]);
+});
+test('the detailed incline chapter is readable at iPhone width without horizontal overflow',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="1"]').click();
+ await expect(page.locator('#incline-textbook .katex').first()).toBeVisible();
+ const x=await page.evaluate(()=>({viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+ expect(x.scroll).toBeLessThanOrEqual(x.viewport+2);
+});
