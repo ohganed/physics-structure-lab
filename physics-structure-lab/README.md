@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.5
+# Physics Structure Lab — v3.6
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -76,3 +76,7 @@ In the work–energy chapter, the algebra now explicitly uses velocity–time tr
 ## v3.5: Chapter 02 reading material
 
 The existing mechanics chapter-selection screen is unchanged. Inside **02 Contact, Friction and Inclines**, the textbook body now contains eight original bilingual explanatory sections: how normal contact forces arise, coordinate decomposition of gravity, why static friction must adjust to equilibrium, its empirical maximum, kinetic friction after sliding begins, numerical comparisons at 20° and 30°, frictional energy transfer, and how to estimate μs from a real tipping-board experiment. Each includes explanatory algebra, assumptions and common model limitations. A responsive force-vector incline diagram lets learners change angle, mass and friction coefficients, displaying the calculated net force, available maximum friction, predicted static/sliding regime and downhill acceleration. These are **model calculations**, not reported experimental measurements. UI and equation modules are included in the offline PWA cache.
+
+## v3.6: Substantive chapters 01–12, unchanged entrance
+
+The chapter-selecting screen is unchanged on desktop and iPhone. Inside the chapter body there is now actual expanded textbook material: the detailed eight-section treatment and physical-model diagram for Chapter 02, plus eleven original in-depth numerical or conceptual worked studies elsewhere. Topics include apparent weight in an elevator; force–distance and car braking; momentum and energy in a sticking collision; banking of circular roads; small-angle versus large-angle pendulums; circular orbital and escape speeds; rolling disk versus hoop; apparent forces in an accelerating train; Atwood's machine through a Lagrangian coordinate; a harmonic oscillator phase-space ellipse; and beating of two coupled normal modes. Each starts from a physical scene, lists model assumptions, shows every major intermediate mathematical step with explanatory bilingual prose, interprets the answer and states limitations. No test gates or progress forcing are attached. The study material is cached for offline navigation and covered by unit and Chromium browser tests.
