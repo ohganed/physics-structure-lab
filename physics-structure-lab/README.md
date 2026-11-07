@@ -1,4 +1,4 @@
-# Physics Structure Lab — v3.6.2
+# Physics Structure Lab — proposed v3.7.0 (review branch)
 
 **An independent bilingual physics-learning environment (日本語 / English).**  
 Core lessons, calculations, notes and visualizations run in the browser without requiring AI or login.
@@ -84,3 +84,10 @@ The chapter-selecting screen is unchanged on desktop and iPhone. Inside the chap
 ### iPhone chapter selection
 
 The chapter overview and its twelve original selection buttons have **not been redesigned**. On a narrow screen, tapping a chapter now scrolls to its lesson below the long list, so the new body is visible immediately rather than appearing hidden beneath all chapters. Initial navigation still shows the chapter overview as before.
+
+
+## Proposed v3.7.0: Chapter 03 work and energy
+
+Chapter 03 now adds nine substantial Japanese-English reading sections inside the existing chapter body, without changing the chapter-selection entrance. The new path begins with force and displacement, derives FΔx = ½mv² − ½mv₀² from Newton's law and the area under a velocity–time graph, then distinguishes kinetic energy, conservative and nonconservative work, gravitational and spring potentials, and work versus impulse. It includes a separate worked cart calculation (2 kg, 6 N, 3 m), and retains the existing car-braking worked study.
+
+A constant-force stopping experiment lets the learner vary mass, speed and force, with a signed force-versus-displacement area and calculated energy, stopping distance, time, acceleration and impulse. The display is explicitly an ideal **model prediction**, not measured braking data, and never estimates a safe real driving distance. The computational model has automated limiting-case and scaling tests; direct iPhone/iPad and expert review are still open. This change is submitted for review rather than claimed released.
