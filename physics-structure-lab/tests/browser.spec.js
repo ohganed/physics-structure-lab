@@ -419,7 +419,7 @@ test('the selected friction chapter has substantial explanatory body and realist
  await page.locator('[data-mech-chapter="1"]').click();
  const body=page.locator('#incline-textbook');
  await expect(body).toBeVisible();
- await expect(body.locator('.incline-reading-section')).toHaveCount(8);
+ await expect(body.locator('.incline-reading-section:not(.incline-interactive)')).toHaveCount(8);
  await expect(body).toContainText('静止摩擦');
  await expect(body).toContainText('限界角');
  await expect(body).toContainText('2.35');
@@ -450,7 +450,7 @@ test('all twelve mechanics selections now open written textbook material inside 
  for(let i=0;i<12;i++){
   await page.locator('[data-mech-chapter="'+i+'"]').click();
   if(i===1){
-   await expect(page.locator('#incline-textbook .incline-reading-section')).toHaveCount(8);
+   await expect(page.locator('#incline-textbook .incline-reading-section:not(.incline-interactive)')).toHaveCount(8);
    await expect(page.locator('#incline-diagram')).toBeVisible();
   }else{
    await expect(page.locator('#mechanics-worked-article')).toBeVisible();
