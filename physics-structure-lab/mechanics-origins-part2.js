@@ -47,8 +47,8 @@ export const mechanicsOriginsPart2={
         ],
         "tex": "x=A\\cos(\\omega t+\\phi)",
         "why": [
-          "最初からこれが唯一の形だと決めつけるのではなく、三角関数を2回微分すると元の関数の符号が変わる性質が役立つ。",
-          "Rather than assuming an arbitrary formula, use the property that differentiating cosine twice returns minus cosine."
+          "三角関数のcosを2回微分すると、元のcosにマイナスが付きます。この性質は、加速度が変位のマイナス倍になるばねの運動方程式とよく合います。",
+          "Differentiating cosine twice yields minus the original cosine multiplied by the angular frequency squared. That is the form the spring equation requires."
         ]
       },
       {
@@ -86,8 +86,8 @@ export const mechanicsOriginsPart2={
       }
     ],
     "meaning": [
-      "周期の公式を暗記する前に、力が変位と逆向きに比例するという現象の近似から、三角関数が自然に解として登場する理由を追える。",
-      "The period formula is explained by how a restoring force proportional to displacement leads naturally to sinusoidal solutions."
+      "ばねが引く力は、平衡位置からの変位に比例して反対向きに働きます。この関係を運動方程式に入れると、三角関数で表される往復運動が得られます。そこから周期と質量・ばね定数の関係も計算できます。",
+      "A spring's restoring force opposes displacement and grows proportionally with it. Substitution into Newton's law gives sinusoidal motion and the period as a function of mass and stiffness."
     ],
     "bounds": [
       "線形ばね・質量一定・減衰なし・ばね自体の質量無視。非線形ばねや抵抗があれば同じ周期式を当然には使えない。",
@@ -173,8 +173,8 @@ export const mechanicsOriginsPart2={
       }
     ],
     "meaning": [
-      "落下と円運動は別々の公式の暗記ではない。同じ重力法則を、直線的な落下と曲がった軌道という異なる現象に適用する。",
-      "Falling and orbiting are not unrelated formulas: the same gravitational interaction produces different trajectories under different initial conditions."
+      "地面へ落ちる石も円軌道を動く衛星も、同じ万有引力を受けています。最初の速度や進む方向が異なると、運動の様子が大きく変わります。",
+      "A falling stone and a circular satellite orbit are subject to the same gravitational interaction. Different initial velocities lead to strikingly different paths."
     ],
     "bounds": [
       "球対称中心天体の外側で、他の天体の影響や抵抗が無視できる円軌道の近似。楕円軌道にはそのままの速度式を使えない。",
@@ -238,8 +238,8 @@ export const mechanicsOriginsPart2={
       },
       {
         "question": [
-          "新しく現れた係数に名前を付ける",
-          "Name the useful coefficient"
+          "トルクについて",
+          "About torque"
         ],
         "tex": "\\tau=rF\\sin\\phi,\\qquad\\Delta W\\approx\\tau\\Delta\\theta",
         "why": [
@@ -265,8 +265,8 @@ export const mechanicsOriginsPart2={
         ],
         "tex": "\\tau_i=r_iF_{t,i}=r_i(m_i r_i\\alpha)=m_i r_i^2\\alpha",
         "why": [
-          "ニュートンの第二法則Ft,i=mi at,iを、前に定義したトルクτi=ri Ft,iへ代入する。ここで初めて距離の二乗が現れる。",
-          "Insert Newton’s tangential force relation Fti=mi ati into the previously motivated torque τi=ri Fti. The square of distance now emerges."
+          "ニュートンの第二法則Ft,i=mi at,iを、先ほどのトルクτi=ri Ft,iへ代入します。ri×riとなるので距離の二乗が現れます。",
+          "Substitute Newton's tangential force relation Fti=mi ati into τi=ri Fti. Multiplying ri by itself produces the square of distance."
         ]
       },
       {
@@ -282,8 +282,8 @@ export const mechanicsOriginsPart2={
       }
     ],
     "meaning": [
-      "トルクを先に『力×腕』と丸暗記するより、仕事を回転角で表すと、なぜrFsinφが自然に登場するかがわかる。",
-      "Instead of memorizing torque as force times a lever arm, expressing work per angular displacement reveals why rFsinφ is useful."
+      "同じ大きさの力でも、作用点が回転軸から遠いほど、また力が半径と直角に近いほど、回転に大きく働きます。この違いをrFsinφで表します。",
+      "For equal forces, a larger lever arm and a more perpendicular push produce greater rotational effect. The expression rFsinφ captures this difference."
     ],
     "bounds": [
       "ここでは固定軸に対する回転を扱う。トルクの向きは本来ベクトル積で表す。Iαは固定軸でI一定の場合の簡単な形。",
