@@ -328,7 +328,7 @@ test('momentum is introduced through force-time area before the named quantity i
  const lesson=page.locator('#momentum-origin');
  await expect(lesson).toBeVisible();
  await expect(lesson.locator('.momentum-origin-step')).toHaveCount(6);
- await expect(lesson.locator('.momentum-origin-step').first()).toContainText('同じ強さで長く押したら');
+ await expect(lesson.locator('.momentum-origin-step').first()).toContainText('台車を押す時間');
  await expect(page.locator('#mo-impulse')).toContainText('8 N·s');
  await expect(page.locator('#mo-momentum-difference')).toContainText('8 N·s');
  await page.locator('#mo-duration').fill('4');
@@ -338,7 +338,7 @@ test('momentum is introduced through force-time area before the named quantity i
  await page.locator('#mo-force').fill('-4');
  await expect(page.locator('#mo-impulse')).toContainText('-8 N·s');
  await page.locator('#language-select').selectOption('en');
- await expect(page.locator('#momentum-origin')).toContainText('What if the same push lasts longer');
+ await expect(page.locator('#momentum-origin')).toContainText('Duration of a push');
  await expect(page.locator('#mo-impulse')).toContainText('8 N·s');
  expect(errors).toEqual([]);
 });
@@ -361,7 +361,7 @@ test('phenomenon-first narratives precede definitions throughout eleven mechanic
   await expect(path.locator('.mechanics-origin-premise')).toHaveCount(3);
   await expect(path.locator('.mechanics-origin-steps li')).not.toHaveCount(0);
   await expect(path.locator('.mechanics-origin-derivation')).toHaveAttribute('open','');
-  await expect(path).toContainText('成り立つ範囲');
+  await expect(path).toContainText('成り立つ条件');
   await expect(path.locator('.katex').first()).toBeVisible();
  }
  await page.locator('[data-mech-chapter="3"]').click();
@@ -372,10 +372,10 @@ test('phenomenon-first narratives precede definitions throughout eleven mechanic
 test('mathematical reasoning pathways are bilingual and stay optional to explore',async({page})=>{
  await page.goto(base+'/#mechanics');
  await page.locator('[data-mech-chapter="2"]').click();
- await expect(page.locator('#mechanics-origin-path')).toContainText('なぜ速度の二乗');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('仕事と運動エネルギーについて');
  await page.locator('#language-select').selectOption('en');
- await expect(page.locator('#mechanics-origin-path')).toContainText('Why do squared speed');
- await expect(page.locator('#mechanics-origin-path')).toContainText('What does this representation now explain?');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('Work and kinetic energy');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('What the relation tells us');
  await page.locator('.mechanics-origin-derivation summary').click();
  await expect(page.locator('.mechanics-origin-derivation')).not.toHaveAttribute('open','');
  await page.locator('[data-mech-chapter="9"]').click();
@@ -398,4 +398,17 @@ test('each mechanics mathematical explanation is contained within an iPhone-widt
   if(m.scroll>m.width+2)failed.push({chapter:i,...m});
  }
  expect(failed).toEqual([]);
+});
+
+test('work and kinetic energy are explained without a scripted definition-first introduction',async({page})=>{
+ await page.goto(base+'/#mechanics');
+ await page.locator('[data-mech-chapter="2"]').click();
+ const chapter=page.locator('#mechanics-origin-path');
+ await expect(chapter.locator('.mechanics-origin-steps li')).toHaveCount(7);
+ await expect(chapter.locator('.mechanics-origin-steps li').first()).toContainText('速度の変化と時間');
+ await expect(chapter.locator('.mechanics-origin-steps li').nth(4)).toContainText('最初と最後の状態');
+ await expect(chapter.locator('.mechanics-origin-steps li').nth(5)).toContainText('K = ½mv² について');
+ await expect(chapter).not.toContainText('初めから定義しません');
+ await page.locator('#language-select').selectOption('en');
+ await expect(page.locator('#mechanics-origin-path')).toContainText('About K = ½mv²');
 });
