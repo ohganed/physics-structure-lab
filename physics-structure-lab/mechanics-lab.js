@@ -8,6 +8,7 @@ import { getLanguage } from './language.js';
 import { deepIntroHtml, deepReasoningHtml, deepWorkedExampleHtml, deepRevisitHtml, formulaReaderHtml } from './mechanics-deep.js';
 import {momentumOriginHtml,installMomentumOrigin} from './momentum-origin-lab.js';
 import {mechanicsOriginHtml} from './mechanics-origins.js';
+import {inclineTextbookHtml,installInclineTextbook} from './incline-textbook.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite))throw new RangeError('Parameters must be finite');
@@ -101,6 +102,7 @@ function chapterHtml(c,index){
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +phenomenonIntro
+  +(c.key==='friction'?inclineTextbookHtml(en?'en':'ja'):'')
   +parallel+'<h3>'+(c.key==='momentum'?word('式の確認','Checking the equations'):word("法則と計算の確認","Laws and calculations"))+'</h3><p>'+esc(c.law)+'</p>'+deepReasoningHtml(c.key,en?'en':'ja')+steps+formulaReaderHtml(c.key,en?'en':'ja')+deepWorkedExampleHtml(c.key,en?'en':'ja')+ (supportingLabs[c.key]?'<div class="mechanics-try-lab"><p>'+word('読んだ説明を、動くモデルで試してみましょう。理解の確認テストではありません。','Use an interactive model to revisit the explanation. This is not a mastery test.')+'</p><button type="button" class="secondary-btn" data-goto="'+supportingLabs[c.key][0]+'">'+esc(supportingLabs[c.key][en?2:1])+' →</button></div>':'')
   +'<div class="callout warm"><strong>'+word("成立条件と注意","Assumptions and validity")+'</strong><p>'+esc(c.conditions)+'</p></div>'
   +chapterConnectionsHtml(c.key)
@@ -127,6 +129,7 @@ export function installMechanics(remarkMath){
   document.querySelectorAll('[data-mech-chapter]').forEach((b,i)=>{b.classList.toggle('active',i===index);b.classList.toggle('is-done',completed.includes(i));});
   if(typeof remarkMath==='function')remarkMath(box);
   if(c.key==='momentum')installMomentumOrigin(box,english?'en':'ja');
+  if(c.key==='friction')installInclineTextbook(box,english?'en':'ja');
   const x=document.getElementById('mech-x'),y=document.getElementById('mech-y'),out=document.getElementById('mech-output');
   function update(){
    const d=mechanicsEvaluate(c.model,Number(x.value),Number(y.value));
