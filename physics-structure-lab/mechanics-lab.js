@@ -16,6 +16,7 @@ import {energyTextbookHtml,installEnergyTextbook} from './energy-textbook.js';
 import {collisionTextbookHtml,installCollisionTextbook} from './collision-textbook.js';
 import {torqueDoorHtml,installTorqueDoor} from './torque-door-diagram.js';
 import {circularVelocityHtml,installCircularVelocity} from './circular-velocity-diagram.js';
+import {oscillationVisualHtml,installOscillationVisual} from './oscillation-visual.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite))throw new RangeError('Parameters must be finite');
@@ -101,7 +102,7 @@ function chapterHtml(c,index){
     +'<p>'+esc(c.definition)+'</p>'
     +'<div class="callout"><strong>'+word('運動量の使い方','Using momentum')+'</strong><p>'+esc(c.why)+'</p></div>'
     +deepIntroHtml(c.key,en?'en':'ja')
-   :mechanicsOriginHtml(c.key,en?'en':'ja',c.key==='circular'?circularVelocityHtml(en?'en':'ja'):'')
+   :mechanicsOriginHtml(c.key,en?'en':'ja',c.key==='circular'?circularVelocityHtml(en?'en':'ja'):c.key==='oscillation'?oscillationVisualHtml(en?'en':'ja'):'')
     +'<h3>'+word('用語と記号','Terms and notation')+'</h3>'
     +'<p>'+esc(c.definition)+'</p>'
     +'<div class="callout"><strong>'+word('この関係の使い方','Using this relation')+'</strong><p>'+esc(c.why)+'</p></div>'
@@ -147,6 +148,7 @@ export function installMechanics(remarkMath){
   if(c.key==='momentum')installCollisionTextbook(box,english?'en':'ja');
   if(c.key==='rotation')installTorqueDoor(box,english?'en':'ja');
   if(c.key==='circular')installCircularVelocity(box,english?'en':'ja');
+  if(c.key==='oscillation')installOscillationVisual(box,english?'en':'ja');
   const x=document.getElementById('mech-x'),y=document.getElementById('mech-y'),out=document.getElementById('mech-output');
   function update(){
    const d=mechanicsEvaluate(c.model,Number(x.value),Number(y.value));
