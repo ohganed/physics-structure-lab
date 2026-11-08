@@ -102,11 +102,12 @@ export function installOscillationVisual(root,lang='ja'){
  function update(){
   const [phaseDeg,amplitude,mass,stiffness]=inputs.map(el=>Number(el.value)),s=oscillatorState({phaseDeg,amplitude,mass,stiffness});
   drawSpring(s);drawCurves(s);drawForce(s);
+  const fmt=(value,digits=3)=>(Math.abs(value)<0.5*10**(-digits)?0:value).toFixed(digits);
   readout.textContent='φ = '+phaseDeg+'°; A = '+amplitude.toFixed(2)+' m; m = '+mass.toFixed(1)+' kg; k = '+stiffness.toFixed(0)+' N/m; '
-   +'T = '+s.period.toFixed(3)+' s; t = '+s.time.toFixed(3)+' s. '
-   +'x = '+s.position.toFixed(3)+' m; v = '+s.velocity.toFixed(3)+' m/s; '
-   +'a = '+s.acceleration.toFixed(3)+' m/s²; F = '+s.force.toFixed(3)+' N; '
-   +'K = '+s.kinetic.toFixed(3)+' J; U = '+s.potential.toFixed(3)+' J; E = '+s.total.toFixed(3)+' J.';
+   +'T = '+fmt(s.period)+' s; t = '+fmt(s.time)+' s. '
+   +'x = '+fmt(s.position)+' m; v = '+fmt(s.velocity)+' m/s; '
+   +'a = '+fmt(s.acceleration)+' m/s²; F = '+fmt(s.force)+' N; '
+   +'K = '+fmt(s.kinetic)+' J; U = '+fmt(s.potential)+' J; E = '+fmt(s.total)+' J.';
  }
  inputs.forEach(el=>el.addEventListener('input',update));update();
 }
