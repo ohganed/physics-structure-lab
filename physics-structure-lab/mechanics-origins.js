@@ -10,13 +10,14 @@ const l=(pair,language)=>pair?.[language==='en'?1:0]||'';
 const txt=(language,ja,en)=>language==='en'?en:ja;
 const math=s=>'<div class="formula tex-display" data-tex="'+escapeHTML(s)+'">'+escapeHTML(s)+'</div>';
 
-export function mechanicsOriginHtml(key,language='ja'){
+export function mechanicsOriginHtml(key,language='ja',illustration=''){
  const c=originLessonByKey(key);if(!c)return '';
  return '<section class="mechanics-origin-path" id="mechanics-origin-path" aria-label="'+txt(language,'各章の解説','Chapter explanation')+'">'
  +'<h3>'+escapeHTML(l(c.title,language))+'</h3>'
  +'<div class="mechanics-origin-premise"><p>'+escapeHTML(l(c.observation,language))+'</p></div>'
  +'<div class="mechanics-origin-premise"><p>'+escapeHTML(l(c.representation,language))+'</p></div>'
  +'<div class="mechanics-origin-premise"><p>'+escapeHTML(l(c.prior,language))+'</p></div>'
+ +illustration
  +'<details class="mechanics-origin-derivation" open><summary>'+txt(language,'式の計算','Working through the equations')+'</summary>'
  +'<ol class="mechanics-origin-steps">'+c.steps.map(s=>'<li><h4>'+escapeHTML(l(s.question,language))+'</h4>'+math(s.tex)+'<p>'+escapeHTML(l(s.why,language))+'</p></li>').join('')+'</ol></details>'
  +'<div class="mechanics-origin-result"><h4>'+txt(language,'式が表していること','What the relation tells us')+'</h4><p>'+escapeHTML(l(c.meaning,language))+'</p></div>'
