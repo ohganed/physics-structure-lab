@@ -3,6 +3,7 @@
 import {mechanicsOriginsPart1} from './mechanics-origins-part1.js';
 import {mechanicsOriginsPart2} from './mechanics-origins-part2.js';
 import {mechanicsOriginsPart3} from './mechanics-origins-part3.js';
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 export const mechanicsOrigins=Object.freeze({...mechanicsOriginsPart1,...mechanicsOriginsPart2,...mechanicsOriginsPart3});
 export const originLessonByKey=key=>mechanicsOrigins[key]||null;
 const escapeHTML=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
@@ -15,6 +16,7 @@ export function mechanicsOriginHtml(key,language='ja',illustration=''){
  return '<section class="mechanics-origin-path" id="mechanics-origin-path" aria-label="'+txt(language,'各章の解説','Chapter explanation')+'">'
  +'<h3>'+escapeHTML(l(c.title,language))+'</h3>'
  +'<div class="mechanics-origin-premise"><p>'+escapeHTML(l(c.observation,language))+'</p></div>'
+ +mechanicsSituationFigure(key,'origin',language)
  +'<div class="mechanics-origin-premise"><p>'+escapeHTML(l(c.representation,language))+'</p></div>'
  +'<div class="mechanics-origin-premise"><p>'+escapeHTML(l(c.prior,language))+'</p></div>'
  +illustration
