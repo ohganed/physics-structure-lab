@@ -95,7 +95,7 @@ function scene(id,lang){
  case 'ac-wave':return linesPlot('v(t)','sine')+text(289,59,'ωt');
  case 'reactance':{let a='',b='';for(let j=0;j<=100;j++){const x=103+j*3.55,phase=j/100*4*Math.PI;a+=(j?'L':'M')+x.toFixed(2)+' '+(143-59*Math.sin(phase)).toFixed(2)+' ';b+=(j?'L':'M')+x.toFixed(2)+' '+(143-59*Math.cos(phase)).toFixed(2)+' ';}return line(92,235,481,235)+line(92,235,92,35)+path(a,'#b45e44',2.5)+path(b,'#397f9f',2.5)+text(140,67,'v','#b45e44')+text(193,67,'i','#397f9f')+text(280,263,t('90°の位相差','90° phase shift'));}
  case 'resonance':return circuit('rlc')+text(216,267,'ω₀ = 1/√LC');
- case 'ampere-maxwell':return circuit('rc')+arrow(362,146,393,146,'#b45d40')+text(280,270,'∂ΦE/∂t');
+ case 'ampere-maxwell':return circuit('rc')+arrow(348,85,402,85,'#b45d40')+arrow(440,143,440,157,'#387eaa')+text(284,270,'∂ΦE/∂t')+text(367,66,'I');
  case 'wave':{
   let s=line(81,223,485,223),curve='';
   for(let j=0;j<=120;j++){const x=85+3.3*j,phase=j/120*4*Math.PI;curve+=(j?'L':'M')+x.toFixed(2)+' '+(125-73*Math.sin(phase)).toFixed(2)+' ';}
