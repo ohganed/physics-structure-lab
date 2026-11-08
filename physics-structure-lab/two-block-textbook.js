@@ -1,3 +1,4 @@
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 /* Interactive, bilingual Newton-law chapter supplement. */
 import {twoBlockReading} from './two-block-textbook-data.js';
 import {solveTwoBlock} from './two-block-model.js';
@@ -7,8 +8,9 @@ const math=s=>'<div class="formula tex-display" data-tex="'+escapeHtml(s)+'">'+e
 const display=n=>(Math.abs(n)<0.0005?0:n).toFixed(2);
 export function twoBlockTextbookHtml(language='ja'){
  const en=language==='en';
- const sections=twoBlockReading.map(part=>'<section class="incline-reading-section">'
+ const sections=twoBlockReading.map((part,i)=>'<section class="incline-reading-section">'
   +'<h4>'+escapeHtml(T(part.title,en))+'</h4>'
+  +mechanicsSituationFigure('two-block-'+i,'supplement',language)
   +part.parts.map(p=>'<p>'+escapeHtml(T(p,en))+'</p>').join('')
   +part.equations.map(eq=>'<div class="incline-reading-equation"><small>'+escapeHtml(en?eq.en:eq.ja)+'</small>'+math(eq.formula)+'</div>').join('')
   +'<p>'+escapeHtml(T(part.after,en))+'</p></section>').join('');
