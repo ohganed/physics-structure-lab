@@ -64,11 +64,10 @@ export function electricityDefinitionFigure(id,index,language='ja'){
  const core=src.match(/<title>[\s\S]*?<\/title>([\s\S]*?)<\/svg>/)?.[1]||'';
  return '<figure class="electricity-definition-figure" data-definition="'+e(id+':'+index)+'">'
  +'<div class="electricity-definition-title">'+(en?'Definition diagram: ':'定義の図：')+e(label)+'</div>'
- +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 300" role="img" aria-label="'+e(label)+'"><title>'+e(label)+'</title>'
- +'<rect x="5" y="7" width="421" height="262" rx="12" fill="#fafdfb" stroke="#cddfd8"/>'
- +'<g transform="translate(6 20) scale(0.73)">'+core+'</g>'
- +'<rect x="438" y="7" width="284" height="262" rx="12" fill="#f7faf8" stroke="#cddfd8"/>'
- +'<g transform="translate(447 39)">'+mini(item.kind,id,index,item.marks)+'</g>'
- +'<text x="454" y="27" font-size="13" fill="#35534b">'+e(en?'Definition-specific view':'定義を取り出した図')+'</text></svg>'
+ +'<div class="electricity-definition-grid">'
+ +'<div class="electricity-definition-panel"><div class="electricity-definition-panel-label">'+e(en?'Physical situation':'物理的な状況')+'</div>'
+ +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 285" role="img" aria-label="'+e(label)+'"><title>'+e(label)+'</title>'+core+'</svg></div>'
+ +'<div class="electricity-definition-panel"><div class="electricity-definition-panel-label">'+e(en?'Quantity and direction':'定義する量と向き')+'</div>'
+ +'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 225" role="img" aria-label="'+e(label+': '+description)+'"><title>'+e(label)+'</title>'+mini(item.kind,id,index,item.marks)+'</svg></div></div>'
  +'<figcaption>'+e(description)+'</figcaption></figure>';
 }
