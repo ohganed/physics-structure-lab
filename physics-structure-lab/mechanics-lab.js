@@ -16,6 +16,7 @@ import {energyTextbookHtml,installEnergyTextbook} from './energy-textbook.js';
 import {collisionTextbookHtml,installCollisionTextbook} from './collision-textbook.js';
 import {torqueDoorHtml,installTorqueDoor} from './torque-door-diagram.js';
 import {circularVelocityHtml,installCircularVelocity} from './circular-velocity-diagram.js';
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 import {oscillationVisualHtml,installOscillationVisual} from './oscillation-visual.js';
 import {installPendulumForces} from './pendulum-force-diagram.js';
 
@@ -98,7 +99,7 @@ function chapterHtml(c,index){
  const other=en?mechanicsChapters[index]:mechanicsEnglish[index];
  const parallel='<details class="parallel-language"><summary>'+(en?'Compare with Japanese explanation / 日本語で確認':'Read this concept in academic English / 英語で学ぶ')+'</summary><h3>'+esc(other.name)+'</h3><p><strong>'+(en?'定義':'Definition')+':</strong> '+esc(other.definition)+'</p><p><strong>'+(en?'定義の必要性':'Why this definition matters')+':</strong> '+esc(other.why)+'</p><p><strong>'+(en?'成立条件':'Validity')+':</strong> '+esc(other.conditions)+'</p></details>';
  const phenomenonIntro=c.key==='momentum'
-   ?momentumOriginHtml(en?'en':'ja')
+   ?mechanicsSituationFigure('momentum','origin',en?'en':'ja')+momentumOriginHtml(en?'en':'ja')
     +'<h3>'+word('運動量について','About momentum')+'</h3>'
     +'<p>'+esc(c.definition)+'</p>'
     +'<div class="callout"><strong>'+word('運動量の使い方','Using momentum')+'</strong><p>'+esc(c.why)+'</p></div>'
