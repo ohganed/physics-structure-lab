@@ -73,30 +73,39 @@ function scene(id,lang){
  case 'gauss':return circleField(275,149,true)+circle(275,149,74,'none')+text(376,56,'S')+text(386,201,'E');
  case 'potential-work':return plateScene()+circle(254,150,11)+text(250,156,'+');
  case 'uniform-field':return plateScene()+text(214,271,'E = ΔV / d');
- case 'potential-gradient':return linesPlot('V','decay')+arrow(311,107,389,107)+text(334,90,'E');
+ case 'potential-gradient':return line(103,222,481,222)+line(103,222,103,44)+path('M117 74 L446 195','#297d99',3)+arrow(284,142,361,142,'#b45e44')+text(369,131,'E')+text(61,50,'V')+text(472,245,'x')+text(130,69,'V(A)')+text(448,192,'V(B)');
  case 'capacitance':return plateScene()+text(189,271,'Q = CΔV');
- case 'capacitor-energy':return linesPlot('V(Q)','linear')+text(249,169,'U = area');
+ case 'capacitor-energy':return line(93,224,481,224)+line(93,224,93,42)+path('M105 216 L431 65 L431 216 Z','#9dbcb0',1,'#e0eee7')+path('M105 216 L431 65','#297d99',3)+text(58,52,'V')+text(471,244,'q')+text(427,241,'Q')+text(224,181,'U = area');
  case 'dielectric':return plateScene()+rect(245,69,42,146,'#e5e4b9')+text(232,264,'εᵣ');
  case 'current-definition':return rect(84,126,374,57,'#dce8e3')+arrow(125,154,421,154,'#b45c43')+text(222,109,'I')+text(180,213,t('断面積 A','Cross-section A'));
- case 'ohm':return circuit('r')+text(226,48,'R')+arrow(330,112,377,112,'#297e9d')+text(329,135,'I');
+ case 'ohm':return circuit('r')+text(226,48,'R')+arrow(331,85,404,85,'#297e9d')+text(351,67,'I');
  case 'joule':return circuit('r')+text(205,50,'P = VI')+text(208,261,t('熱へ変換','To thermal energy'));
  case 'series-parallel':return circuit('parallel')+text(213,52,'R₁')+text(301,138,'R₂');
  case 'kirchhoff':return wire([[107,146],[270,146],[438,91]])+wire([[270,146],[438,210]])+arrow(154,146,221,146)+arrow(310,134,378,111,'#387eaa')+arrow(306,160,378,197,'#b35d40')+circle(270,146,6)+text(240,270,'I = I₁ + I₂');
- case 'battery':return circuit('r')+text(110,58,'ℰ')+text(225,57,'R + r');
+ case 'battery':return circuit('series')+text(110,58,'ℰ')+text(184,57,'r')+text(359,57,'R');
  case 'charging':return circuit('rc')+text(200,48,'I(t)')+text(330,261,'τ = RC');
  case 'discharging':return circuit('rc')+text(327,270,'Q(t) ↓');
  case 'rc-energy':return linesPlot('Q(t)','charging')+text(249,188,'½ Cℰ²');
  case 'magnetic-force':return graphMagnetic('particle')+text(300,111,'F')+text(187,172,'v');
- case 'circular-magnetic':return graphMagnetic('particle')+circle(285,138,69,'none')+text(340,237,'r = mv / |q|B');
+ case 'circular-magnetic':{let s='';for(let x=120;x<460;x+=58)for(let y=49;y<230;y+=52)s+=text(x,y,'×','#427d98');return s+circle(274,141,82,'none')+circle(274,141,4,'#406f65')+circle(356,141,10,'#f5dfd3')+arrow(356,141,356,64,'#b45e44')+arrow(356,141,285,141,'#387ba3')+line(274,141,355,141,'#668a80',1,true)+text(312,129,'r')+text(366,76,'v')+text(297,158,'F')+text(350,263,'r = mv / |q|B');}
  case 'wire-magnetic':return graphMagnetic('wire')+text(261,263,'I ⊙');
  case 'faraday':return coil()+arrow(75,149,155,149)+rect(49,117,36,66,'#f2ddd3')+text(60,153,'N')+text(338,263,'dΦ/dt');
  case 'lenz':return coil()+arrow(83,146,166,146)+rect(50,116,35,68,'#f3dfd4')+text(57,156,'N')+arrow(372,148,428,148,'#387eaa')+text(333,95,'B');
  case 'inductor':return circuit('rlc')+text(347,51,'L')+text(340,273,'U = ½LI²');
  case 'ac-wave':return linesPlot('v(t)','sine')+text(289,59,'ωt');
- case 'reactance':return linesPlot('i(t)','lag')+text(269,70,t('位相差 90°','Phase shift 90°'));
+ case 'reactance':{let a='',b='';for(let j=0;j<=100;j++){const x=103+j*3.55,phase=j/100*4*Math.PI;a+=(j?'L':'M')+x.toFixed(2)+' '+(143-59*Math.sin(phase)).toFixed(2)+' ';b+=(j?'L':'M')+x.toFixed(2)+' '+(143-59*Math.cos(phase)).toFixed(2)+' ';}return line(92,235,481,235)+line(92,235,92,35)+path(a,'#b45e44',2.5)+path(b,'#397f9f',2.5)+text(140,67,'v','#b45e44')+text(193,67,'i','#397f9f')+text(280,263,t('90°の位相差','90° phase shift'));}
  case 'resonance':return circuit('rlc')+text(216,267,'ω₀ = 1/√LC');
  case 'ampere-maxwell':return circuit('rc')+arrow(362,146,393,146,'#b45d40')+text(280,270,'∂ΦE/∂t');
- case 'wave':{let s=line(81,223,485,223);let e='',b='';for(let i=0;i<=120;i++){let x=85+i*3.3;const phase=i/120*4*Math.PI;e+=(i?'L':'M')+x.toFixed(2)+' '+(121-66*Math.sin(phase)).toFixed(2)+' ';b+=(i?'L':'M')+x.toFixed(2)+' '+(121-35*Math.sin(phase)).toFixed(2)+' ';}return s+path(e,'#b45b42',3)+path(b,'#397f9f',2.5)+text(452,243,'x')+text(90,49,'E / B')+text(249,267,lang==='en'?'In phase; B is transverse':'同位相・磁場は横方向');}
+ case 'wave':{
+  let s=line(81,223,485,223),curve='';
+  for(let j=0;j<=120;j++){const x=85+3.3*j,phase=j/120*4*Math.PI;curve+=(j?'L':'M')+x.toFixed(2)+' '+(125-73*Math.sin(phase)).toFixed(2)+' ';}
+  s+=path(curve,'#b45b42',3)+text(68,48,'E')+text(452,244,'x →');
+  for(const j of [15,45,75,105]){
+   const x=85+3.3*j,positive=Math.sin(j/120*4*Math.PI)>0;
+   s+=circle(x,250,12,'none')+(positive?circle(x,250,3,'#397f9f'):text(x-7,256,'×','#397f9f'));
+  }
+  return s+text(103,281,lang==='en'?'B: dot = out of page, cross = into page':'B：点は手前、×は紙面の奥向き');
+ }
  case 'energy-flux':return arrow(150,209,150,73,'#b45c43')+circle(150,209,22,'none')+circle(150,209,5,'#397c9f')+arrow(150,209,420,209,'#8054a1')+text(130,64,'E')+text(174,236,'B ⊙')+text(426,214,'S')+text(215,269,'S ∝ E × B');
  default:return '';
  }
