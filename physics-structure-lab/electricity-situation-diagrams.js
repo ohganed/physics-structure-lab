@@ -18,13 +18,26 @@ function circleField(cx,cy,positive=true){
 const charges=(pair=false)=>circle(180,148,23,'#f4dfd5')+text(174,154,'+')+circle(364,148,23,pair?'#dae9f2':'#f4dfd5')+text(358,154,pair?'−':'+');
 const plateScene=()=>electrode(142,52,'+','#eed9cf')+electrode(381,52,'−','#d6e8f3')+arrow(173,100,364,100)+arrow(173,150,364,150)+arrow(173,201,364,201)+text(258,81,'E')+text(245,247,'d');
 const circuit=(mode='r')=>{
- let s=wire([[110,85],[200,85]])+wire([[300,85],[439,85],[439,225],[110,225],[110,85]]);
- s+=line(96,157,124,157,'#4c8277',3)+line(100,146,120,146,'#4c8277',5)+text(70,144,'ℰ');
- if(mode==='r')s+=resistor(193,85);
- if(mode==='series')s+=resistor(170,85,90)+resistor(311,85,90);
- if(mode==='parallel')s+=resistor(181,85)+wire([[158,85],[158,152],[405,152],[405,85]])+resistor(275,152);
- if(mode==='rc')s+=resistor(190,85)+line(421,133,421,170,'#ae553e',4)+line(404,133,404,170,'#ae553e',4)+text(445,163,'C');
- if(mode==='rlc')s+=resistor(185,85)+spring(322,85,403)+line(419,140,419,179,'#ae553e',4)+line(406,140,406,179,'#ae553e',4);
+ // An electrically continuous loop with genuine breaks at the source and capacitor.
+ // Individual resistors and reactive elements interrupt—not overlie—the connecting wire.
+ let s=wire([[100,85],[100,132]])+wire([[100,158],[100,225],[440,225]]);
+ s+=line(76,132,124,132,'#4c8277',4)+line(85,158,115,158,'#4c8277',2.5)+text(130,134,'+')+text(73,184,'ℰ');
+ if(mode==='series'){
+  s+=wire([[100,85],[152,85]])+resistor(152,85)+wire([[253,85],[321,85]])+resistor(321,85)+wire([[422,85],[440,85],[440,225]]);
+ }else if(mode==='parallel'){
+  s+=wire([[100,85],[220,85]])+resistor(220,85)+wire([[321,85],[440,85],[440,225]]);
+  s+=wire([[180,85],[180,157],[220,157]])+resistor(220,157)+wire([[321,157],[386,157],[386,85]]);
+ }else if(mode==='rc'){
+  s+=wire([[100,85],[194,85]])+resistor(194,85)+wire([[295,85],[440,85],[440,140]]);
+  s+=line(410,140,470,140,'#ae553e',4)+line(410,160,470,160,'#ae553e',4);
+  s+=wire([[440,160],[440,225]])+text(479,155,'C');
+ }else if(mode==='rlc'){
+  s+=wire([[100,85],[152,85]])+resistor(152,85)+wire([[253,85],[289,85]])+spring(289,85,416)+wire([[416,85],[440,85],[440,140]]);
+  s+=line(410,140,470,140,'#ae553e',4)+line(410,160,470,160,'#ae553e',4);
+  s+=wire([[440,160],[440,225]])+text(351,52,'L')+text(480,155,'C');
+ }else{
+  s+=wire([[100,85],[194,85]])+resistor(194,85)+wire([[295,85],[440,85],[440,225]]);
+ }
  return s;
 };
 function linesPlot(label='V',functionKind='linear'){
@@ -53,11 +66,11 @@ function scene(id,lang){
  const en=lang==='en',t=(ja,enText)=>en?enText:ja;
  switch(id){
  case 'charged-bodies':return charges(true)+arrow(242,132,295,132,'#387eaa')+text(220,107,'e−','#387eaa')+text(112,208,t('電子の移動','Electron transfer'));
- case 'coulomb':return charges(true)+arrow(139,148,211,148)+arrow(405,148,333,148,'#387eaa')+text(267,183,'r')+text(196,84,lang==='en'?'Attraction':'引力');
+ case 'coulomb':return charges(true)+arrow(180,148,248,148)+arrow(364,148,296,148,'#387eaa')+text(267,183,'r')+text(196,84,lang==='en'?'Attraction':'引力');
  case 'superposition':return circle(173,208,20,'#f4dfd5')+circle(366,208,20,'#f4dfd5')+circle(270,73,17,'#f4dfd5')+text(265,78,'+')+arrow(270,73,320,11)+arrow(270,73,220,11)+text(160,247,'+')+text(354,247,'+');
  case 'field-definition':return circleField(270,146,true)+circle(416,146,14,'#dae9f2')+text(412,152,'+')+arrow(436,146,479,146,'#b45d40');
- case 'field-lines':return circleField(187,145,true)+circleField(386,145,false);
- case 'gauss':return circleField(275,149,true)+circle(275,149,119,'none')+text(376,56,'S')+text(386,201,'E');
+ case 'field-lines':return circleField(187,145,true)+circleField(386,145,false)+line(286,45,286,245,'#aebdb7',1,true)+text(160,260,lang==='en'?'positive source':'正の点電荷')+text(349,260,lang==='en'?'negative source':'負の点電荷');
+ case 'gauss':return circleField(275,149,true)+circle(275,149,74,'none')+text(376,56,'S')+text(386,201,'E');
  case 'potential-work':return plateScene()+circle(254,150,11)+text(250,156,'+');
  case 'uniform-field':return plateScene()+text(214,271,'E = ΔV / d');
  case 'potential-gradient':return linesPlot('V','decay')+arrow(311,107,389,107)+text(334,90,'E');
