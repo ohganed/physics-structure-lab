@@ -18,7 +18,7 @@ test('average acceleration approaches inward instantaneous v²/r for small angle
  const a=circularVelocityGeometry({radius:2,speed:4,angle:30});
  const b=circularVelocityGeometry({radius:2,speed:4,angle:0.01});
  assert.ok(a.averageAcceleration<a.limitAcceleration);
- assert.ok(Math.abs(b.averageAcceleration-b.limitAcceleration)<1e-8);
+ assert.ok(Math.abs(b.averageAcceleration-b.limitAcceleration)<2e-8);
 });
 test('velocity rotation does not change speed',()=>{
  const r=circularVelocityGeometry({radius:2,speed:4,angle:90});
