@@ -14,6 +14,7 @@ import {twoBlockTextbookHtml,installTwoBlockTextbook} from './two-block-textbook
 import {chapterCompanionHtml} from './mechanics-companion.js';
 import {energyTextbookHtml,installEnergyTextbook} from './energy-textbook.js';
 import {collisionTextbookHtml,installCollisionTextbook} from './collision-textbook.js';
+import {torqueDoorHtml,installTorqueDoor} from './torque-door-diagram.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite))throw new RangeError('Parameters must be finite');
@@ -107,6 +108,7 @@ function chapterHtml(c,index){
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +phenomenonIntro
+  +(c.key==='rotation'?torqueDoorHtml(en?'en':'ja'):'')
   +(c.key==='force'?twoBlockTextbookHtml(en?'en':'ja'):'')
   +(c.key==='friction'?inclineTextbookHtml(en?'en':'ja'):mechanicsWorkedCaseHtml(c.key,en?'en':'ja'))
   +(c.key==='energy'?energyTextbookHtml(en?'en':'ja'):'')
@@ -142,6 +144,7 @@ export function installMechanics(remarkMath){
   if(c.key==='force')installTwoBlockTextbook(box,english?'en':'ja');
   if(c.key==='energy')installEnergyTextbook(box,english?'en':'ja');
   if(c.key==='momentum')installCollisionTextbook(box,english?'en':'ja');
+  if(c.key==='rotation')installTorqueDoor(box,english?'en':'ja');
   const x=document.getElementById('mech-x'),y=document.getElementById('mech-y'),out=document.getElementById('mech-output');
   function update(){
    const d=mechanicsEvaluate(c.model,Number(x.value),Number(y.value));
