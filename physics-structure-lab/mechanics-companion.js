@@ -1,3 +1,4 @@
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 /* Original bilingual companion readings for mechanics chapters 03–12. */
 const readings = {
   "energy": {
@@ -125,5 +126,5 @@ export function chapterCompanionHtml(key, lang='ja') {
  const v=readings[key]?.[lang==='en'?'en':'ja'];
  if(!v)return '';
  const [title,first,second]=v;
- return '<section class="mechanics-companion"><h3>'+title+'</h3><p>'+first+'</p><p>'+second+'</p></section>';
+ return '<section class="mechanics-companion"><h3>'+title+'</h3>'+mechanicsSituationFigure(key,'origin',lang)+'<p>'+first+'</p><p>'+second+'</p></section>';
 }
