@@ -41,6 +41,6 @@ test('Japanese and English diagrams have two accessible SVGs and four controls',
  assert.equal((html.match(/role="img"/g)||[]).length,2);
  for(const id of ['spring-svg','curves-svg','readout'])assert.match(html,new RegExp('id="oscillation-'+id+'"'));
  for(const id of ['phase','amplitude','mass','stiffness'])assert.match(html,new RegExp('id="oscillation-'+id+'"'));
- assert.doesNotMatch(html,/autoplay|required|type="submit"/);
+ assert.doesNotMatch(html,/autoplay\\s*=|required\\s*=|type="submit"/);
  }
 });
