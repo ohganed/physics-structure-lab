@@ -599,3 +599,11 @@
 .electricity-calculators select{max-width:100%;width:100%;min-height:40px}
 .electricity-calculators p[aria-live]{overflow-wrap:anywhere;background:var(--light);border-radius:8px;padding:9px;font-variant-numeric:tabular-nums}
 @media(max-width:830px){.electricity-chapter-layout{grid-template-columns:minmax(0,1fr)}.electricity-chapter-nav{position:static;max-height:none;flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 1px 8px}.electricity-chapter-button{flex:0 0 195px;scroll-snap-align:start}.electricity-situation{padding:7px}.electricity-situation figcaption{font-size:.8rem}}
+
+/* Numerical worked examples use their own situation and visibly explained steps. */
+.electricity-worked-example{margin:24px 0;padding:clamp(12px,3vw,22px);border:1px solid var(--line);border-radius:14px;background:#fffdfa}
+.electricity-worked-example h3{color:var(--green)}
+.electricity-example-steps{padding-left:clamp(18px,3vw,27px)}
+.electricity-example-steps li{padding:8px 0 15px;border-bottom:1px solid var(--line)}
+.electricity-example-steps .tex-display{overflow-x:auto}
+.electricity-equation-explanation{line-height:1.85;margin:3px 0 16px}
