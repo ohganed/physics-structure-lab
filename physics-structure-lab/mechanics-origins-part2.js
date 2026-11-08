@@ -187,70 +187,70 @@ export const mechanicsOriginsPart2={
   },
   "rotation": {
     "title": [
-      "力の回転への働きについて",
-      "Forces and rotation"
+      "ドアを押す位置と、回転の起こり方",
+      "Where you push a door and how it turns"
     ],
     "observation": [
-      "ドアは蝶番の近くより取っ手付近を押した方が開きやすい。同じ場所でも蝶番へ向かって押すと回らない。力の大きさ以外に、作用位置と向きを表す必要がある。",
-      "A door opens more easily when pushed far from the hinge. Pushing toward the hinge barely turns it even with the same force. Location and direction matter."
+      "ドアを開けるとき、蝶番のすぐ近くを押してもなかなか動かないのに、取っ手の近くなら軽い力でも動く。また、取っ手を蝶番の方向へ押してもドアは回りにくい。押す力が同じでも、押す場所と方向によって回転の起こり方が変わる。",
+      "When opening a door, a push near the hinge scarcely turns it, while a similar push near the handle turns it readily. Even at the handle, pushing toward the hinge is ineffective. The position and direction of an applied force matter as well as its magnitude."
     ],
     "representation": [
-      "回転軸から作用点までの距離r、力Fとそのなす角φを描き、回転に役立つ力の成分Fsinφを取り出す。",
-      "Draw the distance r from the axis to the force application point and angle φ between the lever arm and force. Only the perpendicular component Fsinφ contributes to turning about this axis."
+      "蝶番を通る軸から押す位置までの距離を r、押す力の大きさを F とする。押す方向がドアの幅に沿っている場合、力はほとんど回転を起こさない。ドアの幅と直角に押せば、同じ力をより有効に使える。幅の方向と力の間の角度を φ とすると、回転に関係する接線方向の力は Fsinφ である。",
+      "Let r be the distance from the hinge axis to the point of contact and F the applied force. A force directed along the door toward the hinge produces no turning about that axis. A perpendicular push is more effective. If φ is the angle between the radius to the contact point and the force, its tangential component is F sinφ."
     ],
     "prior": [
-      "すでに知っている仕事「力×変位」と、円周上の移動距離Δs≈rΔθを結び付ける。これで角度変化あたりの力の作用を考えられる。",
-      "Combine work as force through displacement with arc length Δs≈rΔθ. This suggests a useful quantity per angular displacement."
+      "ドアがほんの少し回転して角度が Δθ だけ変わると、蝶番から距離 r にある点は円弧に沿って約 rΔθ だけ移動する。この短い移動に対して、接線方向の力 Fsinφ がする仕事は、約 (Fsinφ)rΔθ となる。したがって、同じ角度だけ回す場合の仕事は、力の大きさだけでなく r と φ によっても変わる。",
+      "When the door turns through a small angle Δθ, a point at distance r from the hinge travels approximately rΔθ along an arc. The work done over that short displacement by the tangential force F sinφ is therefore approximately (F sinφ)rΔθ. Thus the work done for the same angular displacement depends on where and how the force is applied."
     ],
     "steps": [
       {
         "question": [
-          "回転に沿った力だけを取り出す",
-          "Resolve the force into the tangential component"
+          "押す力の接線方向の成分",
+          "The tangential part of the push"
         ],
         "tex": "F_t=F\\sin\\phi",
         "why": [
-          "半径に沿って押す成分はこの軸のまわりの回転に寄与しない。",
-          "A component directed along the radius does not turn the object about that axis."
+          "ドアの幅に沿う成分は、蝶番を軸とする微小な回転では移動方向と直角なので仕事をしない。",
+          "The radial component is perpendicular to the small displacement about the hinge and does no work."
         ]
       },
       {
         "question": [
-          "小さな回転角と移動距離を結び付ける",
-          "Relate small angular motion to distance"
+          "角度が変わったときの移動距離",
+          "Displacement during a small rotation"
         ],
         "tex": "\\Delta s\\approx r\\Delta\\theta",
         "why": [
-          "中心から遠い同じ角度の移動ほど、作用点の進む距離は長い。",
-          "At greater radius, a given angular change moves the application point through a longer distance."
+          "同じ角度だけ回るとき、蝶番から離れた点ほど長い円弧を描く。角度はラジアンで測る。",
+          "For the same angular change, a point farther from the hinge travels farther. Angle is measured in radians."
         ]
       },
       {
         "question": [
-          "仕事を角度変化で表す",
-          "Express work using angular displacement"
+          "回転するときの仕事",
+          "Work during rotation"
         ],
         "tex": "\\Delta W\\approx F_t\\Delta s=(rF\\sin\\phi)\\Delta\\theta",
         "why": [
-          "力×距離が、回転角×ある組み合わせに分かれる。この係数が回転の効果を表す候補になる。",
-          "Work separates into angular displacement multiplied by a recurring quantity describing rotational effectiveness."
+          "接線方向の力に円弧の移動距離を掛けると、rFsinφ と回転角 Δθ の積になる。",
+          "Multiplying tangential force by arc displacement gives the product of rF sinφ and angular change Δθ."
         ]
       },
       {
         "question": [
-          "トルクについて",
-          "About torque"
+          "力のモーメント（トルク）",
+          "Torque about the hinge axis"
         ],
         "tex": "\\tau=rF\\sin\\phi,\\qquad\\Delta W\\approx\\tau\\Delta\\theta",
         "why": [
-          "トルクの大きさは作用点・方向・力の大きさから決まり、同じ力でも作用点を変える理由を説明する。",
-          "Torque magnitude depends on force direction and lever arm, explaining why equal pushes can have different turning effects."
+          "rFsinφ は回転軸からの距離と力の方向を同時に含んでいる。固定軸まわりのトルクの大きさを表す。回す向きには符号が必要である。",
+          "rF sinφ incorporates both lever arm and direction. It is the magnitude of torque about the fixed axis; the sense of rotation requires a sign."
         ]
       },
       {
         "question": [
-          "円周上の質点の接線加速度は？",
-          "What tangential acceleration does an angular acceleration cause?"
+          "回転角速度が変わるとき",
+          "When angular velocity changes"
         ],
         "tex": "a_t=r\\alpha,\\qquad\\alpha=\\frac{d\\omega}{dt}",
         "why": [
@@ -260,8 +260,8 @@ export const mechanicsOriginsPart2={
       },
       {
         "question": [
-          "一つの質点に必要なトルクを計算する",
-          "Compute torque for a single rotating mass"
+          "一つの質点に作用するトルク",
+          "Torque acting on one mass element"
         ],
         "tex": "\\tau_i=r_iF_{t,i}=r_i(m_i r_i\\alpha)=m_i r_i^2\\alpha",
         "why": [
@@ -271,8 +271,8 @@ export const mechanicsOriginsPart2={
       },
       {
         "question": [
-          "回転しにくさも、質量の分布から表す",
-          "Represent rotational inertia from mass distribution"
+          "剛体全体の慣性モーメント",
+          "Moment of inertia of the whole body"
         ],
         "tex": "I=\\sum_i m_i r_i^2,\\qquad\\sum\\tau_z=I\\alpha",
         "why": [
@@ -282,8 +282,8 @@ export const mechanicsOriginsPart2={
       }
     ],
     "meaning": [
-      "同じ大きさの力でも、作用点が回転軸から遠いほど、また力が半径と直角に近いほど、回転に大きく働きます。この違いをrFsinφで表します。",
-      "For equal forces, a larger lever arm and a more perpendicular push produce greater rotational effect. The expression rFsinφ captures this difference."
+      "取っ手の位置でドアを押す方が回しやすいのは、蝶番からの距離が大きいためである。反対に、蝶番に向けて押すと Fsinφ が0になり、蝶番まわりのトルクは0になる。力の大きさ、作用位置、方向という三つの条件が、式の中で一緒に表される。",
+      "Pushing at the handle is effective because the distance to the hinge is large. Pushing directly toward the hinge makes F sinφ vanish, so the torque about the hinge is zero. The expression brings force magnitude, application point, and direction together."
     ],
     "bounds": [
       "ここでは固定軸に対する回転を扱う。トルクの向きは本来ベクトル積で表す。Iαは固定軸でI一定の場合の簡単な形。",
