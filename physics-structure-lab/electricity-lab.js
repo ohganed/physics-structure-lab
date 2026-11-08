@@ -3,6 +3,8 @@ import {electricityLessons2} from './electricity-textbook-part2.js';
 import {electricityLessons3} from './electricity-textbook-part3.js';
 import {electricityFigure} from './electricity-situation-diagrams.js';
 import {electricityDerivationNotes} from './electricity-derivation-notes.js';
+import {electricityWorkedExamples} from './electricity-worked-examples.js';
+import {electricityExampleFigure} from './electricity-example-figures.js';
 import {coulombForce,resistorNetwork,rcResponse,chargedParticleB} from './electricity-models.js';
 import {getLanguage} from './language.js';
 export const electricityChapters=[...electricityLessons1,...electricityLessons2,...electricityLessons3];
@@ -21,6 +23,12 @@ function chapterMarkup(chapter,index,en){
   +section.derivation.map((eq,j)=>math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>').join('')+'</div>'
   +'<p><strong>'+(en?'Physical meaning: ':'物理的意味：')+'</strong>'+escapeHTML(pair(section.meaning,en))+'</p>'
   +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p></section>').join('')
+ +(electricityWorkedExamples[chapter.key]?(()=>{
+  const example=electricityWorkedExamples[chapter.key];
+  return '<section class="electricity-worked-example"><h3>'+(en?'Worked example with all intermediate steps':'例題：途中式と判断を確かめる')+'</h3><h4>'+escapeHTML(pair(example.title,en))+'</h4><p>'+escapeHTML(pair(example.problem,en))+'</p>'
+   +electricityExampleFigure(chapter.key,lang)
+   +'<ol class="electricity-example-steps">'+example.steps.map(step=>'<li>'+math(step.formula)+'<p>'+escapeHTML(pair(step.explanation,en))+'</p></li>').join('')+'</ol></section>';
+ })():'')
  +'<section class="electricity-chapter-connection"><h3>'+(en?'From here to the next model':'次の物理現象へ')+'</h3><p>'+(en?'The same conservation laws and field definitions continue to apply, but each new setup has its own geometry, boundaries, force directions and physical assumptions.':'すでに得た保存則や場の定義を利用しても、次の状況では物体や導体の配置、境界、力の方向、成立条件をあらためて確認します。')+'</p></section></article>';
 }
 function interactiveMarkup(en){
