@@ -574,3 +574,28 @@
 .mechanics-situation-figure svg{width:100%;height:auto;display:block;color:var(--ink)}
 .mechanics-situation-figure figcaption{font-size:.88rem;line-height:1.55;color:var(--muted);margin:5px 3px 0}
 @media(max-width:550px){.mechanics-situation-figure{padding:7px;margin:12px 0 15px}.mechanics-situation-figure figcaption{font-size:.82rem}}
+
+/* Electricity course — situation diagrams are part of each explanation, not a detached gallery. */
+.electricity-course{max-width:1220px;margin:0 auto}
+.electricity-chapter-layout{display:grid;grid-template-columns:minmax(205px,260px) minmax(0,1fr);gap:18px;align-items:start;margin:20px 0}
+.electricity-chapter-nav{display:flex;flex-direction:column;gap:7px;position:sticky;top:16px;max-height:85vh;overflow:auto}
+.electricity-chapter-button{text-align:left;line-height:1.5;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 12px;color:var(--ink);font-size:14px}
+.electricity-chapter-button.active,.electricity-chapter-button:hover{border-color:var(--green);background:var(--light);font-weight:700}
+.electricity-chapter-detail{min-width:0}
+.electricity-chapter{padding:clamp(15px,3vw,30px)}
+.electricity-reading-section{padding:20px 0;border-top:1px solid var(--line)}
+.electricity-reading-section h3{margin:0 0 12px}
+.electricity-reading-section p{line-height:1.85}
+.electricity-scene{font-weight:500}
+.electricity-situation{background:#f9fcfa;border:1px solid var(--line);border-radius:14px;padding:12px;margin:18px 0;max-width:720px}
+.electricity-situation svg{display:block;width:100%;height:auto;color:var(--ink)}
+.electricity-situation figcaption{font-size:.88rem;color:var(--muted);line-height:1.55;margin-top:6px}
+.electricity-derivation{margin:20px 0}
+.electricity-derivation .tex-display{overflow-x:auto;max-width:100%}
+.electricity-calculators{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.electricity-calculators>section{background:#fcfdfb;border:1px solid var(--line);border-radius:13px;padding:16px;min-width:0}
+.electricity-calculators label{display:block;font-size:.89rem;font-weight:600;margin:12px 0 3px}
+.electricity-calculators input[type=range]{display:block;width:100%;touch-action:pan-y}
+.electricity-calculators select{max-width:100%;width:100%;min-height:40px}
+.electricity-calculators p[aria-live]{overflow-wrap:anywhere;background:var(--light);border-radius:8px;padding:9px;font-variant-numeric:tabular-nums}
+@media(max-width:830px){.electricity-chapter-layout{grid-template-columns:minmax(0,1fr)}.electricity-chapter-nav{position:static;max-height:none;flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 1px 8px}.electricity-chapter-button{flex:0 0 195px;scroll-snap-align:start}.electricity-situation{padding:7px}.electricity-situation figcaption{font-size:.8rem}}
