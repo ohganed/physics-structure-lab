@@ -3,6 +3,7 @@ import {electricityLessons2} from './electricity-textbook-part2.js';
 import {electricityLessons3} from './electricity-textbook-part3.js';
 import {electricityFigure} from './electricity-situation-diagrams.js';
 import {electricityDerivationNotes} from './electricity-derivation-notes.js';
+import {electricityReasoningPart1} from './electricity-reasoning-part1.js';
 import {electricityDefinitionFigure} from './electricity-definition-diagrams.js';
 import {electricityWorkedExamples} from './electricity-worked-examples.js';
 import {electricityExampleFigure} from './electricity-example-figures.js';
@@ -21,7 +22,22 @@ function chapterMarkup(chapter,index,en){
   +'<p class="electricity-scene">'+escapeHTML(pair(section.scene,en))+'</p>'
   +electricityFigure(section.id,pair(section.title,en),lang)
   +'<div class="electricity-derivation"><h4>'+(en?'Equations and their derivation':'関係式と導出')+'</h4>'
-  +section.derivation.map((eq,j)=>electricityDefinitionFigure(section.id,j,lang)+math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>').join('')+'</div>'
+  +section.derivation.map((eq,j)=>{
+    const deep=electricityReasoningPart1[section.id]?.[j];
+    const kinds={
+     law:['基本法則','Fundamental law'],counting:['電荷の数え方','Counting charge'],
+     empirical:['実験法則','Empirical law'],vector:['向きを含めた表現','Vector expression'],
+     principle:['重ね合わせの原理','Superposition principle'],decomposition:['成分分解','Component resolution'],
+     definition:['定義','Definition'],consequence:['定義からの帰結','Consequence of a definition'],
+     derivation:['導出結果','Derived relation'],integral:['積分表示','Integral form'],
+     work:['仕事の関係','Work relation'],material:['媒質のモデル','Material model'],
+     constraint:['実験条件の違い','Experimental constraints'],increment:['微小変化を考える','Incremental argument']
+    };
+    return electricityDefinitionFigure(section.id,j,lang)
+     +(deep?'<p class="electricity-formula-type"><strong>'+(en?'Type of relation: ':'この式の位置づけ：')+'</strong>'+escapeHTML(pair(kinds[deep.kind]||['物理的関係','Physical relation'],en))+'</p>':'')
+     +math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>'
+     +(deep?'<div class="electricity-reasoning-expansion"><h5>'+(en?'Why this relation follows':'この関係を理解するまでの過程')+'</h5><ol>'+deep.steps.map(step=>'<li>'+escapeHTML(pair(step,en))+'</li>').join('')+'</ol></div>':'');
+   }).join('')+'</div>'
   +'<p><strong>'+(en?'Physical meaning: ':'物理的意味：')+'</strong>'+escapeHTML(pair(section.meaning,en))+'</p>'
   +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p></section>').join('')
  +(electricityWorkedExamples[chapter.key]?(()=>{
