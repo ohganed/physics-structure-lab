@@ -64,7 +64,7 @@ export const electricityLessons2=[
           "Charge passing through a potential difference V transfers electrical energy Vdq; scattering in a resistor converts it to internal energy."
         ],
         "derivation": [
-          "dW=V,dQ,\\quad P=\\frac{dW}{dt}=VI",
+          "dW=V\\,dQ,\\quad P=\\frac{dW}{dt}=VI",
           "P=I^2R=\\frac{V^2}{R}"
         ],
         "meaning": [
@@ -221,7 +221,7 @@ export const electricityLessons2=[
           "Charging a capacitor from an ideal constant voltage source transfers Cℰ² from the source. The capacitor stores half and the resistor dissipates half."
         ],
         "derivation": [
-          "W_{\\rm battery}=\\int_0^{C\\mathcal E}\\mathcal E,dQ=C\\mathcal E^2",
+          "W_{\\rm battery}=\\int_0^{C\\mathcal E}\\mathcal E\\,dQ=C\\mathcal E^2",
           "U_C=\\frac12C\\mathcal E^2,\\quad W_R=\\frac12C\\mathcal E^2"
         ],
         "meaning": [
