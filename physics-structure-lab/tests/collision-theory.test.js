@@ -39,9 +39,10 @@ test('physical input validation',()=>{
 });
 test('chapter 04 has eight bilingual sections plus a non-gating lab',()=>{
  for(const lang of ['ja','en']){const html=collisionTextbookHtml(lang);
- assert.equal((html.match(/<section class="mechanics-worked-article">/g)||[]).length,8);
+ assert.equal((html.match(/<section class="mechanics-worked-article">/g)||[]).length,12);
  assert.match(html,/id="collision-restitution-lab"/);
  assert.match(html,/id="collision-e"/);
+ assert.match(html,/id="collision-inquiry"/);
  assert.doesNotMatch(html,/type="submit"/);
  }
 });
