@@ -15,7 +15,8 @@ export function oscillationVisualHtml(lang='ja'){
  +'<p>'+(en?'The two diagrams describe the same instant. Move the phase slider: the mass moves, the velocity and restoring-force arrows change, and the markers on the three curves move together.':'左のばねの図と右の3つのグラフは、同じ瞬間の運動を表しています。位相を動かすと、物体の位置・速度と復元力の矢印・グラフ上の点が同時に変化します。')+'</p>'
  +'<div class="oscillation-visual-grid">'
  +'<div class="oscillation-panel"><svg id="oscillation-spring-svg" viewBox="0 0 360 286" role="img" aria-label="'+(en?'Spring, mass and arrows for displacement, velocity and restoring force':'ばねと物体、変位・速度・復元力の向きを示す図')+'"></svg><p class="muted">'+(en?'The wall stays fixed. The dashed line marks the equilibrium position x=0. Orange: velocity. Blue: force.':'壁は固定されています。破線は平衡位置 x=0。橙色は速度、青色は復元力です。')+'</p></div>'
- +'<div class="oscillation-panel"><svg id="oscillation-curves-svg" viewBox="0 0 360 342" role="img" aria-label="'+(en?'Three synchronized graphs of normalized displacement, velocity and acceleration':'位置・速度・加速度の3本の時間変化グラフ')+'"></svg><p class="muted">'+(en?'The curves are independently normalized by their maximum magnitude, not plotted in common physical units. The vertical marker is the current instant.':'3つの縦軸は、それぞれの最大絶対値で割った無次元量です。縦線が現在の瞬間を示します。')+'</p></div></div>'
+ +'<div class="oscillation-panel"><svg id="oscillation-curves-svg" viewBox="0 0 360 342" role="img" aria-label="'+(en?'Three synchronized graphs of normalized displacement, velocity and acceleration':'位置・速度・加速度の3本の時間変化グラフ')+'"></svg><p class="muted">'+(en?'The curves are independently normalized by their maximum magnitude, not plotted in common physical units. The vertical marker is the current instant.':'3つの縦軸は、それぞれの最大絶対値で割った無次元量です。縦線が現在の瞬間を示します。')+'</p></div>'
+ +'<div class="oscillation-panel"><svg id="oscillation-force-svg" viewBox="0 0 360 286" role="img" aria-label="'+(en?'Force-displacement graph F = −kx with current state marked':'復元力 F＝−kx と現在の状態を示す力–変位グラフ')+'"></svg><p class="muted">'+(en?'The downward slope is −k: on the right the force points left, and on the left it points right.':'直線の傾きは −k。物体が右側なら力は左向き、左側なら力は右向きです。')+'</p></div></div>'
  +'<div class="mechanics-parameter-grid"><label for="oscillation-phase" id="oscillation-phase-label">'+(en?'Phase φ = ωt (degrees)':'位相 φ=ωt（度）')+'</label><input id="oscillation-phase" type="range" min="0" max="360" step="5" value="0">'
  +'<label for="oscillation-amplitude" id="oscillation-amplitude-label">'+(en?'Amplitude A (m)':'振幅 A（m）')+'</label><input id="oscillation-amplitude" type="range" min="0.25" max="1.5" step="0.05" value="1">'
  +'<label for="oscillation-mass" id="oscillation-mass-label">'+(en?'Mass m (kg)':'質量 m（kg）')+'</label><input id="oscillation-mass" type="range" min="0.5" max="5" step="0.5" value="2">'
@@ -26,7 +27,7 @@ export function oscillationVisualHtml(lang='ja'){
 }
 export function installOscillationVisual(root,lang='ja'){
  const host=root.querySelector('#oscillation-visual');if(!host)return;
- const en=lang==='en',spring=host.querySelector('#oscillation-spring-svg'),curves=host.querySelector('#oscillation-curves-svg'),readout=host.querySelector('#oscillation-readout');
+ const en=lang==='en',spring=host.querySelector('#oscillation-spring-svg'),curves=host.querySelector('#oscillation-curves-svg'),forceSvg=host.querySelector('#oscillation-force-svg'),readout=host.querySelector('#oscillation-readout');
  const inputs=['phase','amplitude','mass','stiffness'].map(id=>host.querySelector('#oscillation-'+id));
  const ns='http://www.w3.org/2000/svg';
  const make=(svg,tag,attrs={},value)=>{const el=document.createElementNS(ns,tag);for(const [key,val] of Object.entries(attrs))el.setAttribute(key,String(val));if(value!==undefined)el.textContent=value;svg.append(el);return el;};
@@ -77,9 +78,30 @@ export function installOscillationVisual(root,lang='ja'){
   text(curves,xLeft+width/2-8,329,'T/2',undefined,12);
   text(curves,xRight-6,329,'T',undefined,12);
  }
+ function drawForce(s){
+  forceSvg.replaceChildren();
+  const zeroX=180,zeroY=148,xScale=120,yScale=100;
+  const xOf=x=>zeroX+xScale*x/s.amplitude;
+  const yOf=force=>zeroY-yScale*force/(s.stiffness*s.amplitude);
+  text(forceSvg,12,21,en?'Spring force versus displacement':'復元力と変位の関係',undefined,16);
+  stroke(forceSvg,34,zeroY,326,zeroY,'#829d96',1.3);
+  stroke(forceSvg,zeroX,37,zeroX,252,'#829d96',1.3);
+  stroke(forceSvg,xOf(-s.amplitude),yOf(s.stiffness*s.amplitude),xOf(s.amplitude),yOf(-s.stiffness*s.amplitude),'#2d74a7',3);
+  const cx=xOf(s.position),cy=yOf(s.force);
+  stroke(forceSvg,cx,zeroY,cx,cy,'#8c7b9d',1,'4 4');
+  stroke(forceSvg,zeroX,cy,cx,cy,'#8c7b9d',1,'4 4');
+  make(forceSvg,'circle',{cx,cy,r:6,fill:'#c46f37',stroke:'#fff','stroke-width':1.5});
+  text(forceSvg,260,137,'x (m)',undefined,14);
+  text(forceSvg,188,47,'F (N)',undefined,14);
+  text(forceSvg,39,168,'−A',undefined,13);
+  text(forceSvg,292,168,'+A',undefined,13);
+  text(forceSvg,120,54,'+kA','#2d74a7',13);
+  text(forceSvg,186,252,'−kA','#2d74a7',13);
+  text(forceSvg,22,274,'F = −kx', '#2d74a7',17);
+ }
  function update(){
   const [phaseDeg,amplitude,mass,stiffness]=inputs.map(el=>Number(el.value)),s=oscillatorState({phaseDeg,amplitude,mass,stiffness});
-  drawSpring(s);drawCurves(s);
+  drawSpring(s);drawCurves(s);drawForce(s);
   readout.textContent='φ = '+phaseDeg+'°; A = '+amplitude.toFixed(2)+' m; m = '+mass.toFixed(1)+' kg; k = '+stiffness.toFixed(0)+' N/m; '
    +'T = '+s.period.toFixed(3)+' s; t = '+s.time.toFixed(3)+' s. '
    +'x = '+s.position.toFixed(3)+' m; v = '+s.velocity.toFixed(3)+' m/s; '
