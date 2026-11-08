@@ -41,6 +41,10 @@ function interactiveMarkup(en){
  +'<section><h3>'+(en?'Magnetic circular motion':'磁場中の円運動')+'</h3>'+slider('mag-v',en?'Speed (m/s)':'速さ（m/s）',10,500,10,100)+slider('mag-B',en?'Magnetic field (T)':'磁束密度（T）',.05,.5,.05,.1)+slider('mag-m',en?'Mass (mg)':'質量（mg）',.5,5,.5,1)+'<p id="electric-mag-out" aria-live="polite"></p></section>'
  +'</div></section>';
 }
+export function electricityChapterHtml(index,language='ja'){
+ const chapter=electricityChapters[index];
+ return chapter?chapterMarkup(chapter,index,language==='en'):'';
+}
 let selected=0;
 export function electricityPage(){
  const en=getLanguage()==='en';
