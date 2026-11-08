@@ -1,3 +1,4 @@
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 /* Complete chapter reading and a live friction diagram; no mastery checkpoints. */
 import {inclineTextSections} from './incline-textbook-data.js';
 import {analyzeIncline} from './incline-explanation-model.js';
@@ -9,6 +10,7 @@ export function inclineTextbookHtml(language='ja'){
  const en=language==='en';
  const chapters=inclineTextSections.map((part,i)=>'<section class="incline-reading-section">'
  +'<h4>'+L(part.title,en)+'</h4>'
+ +mechanicsSituationFigure('incline-'+i,'supplement',language)
  +part.parts.map(p=>'<p>'+L(p,en)+'</p>').join('')
  +part.equations.map(p=>'<div class="incline-reading-equation"><small>'+ (en?p.en:p.ja)+'</small>'+math(p.formula)+'</div>').join('')
  +'<p>'+L(part.after,en)+'</p></section>').join('');
