@@ -12,7 +12,7 @@ export function oscillationVisualHtml(lang='ja'){
  const en=lang==='en';
  return '<section class="mechanics-worked-article oscillation-visual" id="oscillation-visual">'
  +'<h3>'+(en?'How position, velocity and acceleration change together':'ばねの位置・速度・加速度を同時に見る')+'</h3>'
- +'<p>'+(en?'The two diagrams describe the same instant. Move the phase slider: the mass moves, the velocity and restoring-force arrows change, and the markers on the three curves move together.':'左のばねの図と右の3つのグラフは、同じ瞬間の運動を表しています。位相を動かすと、物体の位置・速度と復元力の矢印・グラフ上の点が同時に変化します。')+'</p>'
+ +'<p>'+(en?'All three diagrams describe the same instant. Move the phase slider to see the mass, velocity and restoring-force arrows, phase curves and the force–displacement point change together.':'3つの図は同じ瞬間の運動を表しています。位相を変えると、物体の位置、速度と復元力の矢印、時間グラフ上の点、力–変位グラフ上の点が同時に変化します。')+'</p>'
  +'<div class="oscillation-visual-grid">'
  +'<div class="oscillation-panel"><svg id="oscillation-spring-svg" viewBox="0 0 360 286" role="img" aria-label="'+(en?'Spring, mass and arrows for displacement, velocity and restoring force':'ばねと物体、変位・速度・復元力の向きを示す図')+'"></svg><p class="muted">'+(en?'The wall stays fixed. The dashed line marks the equilibrium position x=0. Orange: velocity. Blue: force.':'壁は固定されています。破線は平衡位置 x=0。橙色は速度、青色は復元力です。')+'</p></div>'
  +'<div class="oscillation-panel"><svg id="oscillation-curves-svg" viewBox="0 0 360 342" role="img" aria-label="'+(en?'Three synchronized graphs of normalized displacement, velocity and acceleration':'位置・速度・加速度の3本の時間変化グラフ')+'"></svg><p class="muted">'+(en?'The curves are independently normalized by their maximum magnitude, not plotted in common physical units. The vertical marker is the current instant.':'3つの縦軸は、それぞれの最大絶対値で割った無次元量です。縦線が現在の瞬間を示します。')+'</p></div>'
