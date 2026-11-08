@@ -68,7 +68,7 @@ test('definition figures distinguish field, flux, current and potential geometry
  const ids=['field-definition','gauss','current-definition','potential-work','faraday','energy-flux'];
  for(const id of ids){
   const a=electricityDefinitionFigure(id,0,'ja');
-  assert.ok(a.includes('電気')||a.includes('電流')||a.includes('磁束')||a.includes('電磁'));
+  assert.ok(/電場|電束|電位|電流|磁束|電磁|ポインティング/.test(a));
   assert.match(a,/<svg[\s\S]*<line/);
  }
 });
