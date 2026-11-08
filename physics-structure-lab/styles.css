@@ -568,3 +568,9 @@
 .pendulum-figure-grid .muted{font-size:.88rem;line-height:1.6;margin:5px 0 10px}
 .pendulum-force-figure input[type=range]{width:100%;touch-action:pan-y}
 @media(max-width:560px){.pendulum-figure-grid{grid-template-columns:minmax(0,1fr)}.pendulum-force-figure{padding:10px}}
+
+/* Each newly introduced physical situation has its own inline SVG. */
+.mechanics-situation-figure{margin:13px 0 20px;padding:12px;background:#f8fbf9;border:1px solid var(--line);border-radius:14px;max-width:780px}
+.mechanics-situation-figure svg{width:100%;height:auto;display:block;color:var(--ink)}
+.mechanics-situation-figure figcaption{font-size:.88rem;line-height:1.55;color:var(--muted);margin:5px 3px 0}
+@media(max-width:550px){.mechanics-situation-figure{padding:7px;margin:12px 0 15px}.mechanics-situation-figure figcaption{font-size:.82rem}}
