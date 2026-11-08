@@ -83,6 +83,91 @@ function deep(key,lang){
  default:return worked(key,lang)||origin(key,lang);
  }
 }
+/* The energy and collision textbooks each introduce eight distinct physical relations. */
+const sectionTitles={
+ 'energy-0':['力と変位の向き','Force and displacement'],
+ 'energy-1':['仕事による速さの変化','Speed change under work'],
+ 'energy-2':['保存力と二つの経路','Two paths under a conservative force'],
+ 'energy-3':['重力とばねの位置エネルギー','Gravitational and spring potential'],
+ 'energy-4':['斜面を下る物体のエネルギー','Energy of an object descending an incline'],
+ 'energy-5':['ポテンシャル曲線と全エネルギー','Potential curve and total energy'],
+ 'energy-6':['安定平衡と不安定平衡','Stable and unstable equilibrium'],
+ 'energy-7':['相互作用によるポテンシャル','An interaction potential'],
+ 'collision-0':['衝突する二台車を囲む系','System boundary around colliding carts'],
+ 'collision-1':['衝突前後の速度','Velocities before and after collision'],
+ 'collision-2':['弾性衝突と完全非弾性衝突','Elastic and perfectly inelastic collisions'],
+ 'collision-3':['実験室系と重心系','Laboratory and center-of-mass frames'],
+ 'collision-4':['運動エネルギーと内部エネルギー','Kinetic and internal energy'],
+ 'collision-5':['同じ力積を与える二つの力','Equal impulse, different contact times'],
+ 'collision-6':['二次元衝突と運動量成分','Two-dimensional momentum components'],
+ 'collision-7':['反発係数で変わる衝突結果','Collision outcomes with different restitution']};
+function sectionScene(key,lang){
+ switch(key){
+ case 'energy-0':return ln(65,225,496,225,'#7a998f',2)+cart(153,207)
+  +ar(215,165,367,165,'#8054a0')+txt(277,151,'Δr','#8054a0')
+  +ar(213,164,338,100,'#b45e44')+txt(303,88,'F','#b45e44')
+  +path('M245 164 A32 32 0 0 0 242 148','#678479',2)+txt(254,145,'θ');
+ case 'energy-1':return ln(60,218,499,218,'#7a998f',2)+cart(103,199)+cart(372,199)
+  +ar(168,153,237,153,'#356fa2')+txt(175,136,'v₀')
+  +ar(436,153,525,153,'#356fa2')+txt(461,135,'v')
+  +ar(214,190,339,190,'#b45e44')+txt(272,176,'F')
+  +txt(215,260,'Δx');
+ case 'energy-2':return circ(137,211,8,'#ad603e')+circ(444,63,8,'#356fa2')
+  +ln(137,211,444,63,'#537e75',3)
+  +path('M137 211 Q132 57 269 67 T444 63','#8054a0',3)
+  +txt(95,242,'A')+txt(450,52,'B')
+  +ar(399,89,399,159,'#b45e44')+txt(410,142,'mg')
+  +txt(256,252,L('経路は違っても高さ差は同じ','Same height difference',lang));
+ case 'energy-3':return ln(70,225,500,225,'#79978e',2)+rect(146,56,44,44)+ar(168,101,168,166)+txt(180,150,'mg')+ln(212,101,212,225,'#7d9990',1,'5 5')+txt(218,157,'h')
+  +ln(320,107,320,222,'#79978e',5)+spring(325,435,174)+rect(435,147,45,54)+ar(457,124,389,124,'#8054a0')+txt(367,106,'−kx','#8054a0');
+ case 'energy-4':{const base=inclineBase(),box=inclineBox(296,241-(296-95)*184/360,56,38);return base+box.shape
+  +ar(box.center.x,box.center.y,box.center.x,box.center.y+59)+txt(box.center.x+7,box.center.y+70,'mg')
+  +ar(box.contact.x,box.contact.y,box.contact.x-64,box.contact.y+33,'#356fa2')+txt(193,188,'v','#356fa2')
+  +txt(141,254,L('高さが減る','Height decreases',lang));}
+ case 'energy-5':return fieldAxes()+path('M132 63 Q278 295 430 63','#297e89',3)+ln(129,135,449,135,'#b45e44',2,'5 5')
+  +circ(186,155,6,'#b45e44')+circ(382,155,6,'#b45e44')
+  +txt(147,92,'U(x)','#297e89')+txt(445,131,'E','#b45e44')+txt(467,223,'x');
+ case 'energy-6':return ln(54,226,506,226,'#79978e',1)+path('M69 66 Q175 293 273 66','#297e89',3)
+  +path('M312 206 Q399 21 493 206','#b45e44',3)
+  +circ(175,177,8,'#caa15a')+circ(402,113,8,'#caa15a')
+  +txt(103,263,L('安定','Stable',lang),'#297e89')+txt(364,263,L('不安定','Unstable',lang),'#b45e44');
+ case 'energy-7':return fieldAxes()+path('M150 53 C178 53 189 229 250 220 C317 211 345 137 453 109','#297e89',3)
+  +ln(149,130,453,130,'#c07b44',1,'5 5')
+  +txt(156,46,L('近距離で強い反発','Short-range repulsion',lang),'#297e89',14)
+  +txt(365,103,L('遠距離','Large r',lang),'#297e89',14)+txt(469,223,'r');
+ case 'collision-0':return ln(66,214,501,214,'#7e998e',2)+cart(154,197)+cart(335,197)
+  +'<rect x="126" y="92" width="321" height="142" rx="13" stroke="#8054a0" stroke-width="2.5" stroke-dasharray="7 6" fill="none"/>'
+  +ar(218,160,273,160,'#b45e44')+ar(339,160,284,160,'#356fa2')+txt(165,72,L('二台車を含む系','Two-cart system',lang),'#8054a0');
+ case 'collision-1':return ln(56,151,507,151,'#7d998f',2)+cart(88,129)+cart(274,129)+ar(154,79,234,79,'#356fa2')+txt(179,65,'u₁')
+  +ln(56,256,507,256,'#7d998f',2)+cart(142,239)+cart(370,239)+ar(209,190,278,190,'#b45e44')+ar(436,190,488,190,'#b45e44')
+  +txt(14,130,L('前','Before',lang))+txt(14,244,L('後','After',lang));
+ case 'collision-2':return ln(55,120,510,120,'#7d998f',2)+cart(145,103)+cart(341,103)+ar(208,45,270,45)+ar(341,45,282,45,'#356fa2')
+  +ln(55,250,510,250,'#7d998f',2)+rect(250,189,132,45)+circ(275,242,7,'#fff')+circ(350,242,7,'#fff')+ar(382,208,451,208,'#8054a0')
+  +txt(18,68,'e = 1')+txt(18,202,'e = 0');
+ case 'collision-3':return ln(70,117,500,117,'#849f96',1)+circ(172,92,11)+circ(365,92,11)+ar(172,56,257,56)+ar(365,56,404,56,'#356fa2')
+  +ln(70,232,500,232,'#849f96',1)+circ(172,206,11)+circ(365,206,11)
+  +ar(172,168,220,168,'#8054a0')+ar(365,168,317,168,'#8054a0')
+  +txt(20,99,L('実験室系','Lab frame',lang))+txt(20,214,L('重心系','CM frame',lang))+txt(470,162,'V');
+ case 'collision-4':return rect(94,86,135,63,'#d4e8e2')+ar(235,117,327,117,'#8054a0')
+  +rect(330,63,139,100,'#e9dfd0')
+  +txt(112,107,'K before','#356fa2')+txt(343,94,'K after')+txt(339,140,'E internal')
+  +txt(148,215,L('運動量保存とエネルギー変換は別','Momentum conservation ≠ K conservation',lang),undefined,14);
+ case 'collision-5':return fieldAxes()+path('M140 213 L171 65 L207 65 L238 213','#b45e44',3,'none')
+  +path('M274 213 L307 141 L423 141 L456 213','#356fa2',3,'none')
+  +txt(142,48,L('短時間・大きな力','Short, large force',lang),'#b45e44',13)
+  +txt(295,121,L('長時間・小さな力','Long, smaller force',lang),'#356fa2',13)
+  +txt(464,231,'t')+txt(91,51,'F');
+ case 'collision-6':return circ(223,143,19)+circ(326,103,19)+ar(223,143,324,143,'#8054a0')
+  +ar(223,143,280,91,'#b45e44')+ar(326,103,385,66,'#356fa2')
+  +ln(182,183,405,183,'#93a9a2',1,'5 5')
+  +txt(327,147,'x')+txt(281,86,'y')
+  +txt(138,257,L('x・y 成分を別々に保存','Conserve x and y components',lang));
+ case 'collision-7':return ln(55,222,510,222,'#7e998e',2)+cart(102,204)+cart(269,204)+ar(167,138,238,138,'#356fa2')
+  +rect(383,147,81,58,'#d4e8e2')+ar(427,119,488,119,'#b45e44')+txt(406,104,'e')
+  +txt(149,260,L('反発係数で終速度が変わる','Restitution changes final velocities',lang),undefined,14);
+ }
+ return '';
+}
 const originTitles={
 force:['台車に作用する力','Forces on a cart'],friction:['斜面上の物体と接触力','Box in contact with an incline'],energy:['台車への仕事','Work on a moving cart'],
 momentum:['衝突前の二台車','Two carts before collision'],circular:['円軌道上の速度と加速度','Velocity and acceleration on a circle'],
@@ -107,11 +192,11 @@ oscillation:['振り子の重力成分','Pendulum weight components'],gravitatio
 rotation:['坂を転がる円盤と輪','Rolling disk and hoop'],noninertial:['加速する車内の振り子','Pendulum in accelerating vehicle'],
 lagrange:['滑車につながれた二つの物体','Two masses over a pulley'],hamilton:['ばねの位置と運動量','Spring position and momentum'],
 coupled:['二つの固有振動','Two normal modes']};
-export const situationKeys=Object.freeze({origin:Object.keys(originTitles),worked:Object.keys(workedTitles),deep:Object.keys(deepTitles)});
+export const situationKeys=Object.freeze({origin:Object.keys(originTitles),worked:Object.keys(workedTitles),deep:Object.keys(deepTitles),section:Object.keys(sectionTitles)});
 export function mechanicsSituationFigure(key,section='origin',language='ja'){
- const titles=section==='worked'?workedTitles:section==='deep'?deepTitles:originTitles;
+ const titles=section==='worked'?workedTitles:section==='deep'?deepTitles:section==='section'?sectionTitles:originTitles;
  if(!Object.prototype.hasOwnProperty.call(titles,key))return '';
- const en=language==='en',art=section==='worked'?worked(key,language):section==='deep'?deep(key,language):origin(key,language);
+ const en=language==='en',art=section==='worked'?worked(key,language):section==='deep'?deep(key,language):section==='section'?sectionScene(key,language):origin(key,language);
  if(!art)return '';
  const name=titles[key][en?1:0];
  return '<figure class="mechanics-situation-figure" data-situation="'+esc(section+':'+key)+'">'
