@@ -101,7 +101,7 @@ function chapterHtml(c,index){
     +'<p>'+esc(c.definition)+'</p>'
     +'<div class="callout"><strong>'+word('運動量の使い方','Using momentum')+'</strong><p>'+esc(c.why)+'</p></div>'
     +deepIntroHtml(c.key,en?'en':'ja')
-   :mechanicsOriginHtml(c.key,en?'en':'ja')
+   :mechanicsOriginHtml(c.key,en?'en':'ja',c.key==='circular'?circularVelocityHtml(en?'en':'ja'):'')
     +'<h3>'+word('用語と記号','Terms and notation')+'</h3>'
     +'<p>'+esc(c.definition)+'</p>'
     +'<div class="callout"><strong>'+word('この関係の使い方','Using this relation')+'</strong><p>'+esc(c.why)+'</p></div>'
@@ -110,7 +110,6 @@ function chapterHtml(c,index){
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
   +phenomenonIntro
   +(c.key==='rotation'?torqueDoorHtml(en?'en':'ja'):'')
-  +(c.key==='circular'?circularVelocityHtml(en?'en':'ja'):'')
   +(c.key==='force'?twoBlockTextbookHtml(en?'en':'ja'):'')
   +(c.key==='friction'?inclineTextbookHtml(en?'en':'ja'):mechanicsWorkedCaseHtml(c.key,en?'en':'ja'))
   +(c.key==='energy'?energyTextbookHtml(en?'en':'ja'):'')
