@@ -35,7 +35,7 @@ test('reject invalid oscillator parameters',()=>{
  for(const opts of [{amplitude:0},{mass:0},{stiffness:-1},{phaseDeg:-1},{phaseDeg:361},{mass:Infinity},{amplitude:NaN}])
  assert.throws(()=>oscillatorState(opts),RangeError);
 });
-test('Japanese and English diagrams have two accessible SVGs and four controls',()=>{
+test('Japanese and English diagrams have three accessible SVGs and four controls',()=>{
  for(const lang of ['ja','en']){
  const html=oscillationVisualHtml(lang);
  assert.equal((html.match(/role="img"/g)||[]).length,3);
