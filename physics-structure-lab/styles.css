@@ -552,3 +552,9 @@
 
 /* Preserve the chapter list while revealing the selected chapter after a mobile tap. */
 #mechanics-detail{scroll-margin-top:86px}
+
+/* Chapter 06: preserve readable SVG panels on narrow phones while keeping textbook prose unchanged. */
+.oscillation-visual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,315px),1fr));gap:14px;align-items:start;margin:18px 0}
+.oscillation-visual-grid .oscillation-panel{min-width:0;border:1px solid var(--line);background:#fafdfb;border-radius:12px;padding:9px}
+.oscillation-visual-grid svg{width:100%;height:auto;display:block;color:var(--ink)}
+.oscillation-visual-grid .muted{font-size:.88rem;margin:8px 5px;line-height:1.6}
