@@ -607,3 +607,13 @@
 .electricity-example-steps li{padding:8px 0 15px;border-bottom:1px solid var(--line)}
 .electricity-example-steps .tex-display{overflow-x:auto}
 .electricity-equation-explanation{line-height:1.85;margin:3px 0 16px}
+
+/* Every new electricity definition has a dedicated and accessible diagram. */
+.electricity-definition-figure{margin:16px 0 12px;padding:clamp(9px,2vw,16px);background:#f9fcfa;border:1px solid var(--line);border-radius:14px}
+.electricity-definition-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:12px;line-height:1.5}
+.electricity-definition-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px;align-items:start}
+.electricity-definition-panel{min-width:0;border:1px solid var(--line);background:white;border-radius:10px;padding:8px}
+.electricity-definition-panel-label{font-size:.83rem;font-weight:600;color:var(--muted);margin:0 0 6px}
+.electricity-definition-panel svg{width:100%;height:auto;display:block;color:var(--ink)}
+.electricity-definition-figure figcaption{font-size:.92rem;line-height:1.75;color:var(--ink);margin:10px 2px 0}
+@media(max-width:780px){.electricity-definition-grid{grid-template-columns:minmax(0,1fr)}.electricity-definition-panel{padding:7px}.electricity-definition-panel:nth-child(2){max-width:480px}.electricity-definition-figure{margin:13px 0 10px}}
