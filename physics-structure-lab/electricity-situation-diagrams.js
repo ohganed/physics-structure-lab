@@ -53,7 +53,7 @@ function scene(id,lang){
  const en=lang==='en',t=(ja,enText)=>en?enText:ja;
  switch(id){
  case 'charged-bodies':return charges(true)+arrow(242,132,295,132,'#387eaa')+text(220,107,'e−','#387eaa')+text(112,208,t('電子の移動','Electron transfer'));
- case 'coulomb':return charges(true)+arrow(147,148,76,148)+arrow(398,148,465,148,'#387eaa')+text(267,183,'r');
+ case 'coulomb':return charges(true)+arrow(139,148,211,148)+arrow(405,148,333,148,'#387eaa')+text(267,183,'r')+text(196,84,lang==='en'?'Attraction':'引力');
  case 'superposition':return circle(173,208,20,'#f4dfd5')+circle(366,208,20,'#f4dfd5')+circle(270,73,17,'#f4dfd5')+text(265,78,'+')+arrow(270,73,320,11)+arrow(270,73,220,11)+text(160,247,'+')+text(354,247,'+');
  case 'field-definition':return circleField(270,146,true)+circle(416,146,14,'#dae9f2')+text(412,152,'+')+arrow(436,146,479,146,'#b45d40');
  case 'field-lines':return circleField(187,145,true)+circleField(386,145,false);
@@ -83,8 +83,8 @@ function scene(id,lang){
  case 'reactance':return linesPlot('i(t)','lag')+text(269,70,t('位相差 90°','Phase shift 90°'));
  case 'resonance':return circuit('rlc')+text(216,267,'ω₀ = 1/√LC');
  case 'ampere-maxwell':return circuit('rc')+arrow(362,146,393,146,'#b45d40')+text(280,270,'∂ΦE/∂t');
- case 'wave':{let s=line(81,223,485,223);let e='',b='';for(let i=0;i<=120;i++){let x=85+i*3.3;e+=(i?'L':'M')+x.toFixed(2)+' '+(121-66*Math.sin(i/120*4*Math.PI)).toFixed(2)+' ';b+=(i?'L':'M')+x.toFixed(2)+' '+(121-40*Math.cos(i/120*4*Math.PI)).toFixed(2)+' ';}return s+path(e,'#b45b42',3)+path(b,'#397f9f',3)+text(450,243,'x')+text(90,49,'E / B');}
- case 'energy-flux':return arrow(150,209,150,73,'#b45c43')+arrow(150,209,319,209,'#397c9f')+arrow(150,209,409,65,'#8054a1')+text(130,64,'E')+text(321,228,'B')+text(414,59,'S')+text(215,269,'S ∝ E × B');
+ case 'wave':{let s=line(81,223,485,223);let e='',b='';for(let i=0;i<=120;i++){let x=85+i*3.3;const phase=i/120*4*Math.PI;e+=(i?'L':'M')+x.toFixed(2)+' '+(121-66*Math.sin(phase)).toFixed(2)+' ';b+=(i?'L':'M')+x.toFixed(2)+' '+(121-35*Math.sin(phase)).toFixed(2)+' ';}return s+path(e,'#b45b42',3)+path(b,'#397f9f',2.5)+text(452,243,'x')+text(90,49,'E / B')+text(249,267,lang==='en'?'In phase; B is transverse':'同位相・磁場は横方向');}
+ case 'energy-flux':return arrow(150,209,150,73,'#b45c43')+circle(150,209,22,'none')+circle(150,209,5,'#397c9f')+arrow(150,209,420,209,'#8054a1')+text(130,64,'E')+text(174,236,'B ⊙')+text(426,214,'S')+text(215,269,'S ∝ E × B');
  default:return '';
  }
 }
