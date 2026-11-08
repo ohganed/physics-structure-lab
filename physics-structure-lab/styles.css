@@ -558,3 +558,13 @@
 .oscillation-visual-grid .oscillation-panel{min-width:0;border:1px solid var(--line);background:#fafdfb;border-radius:12px;padding:9px}
 .oscillation-visual-grid svg{width:100%;height:auto;display:block;color:var(--ink)}
 .oscillation-visual-grid .muted{font-size:.88rem;margin:8px 5px;line-height:1.6}
+
+/* Pendulum diagrams stay legible on mobile, immediately beside their derivation. */
+.pendulum-force-figure{margin:18px 0 24px;padding:clamp(10px,2.5vw,18px);border:1px solid var(--line);border-radius:16px;background:#f9fcfa}
+.pendulum-force-figure h4{margin:0 0 10px;color:var(--green)}
+.pendulum-figure-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;align-items:start}
+.pendulum-figure-grid>div{min-width:0;max-width:520px}
+.pendulum-figure-grid svg{display:block;width:100%;max-width:420px;height:auto;color:var(--ink)}
+.pendulum-figure-grid .muted{font-size:.88rem;line-height:1.6;margin:5px 0 10px}
+.pendulum-force-figure input[type=range]{width:100%;touch-action:pan-y}
+@media(max-width:560px){.pendulum-figure-grid{grid-template-columns:minmax(0,1fr)}.pendulum-force-figure{padding:10px}}
