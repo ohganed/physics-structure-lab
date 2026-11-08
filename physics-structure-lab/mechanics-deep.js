@@ -2,6 +2,7 @@
 import {deepMechanicsLessons} from './mechanics-deep-part1.js';
 import {advancedDeepMechanicsLessons} from './mechanics-deep-part2.js';
 import {formulaReaders} from './mechanics-formula-readers.js';
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 export const deepLessons=Object.freeze({...deepMechanicsLessons,...advancedDeepMechanicsLessons});
 const escapeHTML=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
 const t=(pair,language='ja')=>pair?.[language==='en'?'en':'ja']||'';
@@ -30,6 +31,7 @@ export function deepWorkedExampleHtml(key,language='ja'){
  return '<section class="mechanics-deep-example">'
   +'<details class="mechanics-explain-details"><summary>'+label(language,'例題を最初から解く：途中式と判断の理由','Worked example: every step and why it matters')+'</summary>'
   +'<p class="mechanics-example-prompt">'+escapeHTML(t(example.problem,language))+'</p>'
+  +mechanicsSituationFigure(key,'deep',language)
   +'<ol class="mechanics-worked-steps">'+example.steps.map(([formula,explanation])=>'<li>'+math(formula)+'<p>'+escapeHTML(t(explanation,language))+'</p></li>').join('')+'</ol>'
   +'<p class="mechanics-example-conclusion"><strong>'+label(language,'結果を物理的に読む：','Interpret the result:')+'</strong> '+escapeHTML(t(example.conclusion,language))+'</p></details>'
   +'<div class="mechanics-common-error"><strong>'+label(language,'つまずきやすい点','A common misconception')+'</strong><p>'+escapeHTML(t(lesson.misconception,language))+'</p></div>'
