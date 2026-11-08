@@ -47,15 +47,15 @@ function origin(key,lang){
  case 'force':return ln(65,207,480,207,'#78958d',3)+cart(175,193)+ar(245,167,367,167)+txt(273,152,'F')+ar(210,148,151,148,'#356fa2')+txt(160,133,L('抵抗','resistance',lang),'#356fa2')+ar(207,171,207,245,'#af573f')+txt(218,257,'mg')+ar(207,207,207,112,'#356fa2')+txt(217,106,'N');
  case 'friction':{const b=inclineBox();return inclineBase()+b.shape+circ(b.center.x,b.center.y,4,'#356d66')+ar(b.center.x,b.center.y,b.center.x,b.center.y+74)+txt(b.center.x+10,b.center.y+75,'mg')+ar(b.contact.x,b.contact.y,b.contact.x+b.normal.x*79,b.contact.y+b.normal.y*79,'#356fa2')+txt(193,81,'N','#356fa2')+ar(b.contact.x,b.contact.y,b.contact.x+b.along.x*61,b.contact.y+b.along.y*61,'#8052a6')+txt(335,143,'f','#8052a6');}
  case 'energy':return ln(65,205,480,205,'#78958d',3)+cart(162,191)+ar(225,153,390,153)+txt(300,136,'F')+ln(215,232,392,232,'#6c8d85',2)+txt(263,254,'Δx')+txt(142,100,L('移動方向 →','Displacement →',lang));
- case 'momentum':return ln(65,205,480,205,'#78958d',3)+cart(133,190)+cart(357,190)+ar(194,138,293,138)+txt(226,121,'v₁')+ar(360,138,315,138,'#356fa2')+txt(330,121,'v₂','#356fa2')+txt(205,265,L('衝突前','Before collision',lang));
+ case 'momentum':return ln(65,205,480,205,'#78958d',3)+cart(133,192)+cart(357,192)+ar(194,138,293,138)+txt(226,121,'v₁')+ar(360,138,315,138,'#356fa2')+txt(330,121,'v₂','#356fa2')+txt(205,265,L('衝突前','Before collision',lang));
  case 'circular':return circ(262,147,108,'none')+ln(262,147,370,147,'#9db6ae',1.5,'5 5')+circ(370,147,7)+ar(370,147,370,51,'#af573f')+txt(382,70,'v')+ar(370,147,302,147,'#356fa2')+txt(316,131,'a','#356fa2')+txt(265,139,'O')+txt(309,166,'r');
- case 'oscillation':return ln(70,81,70,230,'#7d9890',5)+ln(70,222,485,222,'#8da9a0',2)+spring(74,327,174)+rect(327,146,80,56)+ar(365,130,296,130,'#af573f')+txt(294,111,'F=−kx')+ln(270,95,270,236,'#8da9a0',1.5,'4 5')+txt(239,256,'x=0');
+ case 'oscillation':return ln(70,81,70,230,'#7d9890',5)+ln(70,202,485,202,'#8da9a0',2)+spring(74,327,174)+rect(327,146,80,56)+ar(365,130,296,130,'#af573f')+txt(294,111,'F=−kx')+ln(270,95,270,236,'#8da9a0',1.5,'4 5')+txt(239,256,'x=0');
  case 'gravitation':return circ(230,140,73,'#d0e5e1')+circ(230,140,6,'#356d66')+path('M230 21 A119 119 0 1 1 229.9 21','#9ab3ae',2)+circ(343,100,10)+ar(343,100,285,120)+txt(313,85,'Fg')+ar(343,100,320,35,'#356fa2')+txt(335,43,'v','#356fa2')+txt(192,144,L('地球','Earth',lang));
  case 'rotation':return ln(110,188,110,72,'#567f73',6)+rect(113,109,327,32)+circ(113,125,9)+circ(412,125,6,'#b46a4a')+ar(412,125,412,35)+txt(423,52,'F')+txt(251,160,'r')+txt(73,211,L('蝶番','Hinge',lang));
  case 'noninertial':return ln(65,207,484,207,'#7c9990',2)+rect(112,111,310,91,'#e0eae6')+rect(267,156,58,51)+ar(447,169,501,169)+txt(455,153,'a')+ar(295,181,246,181,'#8052a6')+txt(190,136,L('見かけの力','inertial force',lang),'#8052a6');
  case 'lagrange':{const p=pendulum(270,46,34,151);return p.art+txt(280,73,'θ')+txt(345,188,'m')+path('M270 197 Q315 211 357 184','#6e8a80',1.5)+txt(174,254,L('糸の長さ ℓ が一定','Fixed length ℓ',lang));}
  case 'hamilton':return fieldAxes()+path('M125 139 C139 45 419 45 432 139 C447 235 142 263 125 139','#377f89',3)+circ(432,139,5,'#bf774b')+txt(461,226,'q')+txt(92,61,'p')+txt(225,54,L('一定の H','constant H',lang));
- case 'coupled':return ln(55,228,515,228,'#78958d',2)+ln(62,123,62,201,'#78958d',5)+ln(492,123,492,201,'#78958d',5)+spring(67,177,169)+rect(177,141,63,55)+spring(240,327,169)+rect(327,141,63,55)+spring(390,490,169)+ar(206,119,237,119,'#af573f')+ar(358,119,389,119,'#356fa2')+txt(196,109,'x₁')+txt(354,109,'x₂');
+ case 'coupled':return ln(55,196,515,196,'#78958d',2)+ln(62,123,62,201,'#78958d',5)+ln(492,123,492,201,'#78958d',5)+spring(67,177,169)+rect(177,141,63,55)+spring(240,327,169)+rect(327,141,63,55)+spring(390,490,169)+ar(206,119,237,119,'#af573f')+ar(358,119,389,119,'#356fa2')+txt(196,109,'x₁')+txt(354,109,'x₂');
  }
  return '';
 }
@@ -70,8 +70,8 @@ function worked(key,lang){
  case 'rotation':{const ramp=path('M95 239 L471 96 L471 239 Z','#728d81',2,'#eff5f2');return ramp+circ(233,155.5,29,'#d4e7df')+circ(326,119.8,29,'#e7e1c9')+circ(326,119.8,19,'#eff5f2')+circ(233,155.5,4)+circ(326,119.8,4)+txt(174,140,L('円盤','disk',lang))+txt(353,115,L('輪','hoop',lang));}
  case 'noninertial':{const p=pendulum(253,52,-27,131);return rect(95,24,357,212,'#eef3f0')+p.art+ar(470,149,522,149,'#356fa2')+txt(478,136,'a','#356fa2')+ar(p.bx,p.by,p.bx-51,p.by,'#8052a6')+txt(112,167,L('慣性力','fictitious force',lang),'#8052a6');}
  case 'lagrange':return circ(270,81,33,'#fff')+ln(270,48,270,30,'#62897b',3)+ln(237,81,237,178,'#547e75',3)+ln(303,81,303,209,'#547e75',3)+rect(212,178,49,40)+rect(278,209,49,39)+ar(238,174,238,251)+ar(303,206,303,266)+txt(175,200,'m₁')+txt(331,229,'m₂')+txt(352,133,L('滑車','pulley',lang));
- case 'hamilton':return ln(75,209,492,209,'#779389',3)+spring(77,269,168)+rect(269,151,88,58)+ar(315,115,393,115,'#356fa2')+txt(335,98,'p')+txt(274,246,'q')+txt(122,53,L('位置と運動量','Position & momentum',lang));
- case 'coupled':return ln(58,227,507,227,'#7b998f',2)+ln(62,128,62,199,'#7b998f',5)+ln(494,128,494,199,'#7b998f',5)+spring(65,183,169)+rect(183,144,61,50)+spring(244,329,169)+rect(329,144,61,50)+spring(390,491,169)+ar(215,117,251,117,'#af573f')+ar(360,117,322,117,'#356fa2')+txt(170,99,L('逆位相の例','Opposite-phase example',lang));
+ case 'hamilton':return ln(75,209,492,209,'#779389',3)+spring(77,269,180)+rect(269,151,88,58)+ar(315,115,393,115,'#356fa2')+txt(335,98,'p')+txt(274,246,'q')+txt(122,53,L('位置と運動量','Position & momentum',lang));
+ case 'coupled':return ln(58,194,507,194,'#7b998f',2)+ln(62,128,62,199,'#7b998f',5)+ln(494,128,494,199,'#7b998f',5)+spring(65,183,169)+rect(183,144,61,50)+spring(244,329,169)+rect(329,144,61,50)+spring(390,491,169)+ar(215,117,251,117,'#af573f')+ar(360,117,322,117,'#356fa2')+txt(170,99,L('逆位相の例','Opposite-phase example',lang));
  }
  return '';
 }
@@ -79,7 +79,7 @@ function deep(key,lang){
  switch(key){
  case 'energy':return ln(70,233,483,233,'#78958d',3)+circ(260,59,17)+ln(260,78,260,200,'#8baca2',1.5,'5 5')+ar(260,59,260,128)+txt(277,116,'mg')+ar(315,75,315,203,'#356fa2')+txt(326,161,'h = 5 m','#356fa2')+txt(202,260,L('地面','Ground',lang));
  case 'noninertial':return ln(55,235,502,235,'#739186',3)+rect(128,101,280,115,'#e3eeeb')+rect(234,166,70,69)+ar(439,155,495,155,'#356fa2')+txt(446,137,'a')+ar(269,173,207,173,'#8052a6')+txt(160,153,L('見かけの力','Inertial force',lang),'#8052a6')+txt(150,262,L('右向きに加速するバス','Bus accelerating right',lang));
- case 'lagrange':return ln(64,204,485,204,'#739186',3)+ln(70,116,70,206,'#739186',5)+spring(74,258,164)+rect(258,145,88,59)+ar(306,117,362,117,'#356fa2')+txt(315,101,'x')+ar(290,133,241,133,'#af573f')+txt(213,112,'−kx');
+ case 'lagrange':return ln(64,204,485,204,'#739186',3)+ln(70,116,70,206,'#739186',5)+spring(74,258,175)+rect(258,145,88,59)+ar(306,117,362,117,'#356fa2')+txt(315,101,'x')+ar(290,133,241,133,'#af573f')+txt(213,112,'−kx');
  default:return worked(key,lang)||origin(key,lang);
  }
 }
@@ -103,11 +103,11 @@ const sectionTitles={
  'collision-7':['反発係数で変わる衝突結果','Collision outcomes with different restitution']};
 function sectionScene(key,lang){
  switch(key){
- case 'energy-0':return ln(65,225,496,225,'#7a998f',2)+cart(153,207)
+ case 'energy-0':return ln(65,225,496,225,'#7a998f',2)+cart(153,211)
   +ar(215,165,367,165,'#8054a0')+txt(277,151,'Δr','#8054a0')
   +ar(213,164,338,100,'#b45e44')+txt(303,88,'F','#b45e44')
   +path('M245 164 A32 32 0 0 0 242 148','#678479',2)+txt(254,145,'θ');
- case 'energy-1':return ln(60,218,499,218,'#7a998f',2)+cart(103,199)+cart(372,199)
+ case 'energy-1':return ln(60,218,499,218,'#7a998f',2)+cart(103,204)+cart(372,204)
   +ar(168,153,237,153,'#356fa2')+txt(175,136,'v₀')
   +ar(436,153,525,153,'#356fa2')+txt(461,135,'v')
   +ar(214,190,339,190,'#b45e44')+txt(272,176,'F')
@@ -138,8 +138,8 @@ function sectionScene(key,lang){
  case 'collision-0':return ln(66,214,501,214,'#7e998e',2)+cart(154,197)+cart(335,197)
   +'<rect x="126" y="92" width="321" height="142" rx="13" stroke="#8054a0" stroke-width="2.5" stroke-dasharray="7 6" fill="none"/>'
   +ar(218,160,273,160,'#b45e44')+ar(339,160,284,160,'#356fa2')+txt(165,72,L('二台車を含む系','Two-cart system',lang),'#8054a0');
- case 'collision-1':return ln(56,151,507,151,'#7d998f',2)+cart(88,129)+cart(274,129)+ar(154,79,234,79,'#356fa2')+txt(179,65,'u₁')
-  +ln(56,256,507,256,'#7d998f',2)+cart(142,239)+cart(370,239)+ar(209,190,278,190,'#b45e44')+ar(436,190,488,190,'#b45e44')
+ case 'collision-1':return ln(56,151,507,151,'#7d998f',2)+cart(88,137)+cart(274,137)+ar(154,79,234,79,'#356fa2')+txt(179,65,'u₁')
+  +ln(56,256,507,256,'#7d998f',2)+cart(142,242)+cart(370,242)+ar(209,190,278,190,'#b45e44')+ar(436,190,488,190,'#b45e44')
   +txt(14,130,L('前','Before',lang))+txt(14,244,L('後','After',lang));
  case 'collision-2':return ln(55,120,510,120,'#7d998f',2)+cart(145,103)+cart(341,103)+ar(208,45,270,45)+ar(341,45,282,45,'#356fa2')
   +ln(55,250,510,250,'#7d998f',2)+rect(250,189,132,45)+circ(275,242,7,'#fff')+circ(350,242,7,'#fff')+ar(382,208,451,208,'#8054a0')
@@ -223,8 +223,8 @@ function supplementScene(key,lang){
  }
  if(key.startsWith('transfer-')){
   const k=key.slice(9);
-  if(k==='slope')return path('M80 226 L209 98 L209 226 Z','#7b998f',2,'#eff6f2')+path('M298 226 L470 154 L470 226 Z','#7b998f',2,'#eff6f2')+txt(148,88,'h₁')+txt(463,142,'h₂')+circ(141,159,9)+circ(374,195,9)+txt(165,265,L('同じ高さ差を比較','Compare equal height loss',lang));
-  if(k==='spring')return ln(65,220,496,220,'#7b998f',2)+ln(81,100,81,220,'#7b998f',5)+spring(85,289,175)+rect(289,147,75,54)+ar(364,175,441,175,'#356fa2')+txt(403,157,'v')+txt(190,263,L('圧縮 x','compression x',lang));
+  if(k==='slope')return path('M80 226 L209 117 L209 226 Z','#7b998f',2,'#eff6f2')+path('M298 226 L470 117 L470 226 Z','#7b998f',2,'#eff6f2')+txt(148,88,'h₁')+txt(463,142,'h₂')+circ(141,159,9)+circ(374,195,9)+txt(165,265,L('同じ高さ差を比較','Compare equal height loss',lang));
+  if(k==='spring')return ln(65,220,496,220,'#7b998f',2)+ln(81,100,81,220,'#7b998f',5)+spring(85,289,193)+rect(289,166,75,54)+ar(364,175,441,175,'#356fa2')+txt(403,157,'v')+txt(190,263,L('圧縮 x','compression x',lang));
   if(k==='pendulum'){const p=pendulum(240,48,42,145);return p.art+circ(240,193,12,'none')+ln(p.bx,p.by,240,193,'#8ca9a0',1.5,'5 5')+ar(p.bx,p.by,p.bx,p.by+66)+txt(p.bx+9,p.by+59,'mg')+txt(150,254,L('高さ差 h','height drop h',lang));}
   if(k==='friction')return ln(60,212,506,212,'#7b998f',3)+cart(116,195)+ar(183,151,266,151,'#356fa2')+ar(174,170,101,170,'#b45e44')+txt(209,135,'v₀')+txt(98,156,'f')+txt(289,246,L('停止距離 d','stopping distance d',lang));
  }
