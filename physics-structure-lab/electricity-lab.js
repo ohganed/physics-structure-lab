@@ -3,6 +3,7 @@ import {electricityLessons2} from './electricity-textbook-part2.js';
 import {electricityLessons3} from './electricity-textbook-part3.js';
 import {electricityFigure} from './electricity-situation-diagrams.js';
 import {electricityDerivationNotes} from './electricity-derivation-notes.js';
+import {electricityDefinitionFigure} from './electricity-definition-diagrams.js';
 import {electricityWorkedExamples} from './electricity-worked-examples.js';
 import {electricityExampleFigure} from './electricity-example-figures.js';
 import {coulombForce,resistorNetwork,rcResponse,chargedParticleB} from './electricity-models.js';
@@ -20,7 +21,7 @@ function chapterMarkup(chapter,index,en){
   +'<p class="electricity-scene">'+escapeHTML(pair(section.scene,en))+'</p>'
   +electricityFigure(section.id,pair(section.title,en),lang)
   +'<div class="electricity-derivation"><h4>'+(en?'Equations and their derivation':'関係式と導出')+'</h4>'
-  +section.derivation.map((eq,j)=>math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>').join('')+'</div>'
+  +section.derivation.map((eq,j)=>electricityDefinitionFigure(section.id,j,lang)+math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>').join('')+'</div>'
   +'<p><strong>'+(en?'Physical meaning: ':'物理的意味：')+'</strong>'+escapeHTML(pair(section.meaning,en))+'</p>'
   +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p></section>').join('')
  +(electricityWorkedExamples[chapter.key]?(()=>{
