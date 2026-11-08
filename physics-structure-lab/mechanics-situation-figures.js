@@ -70,6 +70,14 @@ function worked(key,lang){
  }
  return '';
 }
+function deep(key,lang){
+ switch(key){
+ case 'energy':return ln(70,233,483,233,'#78958d',3)+circ(260,59,17)+ln(260,78,260,200,'#8baca2',1.5,'5 5')+ar(260,59,260,128)+txt(277,116,'mg')+ar(315,75,315,203,'#356fa2')+txt(326,161,'h = 5 m','#356fa2')+txt(202,260,L('地面','Ground',lang));
+ case 'noninertial':return ln(55,235,502,235,'#739186',3)+rect(128,101,280,115,'#e3eeeb')+rect(234,158,70,50)+ar(439,155,495,155,'#356fa2')+txt(446,137,'a')+ar(269,173,207,173,'#8052a6')+txt(160,153,L('見かけの力','Inertial force',lang),'#8052a6')+txt(150,262,L('右向きに加速するバス','Bus accelerating right',lang));
+ case 'lagrange':return ln(64,204,485,204,'#739186',3)+ln(70,116,70,206,'#739186',5)+spring(74,258,164)+rect(258,137,88,59)+ar(306,117,362,117,'#356fa2')+txt(315,101,'x')+ar(290,133,241,133,'#af573f')+txt(213,112,'−kx');
+ default:return worked(key,lang)||origin(key,lang);
+ }
+}
 const originTitles={
 force:['台車に作用する力','Forces on a cart'],friction:['斜面上の物体と接触力','Box in contact with an incline'],energy:['台車への仕事','Work on a moving cart'],
 momentum:['衝突前の二台車','Two carts before collision'],circular:['円軌道上の速度と加速度','Velocity and acceleration on a circle'],
@@ -77,6 +85,16 @@ oscillation:['水平ばねと復元力','Horizontal spring and restoring force']
 rotation:['ドアの回転軸と作用点','Hinge and applied force'],noninertial:['加速する車内の座標系','Accelerating reference frame'],
 lagrange:['拘束された振り子の角度','The constrained pendulum'],hamilton:['ばね振動の位相空間','Oscillator phase space'],
 coupled:['ばねで結合した二つの物体','Two spring-coupled masses']};
+const deepTitles={
+ force:['台車に働く力の例題','Worked cart forces'],friction:['静止摩擦が働く斜面','Static friction on an incline'],
+ energy:['自由落下する物体','Object in free fall'],momentum:['合体する二物体','Inelastic collision'],
+ circular:['円周上の速度と加速度','Circular motion velocity and acceleration'],
+ oscillation:['周期を計算するばね','Spring used to calculate a period'],gravitation:['円軌道を動く衛星','Satellite in circular orbit'],
+ rotation:['回転軸を押す力','Force applied about an axis'],
+ noninertial:['加速するバス内の物体','Object inside accelerating bus'],
+ lagrange:['ラグランジアンで扱う水平ばね','Horizontal spring in a Lagrangian'],
+ hamilton:['位置と運動量で表すばね','Spring in position-momentum coordinates'],
+ coupled:['結合ばねと二つの物体','Coupled masses and springs']};
 const workedTitles={
 force:['加速するエレベーター','Accelerating elevator'],energy:['ブレーキで停止する車','Car braking to a stop'],
 momentum:['くっつく二台車','Carts sticking together'],circular:['傾斜した道路を走る車','Car on a banked curve'],
@@ -84,11 +102,11 @@ oscillation:['振り子の重力成分','Pendulum weight components'],gravitatio
 rotation:['坂を転がる円盤と輪','Rolling disk and hoop'],noninertial:['加速する車内の振り子','Pendulum in accelerating vehicle'],
 lagrange:['滑車につながれた二つの物体','Two masses over a pulley'],hamilton:['ばねの位置と運動量','Spring position and momentum'],
 coupled:['二つの固有振動','Two normal modes']};
-export const situationKeys=Object.freeze({origin:Object.keys(originTitles),worked:Object.keys(workedTitles)});
+export const situationKeys=Object.freeze({origin:Object.keys(originTitles),worked:Object.keys(workedTitles),deep:Object.keys(deepTitles)});
 export function mechanicsSituationFigure(key,section='origin',language='ja'){
- const titles=section==='worked'?workedTitles:originTitles;
+ const titles=section==='worked'?workedTitles:section==='deep'?deepTitles:originTitles;
  if(!Object.prototype.hasOwnProperty.call(titles,key))return '';
- const en=language==='en',art=section==='worked'?worked(key,language):origin(key,language);
+ const en=language==='en',art=section==='worked'?worked(key,language):section==='deep'?deep(key,language):origin(key,language);
  if(!art)return '';
  const name=titles[key][en?1:0];
  return '<figure class="mechanics-situation-figure" data-situation="'+esc(section+':'+key)+'">'
