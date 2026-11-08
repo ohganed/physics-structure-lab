@@ -29,7 +29,7 @@ export function inclineTextbookHtml(language='ja'){
  +'</div>'
  +'<svg id="incline-diagram" role="img" viewBox="0 0 560 310" aria-label="'+(en?'Inclined block and forces':'斜面の箱と力の方向')+'"></svg>'
  +'<div id="incline-results" class="incline-results" aria-live="polite"></div>'
- +'<p class="muted">'+(en?'Force arrows are drawn in proportion to each other. Gravity and contact forces are shown from one point to make their vector directions easy to compare.':'力の矢印の長さは互いの大きさに比例して描きます。方向を比較しやすいよう、同じ点から示しています。')+'</p>'
+ +'<p class="muted">'+(en?'Force-arrow lengths use a common scale. Weight is drawn from the block center; normal reaction and friction begin at the surface contact point.':'力の矢印の長さは共通の尺度で示します。重力は物体の中心から、垂直抗力と摩擦は斜面との接触点から描きます。')+'</p>'
  +'<p class="muted">'+(en?'The model assumes a block starting from rest, a rigid plane, and μk ≤ μs. Contact behavior can be more complicated in real experiments.':'静止から考え始める箱、変形しない板、μk ≤ μsを仮定したモデルです。実際の接触面の挙動は、さらに複雑になる場合があります。')+'</p>'
  +'</section></article>';
 }
@@ -49,20 +49,23 @@ export function installInclineTextbook(root,language='ja'){
   }
   const rad=thetaDegrees*Math.PI/180,co=Math.cos(rad),si=Math.sin(rad);
   const tipX=80+270*co,tipY=248-270*si;
-  const cx=80+142*co-18*si,cy=248-142*si-18*co;
+  // The rectangle is anchored at its bottom midpoint, exactly ON the incline.
+  // Gravity starts at its geometric center; contact forces start at the contact point.
+  const contactX=80+142*co,contactY=248-142*si;
+  const massCenterX=contactX-15.5*si,massCenterY=contactY-15.5*co;
   const c=v.canRemainAtRest?'#2d7d5c':'#ad6543';
   const arrowScale=88/v.weight;
-  function arrow(dx,dy,color,label){
-   return '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+dx)+'" y2="'+(cy+dy)+'" stroke="'+color+'" stroke-width="3" marker-end="url(#inclineArrow)"/>'
-    +'<text x="'+(cx+dx+6)+'" y="'+(cy+dy-6)+'" font-size="15" fill="'+color+'">'+label+'</text>';
+  function arrow(dx,dy,color,label,x=massCenterX,y=massCenterY){
+   return '<line x1="'+x+'" y1="'+y+'" x2="'+(x+dx)+'" y2="'+(y+dy)+'" stroke="'+color+'" stroke-width="3" marker-end="url(#inclineArrow)"/>'
+    +'<text x="'+(x+dx+6)+'" y="'+(y+dy-6)+'" font-size="15" fill="'+color+'">'+label+'</text>';
   }
   svg.innerHTML='<defs><marker id="inclineArrow" viewBox="0 0 10 10" markerWidth="7" markerHeight="7" refX="9" refY="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10" fill="#526b61"/></marker></defs>'
    +'<path d="M80 248 L'+tipX+' '+tipY+' L'+tipX+' 248 Z" fill="#ecf3ed" stroke="#a3bbad" stroke-width="2"/>'
    +'<path d="M80 248 L'+tipX+' '+tipY+'" fill="none" stroke="#477960" stroke-width="4"/>'
-   +'<g transform="translate('+cx+' '+cy+') rotate('+(-thetaDegrees)+')"><rect x="-24" y="-31" width="48" height="31" rx="5" fill="#e6b783" stroke="#8b674d" stroke-width="2"/></g>'
+   +'<g transform="translate('+contactX+' '+contactY+') rotate('+(-thetaDegrees)+')"><rect x="-24" y="-31" width="48" height="31" rx="5" fill="#e6b783" stroke="#8b674d" stroke-width="2"/></g>'
    +arrow(0,v.weight*arrowScale,'#ac5e51','mg')
-   +arrow(-v.normal*arrowScale*si,-v.normal*arrowScale*co,'#2b806c','N')
-   +(v.friction>0.05?arrow(v.friction*arrowScale*co,-v.friction*arrowScale*si,'#426da5',en?'friction':'摩擦'):'')
+   +arrow(-v.normal*arrowScale*si,-v.normal*arrowScale*co,'#2b806c','N',contactX,contactY)
+   +(v.friction>0.05?arrow(v.friction*arrowScale*co,-v.friction*arrowScale*si,'#426da5',en?'friction':'摩擦',contactX,contactY):'')
    +'<text x="88" y="272" font-size="15" fill="#345b49">θ='+val(thetaDegrees)+'°</text>'
    +'<text x="306" y="285" font-size="16" font-weight="700" fill="'+c+'">'+(en?(v.canRemainAtRest?'Can remain at rest':'Slides downslope'):(v.canRemainAtRest?'静止できる':'斜面下向きに滑る'))+'</text>';
   root.querySelector('#incline-results').innerHTML=
