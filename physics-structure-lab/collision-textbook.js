@@ -1,3 +1,4 @@
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 import {collisionInquiryHtml} from './collision-inquiry.js';
 /* Chapter 04 expanded bilingual reading: collision physics, CM frame and energy transfer. */
 import {contactImpulse} from './collision-theory-model.js';
@@ -7,7 +8,7 @@ const eq=s=>'<div class="formula tex-display" data-tex="'+E(s)+'">'+E(s)+'</div>
 export function collisionTextbookHtml(lang='ja'){
  const en=lang==='en',i=en?1:0;
  return '<article class="collision-textbook" id="collision-textbook"><h3>'+(en?'Momentum and collisions: an extended treatment':'運動量・衝突をさらに理解する')+'</h3><p>'+(en?'Eight connected sections. The original impulse derivation remains available above.':'8つの節で、力積の導出から保存則・反発係数・重心系・エネルギーへつなげます。先ほどの力積の導出もそのまま残しています。')+'</p>'
- +sections.map((s,n)=>'<section class="mechanics-worked-article"><h3>'+String(n+1)+'. '+E(s.title[i])+'</h3><p>'+E(s.body[i])+'</p>'+s.math.map(eq).join('')+'<p><strong>'+(en?'Interpretation and assumptions: ':'物理的意味と条件：')+'</strong>'+E(s.interpret[i])+'</p></section>').join('')
+ +sections.map((s,n)=>'<section class="mechanics-worked-article"><h3>'+String(n+1)+'. '+E(s.title[i])+'</h3><p>'+E(s.body[i])+'</p>'+mechanicsSituationFigure('collision-'+n,'section',lang)+s.math.map(eq).join('')+'<p><strong>'+(en?'Interpretation and assumptions: ':'物理的意味と条件：')+'</strong>'+E(s.interpret[i])+'</p></section>').join('')
  +'<section class="mechanics-worked-article" id="collision-restitution-lab"><h3>'+(en?'Investigate a two-cart collision':'二台車の衝突を調べる')+'</h3><p>'+(en?'Change masses, approach speed and restitution. All results are calculated predictions for an isolated one-dimensional system.':'質量・衝突前の相対速度・反発係数を変えて、終速度とエネルギー変化を比較します。数値は一次元・孤立二体系のモデル計算です。')+'</p>'
  +'<div class="mechanics-parameter-grid">'
  +'<label for="collision-m1">'+(en?'Mass 1 (kg)':'台車1の質量 (kg)')+'</label><input id="collision-m1" type="range" min="0.5" max="6" step="0.5" value="2">'
