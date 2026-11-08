@@ -2,6 +2,7 @@ import {electricityLessons1} from './electricity-textbook-part1.js';
 import {electricityLessons2} from './electricity-textbook-part2.js';
 import {electricityLessons3} from './electricity-textbook-part3.js';
 import {electricityFigure} from './electricity-situation-diagrams.js';
+import {electricityDerivationNotes} from './electricity-derivation-notes.js';
 import {coulombForce,resistorNetwork,rcResponse,chargedParticleB} from './electricity-models.js';
 import {getLanguage} from './language.js';
 export const electricityChapters=[...electricityLessons1,...electricityLessons2,...electricityLessons3];
@@ -17,7 +18,7 @@ function chapterMarkup(chapter,index,en){
   +'<p class="electricity-scene">'+escapeHTML(pair(section.scene,en))+'</p>'
   +electricityFigure(section.id,pair(section.title,en),lang)
   +'<div class="electricity-derivation"><h4>'+(en?'Equations and their derivation':'関係式と導出')+'</h4>'
-  +section.derivation.map((eq,j)=>math(eq)+(j===0?'<p class="muted">'+(en?'The first relation describes the physical situation above; each later relation follows with its specified assumptions.':'最初の式が図の状況を表します。後続の式では必要な条件を保ちながら、物理量の関係を明確にします。')+'</p>':'')).join('')+'</div>'
+  +section.derivation.map((eq,j)=>math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>').join('')+'</div>'
   +'<p><strong>'+(en?'Physical meaning: ':'物理的意味：')+'</strong>'+escapeHTML(pair(section.meaning,en))+'</p>'
   +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p></section>').join('')
  +'<section class="electricity-chapter-connection"><h3>'+(en?'From here to the next model':'次の物理現象へ')+'</h3><p>'+(en?'The same conservation laws and field definitions continue to apply, but each new setup has its own geometry, boundaries, force directions and physical assumptions.':'すでに得た保存則や場の定義を利用しても、次の状況では物体や導体の配置、境界、力の方向、成立条件をあらためて確認します。')+'</p></section></article>';
