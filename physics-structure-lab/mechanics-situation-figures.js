@@ -168,6 +168,75 @@ function sectionScene(key,lang){
  }
  return '';
 }
+const supplementTitles={
+ 'incline-0':['机上の箱と垂直抗力','Box on a horizontal table'],
+ 'incline-1':['斜面に沿う軸と法線方向','Tangential and normal axes on an incline'],
+ 'incline-2':['静止する箱と静止摩擦','Static friction holding a box'],
+ 'incline-3':['最大静止摩擦と滑り出し','Threshold of static friction'],
+ 'incline-4':['滑走中の箱と動摩擦','Sliding box and kinetic friction'],
+ 'incline-5':['斜面の力の成分と数値','Force components on a slope'],
+ 'incline-6':['摩擦による仕事','Work done by friction'],
+ 'incline-7':['滑り出す角度の測定','Measuring critical inclination'],
+ 'two-block-0':['台車AとBを囲む系','System boundary of carts A and B'],
+ 'two-block-1':['合力がないときの速度','Velocity without net force'],
+ 'two-block-2':['合力と質量と加速度','Force, mass and acceleration'],
+ 'two-block-3':['接触する二台車の作用・反作用','Action and reaction between carts'],
+ 'two-block-4':['Aを押すときの二台車','Pushing cart A'],
+ 'two-block-5':['Bが受ける接触力','Contact force acting on B'],
+ 'two-block-6':['Bを左へ押す場合','Pushing B toward the left'],
+ 'two-block-7':['等加速度運動の時間変化','Motion with constant acceleration'],
+ 'two-block-8':['抵抗のある現実の台車','Real carts with rolling resistance'],
+ 'transfer-slope':['同じ高さ差の異なる斜面','Different slopes with equal height loss'],
+ 'transfer-spring':['圧縮したばねの解放','Release from a compressed spring'],
+ 'transfer-pendulum':['振り子が最下点へ動く','Pendulum descending to its lowest point'],
+ 'transfer-friction':['摩擦で止まる物体','Object stopping under friction'],
+ 'inquiry-0':['衝突と外力積','Collision and external impulse'],
+ 'inquiry-1':['静止物体への衝突','Collision with initially stationary cart'],
+ 'inquiry-2':['重心系での衝突','Collision in center-of-mass frame'],
+ 'inquiry-3':['接触時間による平均力の違い','Average force and contact time']};
+function supplementScene(key,lang){
+ if(key.startsWith('incline-')){
+  const i=Number(key.split('-')[1]);
+  if(i===0)return ln(80,222,486,222,'#7b978d',4)+rect(220,154,109,68)+ar(275,222,275,103,'#356fa2')+ar(275,187,275,267,'#b45e44')+txt(288,112,'N','#356fa2')+txt(288,260,'mg','#b45e44');
+  const b=inclineBox(),base=inclineBase(),c=b.center;
+  let img=base+b.shape+ar(c.x,c.y,c.x,c.y+67)+txt(c.x+8,c.y+69,'mg');
+  if(i===1)return img+ar(b.contact.x,b.contact.y,b.contact.x+b.normal.x*75,b.contact.y+b.normal.y*75,'#356fa2')
+   +ar(b.contact.x,b.contact.y,b.contact.x-b.along.x*75,b.contact.y-b.along.y*75,'#8054a0')+txt(164,92,L('法線','normal',lang),'#356fa2');
+  if(i===2||i===3||i===5||i===7)img+=ar(b.contact.x,b.contact.y,b.contact.x+b.along.x*65,b.contact.y+b.along.y*65,'#8054a0')+txt(337,120,i===3?'fₛ,max':i===7?'θc':'fₛ','#8054a0');
+  if(i===4||i===6)img+=ar(b.contact.x,b.contact.y,b.contact.x+b.along.x*65,b.contact.y+b.along.y*65,'#8054a0')+ar(c.x,c.y,c.x-b.along.x*75,c.y-b.along.y*75,'#356fa2')+txt(140,205,i===6?'Wf < 0':'v','#356fa2');
+  if(i===3||i===7)img+=txt(77,268,i===3?'fₛ ≤ μₛN':'μₛ ≈ tan θc','#8054a0');
+  if(i===5)img+=txt(79,265,'mg sinθ / mg cosθ',undefined,16);
+  return img;
+ }
+ if(key.startsWith('two-block-')){
+  const i=Number(key.split('-')[2]),road=ln(55,216,500,216,'#7e9a8f',3);
+  let base=road+rect(177,165,86,51)+rect(263,165,96,51)+txt(205,197,'A')+txt(299,197,'B');
+  if(i===0)return base+'<rect x="153" y="130" width="237" height="110" rx="12" stroke="#8054a0" stroke-width="2" stroke-dasharray="7 5" fill="none"/>'+txt(169,114,L('AとBの系','System A+B',lang),'#8054a0');
+  if(i===1)return base+ar(238,124,331,124,'#356fa2')+txt(254,106,'v=const');
+  if(i===2)return base+ar(358,148,438,148,'#b45e44')+txt(381,131,'F')+txt(176,267,'a=F/(mA+mB)');
+  if(i===3)return base+ar(263,184,211,184,'#b45e44')+ar(263,207,315,207,'#356fa2')+txt(165,142,'FAB')+txt(309,194,'FBA');
+  if(i===4)return base+ar(105,177,176,177,'#b45e44')+txt(108,158,'F')+ar(349,124,424,124,'#356fa2')+txt(362,104,'a');
+  if(i===5)return base+ar(265,145,333,145,'#356fa2')+txt(275,128,'N=mBa');
+  if(i===6)return base+ar(434,185,360,185,'#b45e44')+txt(398,166,'F')+ar(182,129,123,129,'#356fa2')+txt(132,112,'a');
+  if(i===7)return base+ar(300,125,388,125,'#356fa2')+txt(306,105,'v(t)')+txt(187,258,'x(t) = ½at²');
+  if(i===8)return base+ar(219,145,177,145,'#8054a0')+ar(299,145,257,145,'#8054a0')+txt(128,111,L('車輪の抵抗','Rolling resistance',lang),'#8054a0');
+ }
+ if(key.startsWith('transfer-')){
+  const k=key.slice(9);
+  if(k==='slope')return path('M80 226 L209 98 L209 226 Z','#7b998f',2,'#eff6f2')+path('M298 226 L470 154 L470 226 Z','#7b998f',2,'#eff6f2')+txt(148,88,'h₁')+txt(463,142,'h₂')+circ(141,159,9)+circ(374,195,9)+txt(165,265,L('同じ高さ差を比較','Compare equal height loss',lang));
+  if(k==='spring')return ln(65,220,496,220,'#7b998f',2)+ln(81,100,81,220,'#7b998f',5)+spring(85,289,175)+rect(289,147,75,54)+ar(364,175,441,175,'#356fa2')+txt(403,157,'v')+txt(190,263,L('圧縮 x','compression x',lang));
+  if(k==='pendulum'){const p=pendulum(240,48,42,145);return p.art+circ(240,193,12,'none')+ln(p.bx,p.by,240,193,'#8ca9a0',1.5,'5 5')+ar(p.bx,p.by,p.bx,p.by+66)+txt(p.bx+9,p.by+59,'mg')+txt(150,254,L('高さ差 h','height drop h',lang));}
+  if(k==='friction')return ln(60,212,506,212,'#7b998f',3)+cart(116,195)+ar(183,151,266,151,'#356fa2')+ar(174,170,101,170,'#b45e44')+txt(209,135,'v₀')+txt(98,156,'f')+txt(289,246,L('停止距離 d','stopping distance d',lang));
+ }
+ if(key.startsWith('inquiry-')){
+  const i=Number(key.split('-')[1]);
+  if(i===0)return supplementScene('collision-0',lang)||sectionScene('collision-0',lang);
+  if(i===1)return sectionScene('collision-7',lang);
+  if(i===2)return sectionScene('collision-3',lang);
+  if(i===3)return sectionScene('collision-5',lang);
+ }
+ return '';
+}
 const originTitles={
 force:['台車に作用する力','Forces on a cart'],friction:['斜面上の物体と接触力','Box in contact with an incline'],energy:['台車への仕事','Work on a moving cart'],
 momentum:['衝突前の二台車','Two carts before collision'],circular:['円軌道上の速度と加速度','Velocity and acceleration on a circle'],
@@ -192,11 +261,11 @@ oscillation:['振り子の重力成分','Pendulum weight components'],gravitatio
 rotation:['坂を転がる円盤と輪','Rolling disk and hoop'],noninertial:['加速する車内の振り子','Pendulum in accelerating vehicle'],
 lagrange:['滑車につながれた二つの物体','Two masses over a pulley'],hamilton:['ばねの位置と運動量','Spring position and momentum'],
 coupled:['二つの固有振動','Two normal modes']};
-export const situationKeys=Object.freeze({origin:Object.keys(originTitles),worked:Object.keys(workedTitles),deep:Object.keys(deepTitles),section:Object.keys(sectionTitles)});
+export const situationKeys=Object.freeze({origin:Object.keys(originTitles),worked:Object.keys(workedTitles),deep:Object.keys(deepTitles),section:Object.keys(sectionTitles),supplement:Object.keys(supplementTitles)});
 export function mechanicsSituationFigure(key,section='origin',language='ja'){
- const titles=section==='worked'?workedTitles:section==='deep'?deepTitles:section==='section'?sectionTitles:originTitles;
+ const titles=section==='worked'?workedTitles:section==='deep'?deepTitles:section==='section'?sectionTitles:section==='supplement'?supplementTitles:originTitles;
  if(!Object.prototype.hasOwnProperty.call(titles,key))return '';
- const en=language==='en',art=section==='worked'?worked(key,language):section==='deep'?deep(key,language):section==='section'?sectionScene(key,language):origin(key,language);
+ const en=language==='en',art=section==='worked'?worked(key,language):section==='deep'?deep(key,language):section==='section'?sectionScene(key,language):section==='supplement'?supplementScene(key,language):origin(key,language);
  if(!art)return '';
  const name=titles[key][en?1:0];
  return '<figure class="mechanics-situation-figure" data-situation="'+esc(section+':'+key)+'">'
