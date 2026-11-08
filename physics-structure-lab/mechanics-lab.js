@@ -17,6 +17,7 @@ import {collisionTextbookHtml,installCollisionTextbook} from './collision-textbo
 import {torqueDoorHtml,installTorqueDoor} from './torque-door-diagram.js';
 import {circularVelocityHtml,installCircularVelocity} from './circular-velocity-diagram.js';
 import {oscillationVisualHtml,installOscillationVisual} from './oscillation-visual.js';
+import {installPendulumForces} from './pendulum-force-diagram.js';
 
 export function mechanicsEvaluate(model, x, y) {
  if(![x,y].every(Number.isFinite))throw new RangeError('Parameters must be finite');
@@ -149,6 +150,7 @@ export function installMechanics(remarkMath){
   if(c.key==='rotation')installTorqueDoor(box,english?'en':'ja');
   if(c.key==='circular')installCircularVelocity(box,english?'en':'ja');
   if(c.key==='oscillation')installOscillationVisual(box,english?'en':'ja');
+  if(c.key==='oscillation')installPendulumForces(box,english?'en':'ja');
   const x=document.getElementById('mech-x'),y=document.getElementById('mech-y'),out=document.getElementById('mech-output');
   function update(){
    const d=mechanicsEvaluate(c.model,Number(x.value),Number(y.value));
