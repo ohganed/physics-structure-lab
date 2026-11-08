@@ -67,7 +67,7 @@ function worked(key,lang){
  case 'circular':{const road=path('M125 209 L404 85 L451 192 L172 268 Z','#7f9a92',2,'#e3eee9');return road+contactAlignedBox(270,209-(270-125)*124/279,54,35,124,279)+ar(263,128,232,60,'#356fa2')+txt(208,52,'N')+ar(263,128,263,214)+txt(283,221,'mg')+txt(115,249,L('傾いた路面','Banked road',lang));}
  case 'oscillation':{const p=pendulum(270,42,42,151);return p.art+ar(p.bx,p.by,p.bx,p.by+75)+txt(p.bx+8,p.by+76,'mg')+ar(p.bx,p.by,p.bx-46,p.by+46,'#8052a6')+txt(p.bx-87,p.by+59,'−mg sinθ','#8052a6')+txt(283,75,'θ');}
  case 'gravitation':return circ(244,143,65,'#d9e9e4')+path('M244 21 A122 122 0 1 1 243 21','#8baea5',2)+circ(359,106,9)+ar(359,106,317,126)+txt(331,93,'Fg')+ar(359,106,370,50,'#356fa2')+txt(380,58,'vc')+ar(370,44,465,28,'#8052a6')+txt(409,19,'vesc','#8052a6')+txt(210,147,L('地球','Earth',lang));
- case 'rotation':{const ramp=path('M95 239 L471 96 L471 239 Z','#728d81',2,'#eff5f2');return ramp+circ(233,155.5,29,'#d4e7df')+circ(326,119.8,29,'#e7e1c9')+circ(233,155.5,4)+circ(326,119.8,4)+txt(174,140,L('円盤','disk',lang))+txt(353,115,L('輪','hoop',lang));}
+ case 'rotation':{const ramp=path('M95 239 L471 96 L471 239 Z','#728d81',2,'#eff5f2');return ramp+circ(233,155.5,29,'#d4e7df')+circ(326,119.8,29,'#e7e1c9')+circ(326,119.8,19,'#eff5f2')+circ(233,155.5,4)+circ(326,119.8,4)+txt(174,140,L('円盤','disk',lang))+txt(353,115,L('輪','hoop',lang));}
  case 'noninertial':{const p=pendulum(253,52,-27,131);return rect(95,24,357,212,'#eef3f0')+p.art+ar(470,149,522,149,'#356fa2')+txt(478,136,'a','#356fa2')+ar(p.bx,p.by,p.bx-51,p.by,'#8052a6')+txt(112,167,L('慣性力','fictitious force',lang),'#8052a6');}
  case 'lagrange':return circ(270,81,33,'#fff')+ln(270,48,270,30,'#62897b',3)+ln(237,81,237,178,'#547e75',3)+ln(303,81,303,209,'#547e75',3)+rect(212,178,49,40)+rect(278,209,49,39)+ar(238,174,238,251)+ar(303,206,303,266)+txt(175,200,'m₁')+txt(331,229,'m₂')+txt(352,133,L('滑車','pulley',lang));
  case 'hamilton':return ln(75,209,492,209,'#779389',3)+spring(77,269,168)+rect(269,151,88,58)+ar(315,115,393,115,'#356fa2')+txt(335,98,'p')+txt(274,246,'q')+txt(122,53,L('位置と運動量','Position & momentum',lang));
@@ -125,7 +125,7 @@ function sectionScene(key,lang){
   +ar(box.contact.x,box.contact.y,box.contact.x-64,box.contact.y+33,'#356fa2')+txt(193,188,'v','#356fa2')
   +txt(141,254,L('高さが減る','Height decreases',lang));}
  case 'energy-5':return fieldAxes()+path('M132 63 Q278 295 430 63','#297e89',3)+ln(129,135,449,135,'#b45e44',2,'5 5')
-  +circ(186,155,6,'#b45e44')+circ(382,155,6,'#b45e44')
+  +circ(190,135,6,'#b45e44')+circ(372,135,6,'#b45e44')
   +txt(147,92,'U(x)','#297e89')+txt(445,131,'E','#b45e44')+txt(467,223,'x');
  case 'energy-6':return ln(54,226,506,226,'#79978e',1)+path('M69 66 Q175 293 273 66','#297e89',3)
   +path('M312 206 Q399 21 493 206','#b45e44',3)
@@ -152,8 +152,8 @@ function sectionScene(key,lang){
   +rect(330,63,139,100,'#e9dfd0')
   +txt(112,107,'K before','#356fa2')+txt(343,94,'K after')+txt(339,140,'E internal')
   +txt(148,215,L('運動量保存とエネルギー変換は別','Momentum conservation ≠ K conservation',lang),undefined,14);
- case 'collision-5':return fieldAxes()+path('M140 213 L171 65 L207 65 L238 213','#b45e44',3,'none')
-  +path('M274 213 L307 141 L423 141 L456 213','#356fa2',3,'none')
+ case 'collision-5':return fieldAxes()+path('M140 213 L140 93 L200 93 L200 213','#b45e44',3,'none')
+  +path('M270 213 L270 153 L390 153 L390 213','#356fa2',3,'none')
   +txt(142,48,L('短時間・大きな力','Short, large force',lang),'#b45e44',13)
   +txt(295,121,L('長時間・小さな力','Long, smaller force',lang),'#356fa2',13)
   +txt(464,231,'t')+txt(91,51,'F');
