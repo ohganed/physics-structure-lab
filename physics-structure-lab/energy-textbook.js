@@ -19,8 +19,8 @@ export function installEnergyTextbook(root,lang='ja'){
  const ns='http://www.w3.org/2000/svg';const en=lang==='en';
  const add=(tag,attrs,label)=>{const el=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));if(label!=null)el.textContent=label;svg.append(el);return el;};
  const draw=()=>{
- const k=Number(ks.value),E=Number(es.value),limit=Math.sqrt(2*E/k),max=4;
- const fx=x=>320+70*x,fy=u=>220-180*u/Math.max(16,E+2);
+ const k=Number(ks.value),E=Number(es.value),limit=Math.sqrt(2*E/k),max=limit*1.16;
+ const fx=x=>320+260*x/max,fy=u=>220-180*u/(1.4*E);
  svg.replaceChildren();
  add('line',{x1:40,y1:220,x2:620,y2:220,stroke:'currentColor','stroke-width':1});
  add('line',{x1:320,y1:18,x2:320,y2:238,stroke:'currentColor','stroke-width':1});
@@ -31,6 +31,8 @@ export function installEnergyTextbook(root,lang='ja'){
  add('text',{x:345,y:25,fill:'currentColor','font-size':15},'U(x) = ½kx²');
  add('text',{x:45,y:Math.max(30,fy(E)-10),fill:'#b45d35','font-size':14},'E');
  add('text',{x:578,y:242,fill:'currentColor','font-size':13},'x (m)');
+ add('text',{x:52,y:238,fill:'currentColor','font-size':12},'−'+max.toFixed(2));
+ add('text',{x:530,y:238,fill:'currentColor','font-size':12},'+'+max.toFixed(2));
  readout.textContent=(en?'k = ':'k = ')+k.toFixed(1)+' N/m; E = '+E.toFixed(1)+' J; '+(en?'turning points':'折り返し点')+' x = ±'+limit.toFixed(2)+' m; '+(en?'accessible interval':'到達可能区間')+' [−'+limit.toFixed(2)+', +'+limit.toFixed(2)+'] m.';
  };
  ks.addEventListener('input',draw);es.addEventListener('input',draw);draw();
