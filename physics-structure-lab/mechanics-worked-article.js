@@ -1,3 +1,4 @@
+import {mechanicsSituationFigure} from './mechanics-situation-figures.js';
 import {pendulumForcesHtml} from './pendulum-force-diagram.js';
 /* Real worked mechanics material integrated below each chapter's physical explanation. */
 import {mechanicsWorkedCases} from './mechanics-worked-cases.js';
@@ -11,6 +12,7 @@ export function mechanicsWorkedCaseHtml(key,language='ja'){
  return '<article class="mechanics-worked-article" id="mechanics-worked-article">'
  +'<h3>'+E(L(c.title,en))+'</h3>'
  +'<p>'+E(L(c.story,en))+'</p>'
+ +mechanicsSituationFigure(key,'worked',language)
  +'<p class="mechanics-worked-conditions"><strong>'+(en?'Assumptions: ':'条件：')+'</strong>'+E(L(c.conditions,en))+'</p>'
  +(key==='oscillation'?pendulumForcesHtml(language):'')
  +'<div class="mechanics-worked-solution"><h4>'+(en?'Calculations':'計算')+'</h4>'
