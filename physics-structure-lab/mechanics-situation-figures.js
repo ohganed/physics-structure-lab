@@ -16,7 +16,7 @@ const ar=(x1,y1,x2,y2,color='#af573f')=>{
 const slope=(originX,originY,cos,sin,along,normal)=>({x:originX+along*cos-normal*sin,y:originY-along*sin-normal*cos});
 // Rectangular rigid body: bottom midpoint is ON the incline; center is offset upward by half its height.
 // Slope rise to the right, screen y downward. Along=(cos,-sin), outward normal=(-sin,-cos).
-function inclineBox(contactX=290,contactY=163,w=65,h=43){
+function inclineBox(contactX=290,contactY=241-(290-95)*184/360,w=65,h=43){
  const a=Math.atan2(115,225),c=Math.cos(a),s=Math.sin(a);
  const p=[slope(contactX,contactY,c,s,-w/2,0),slope(contactX,contactY,c,s,w/2,0),
           slope(contactX,contactY,c,s,w/2,h),slope(contactX,contactY,c,s,-w/2,h)];
@@ -62,7 +62,7 @@ function worked(key,lang){
  case 'circular':{const road=path('M125 209 L404 85 L451 192 L172 268 Z','#7f9a92',2,'#e3eee9');return road+rect(241,123,54,35)+ar(272,142,272,68,'#356fa2')+txt(283,78,'N')+ar(272,142,272,224)+txt(283,221,'mg')+txt(115,249,L('傾いた路面','Banked road',lang));}
  case 'oscillation':{const p=pendulum(270,42,42,151);return p.art+ar(p.bx,p.by,p.bx,p.by+75)+txt(p.bx+8,p.by+76,'mg')+ar(p.bx,p.by,p.bx-46,p.by+46,'#8052a6')+txt(p.bx-87,p.by+59,'−mg sinθ','#8052a6')+txt(283,75,'θ');}
  case 'gravitation':return circ(244,143,65,'#d9e9e4')+path('M244 21 A122 122 0 1 1 243 21','#8baea5',2)+circ(359,106,9)+ar(359,106,317,126)+txt(331,93,'Fg')+ar(359,106,370,50,'#356fa2')+txt(380,58,'vc')+ar(370,44,465,28,'#8052a6')+txt(409,19,'vesc','#8052a6')+txt(210,147,L('地球','Earth',lang));
- case 'rotation':{const ramp=path('M95 239 L471 96 L471 239 Z','#728d81',2,'#eff5f2');return ramp+circ(233,187,29,'#d4e7df')+circ(326,150,29,'#e7e1c9')+circ(233,187,4)+circ(326,150,4)+txt(174,140,L('円盤','disk',lang))+txt(353,115,L('輪','hoop',lang));}
+ case 'rotation':{const ramp=path('M95 239 L471 96 L471 239 Z','#728d81',2,'#eff5f2');return ramp+circ(233,155.5,29,'#d4e7df')+circ(326,119.8,29,'#e7e1c9')+circ(233,155.5,4)+circ(326,119.8,4)+txt(174,140,L('円盤','disk',lang))+txt(353,115,L('輪','hoop',lang));}
  case 'noninertial':{const p=pendulum(253,52,-27,131);return rect(95,24,357,212,'#eef3f0')+p.art+ar(470,149,522,149,'#356fa2')+txt(478,136,'a','#356fa2')+ar(p.bx,p.by,p.bx-51,p.by,'#8052a6')+txt(112,167,L('慣性力','fictitious force',lang),'#8052a6');}
  case 'lagrange':return circ(270,81,33,'#fff')+ln(270,48,270,30,'#62897b',3)+ln(237,81,237,178,'#547e75',3)+ln(303,81,303,209,'#547e75',3)+rect(212,178,49,40)+rect(278,209,49,39)+ar(238,174,238,251)+ar(303,206,303,266)+txt(175,200,'m₁')+txt(331,229,'m₂')+txt(352,133,L('滑車','pulley',lang));
  case 'hamilton':return ln(75,209,492,209,'#779389',3)+spring(77,269,168)+rect(269,140,88,58)+ar(315,115,393,115,'#356fa2')+txt(335,98,'p')+txt(274,246,'q')+txt(122,53,L('位置と運動量','Position & momentum',lang));
