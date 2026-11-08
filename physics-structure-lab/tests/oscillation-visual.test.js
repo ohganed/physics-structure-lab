@@ -38,9 +38,9 @@ test('reject invalid oscillator parameters',()=>{
 test('Japanese and English diagrams have two accessible SVGs and four controls',()=>{
  for(const lang of ['ja','en']){
  const html=oscillationVisualHtml(lang);
- assert.equal((html.match(/role="img"/g)||[]).length,2);
- for(const id of ['spring-svg','curves-svg','readout'])assert.match(html,new RegExp('id="oscillation-'+id+'"'));
+ assert.equal((html.match(/role="img"/g)||[]).length,3);
+ for(const id of ['spring-svg','curves-svg','force-svg','readout'])assert.match(html,new RegExp('id="oscillation-'+id+'"'));
  for(const id of ['phase','amplitude','mass','stiffness'])assert.match(html,new RegExp('id="oscillation-'+id+'"'));
- assert.doesNotMatch(html,/autoplay\\s*=|required\\s*=|type="submit"/);
+ assert.doesNotMatch(html,/autoplay=|required=|type="submit"/);
  }
 });
