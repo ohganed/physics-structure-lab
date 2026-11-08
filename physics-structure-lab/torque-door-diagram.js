@@ -34,7 +34,7 @@ export function installTorqueDoor(root,lang='ja'){
   add('line',{x1:hingeX,y1:hingeY+36,x2:pointX,y2:hingeY+36,stroke:'#325f5b','stroke-width':2});
   add('text',{x:hingeX+(pointX-hingeX)/2-12,y:hingeY+58,'font-size':16,fill:'currentColor'},'r = '+r.toFixed(2)+' m');
   add('circle',{cx:pointX,cy:hingeY,r:8,fill:'#b55332'});
-  const vectorScale=F*3.5,dx=vectorScale*Math.cos(rad),dy=-vectorScale*Math.sin(rad);
+  const vectorScale=F*2.2,dx=vectorScale*Math.cos(rad),dy=-vectorScale*Math.sin(rad);
   // The arrow ends at the force tip, while its tail remains at the contact point.
   const arrow=(x1,y1,x2,y2,color,dash=false)=>{
    add('line',{x1,y1,x2,y2,stroke:color,'stroke-width':3,'stroke-dasharray':dash?'7 5':'none','stroke-linecap':'round'});
