@@ -284,90 +284,90 @@ export const mechanicsOriginsPart1={
     ]
   },
   "circular": {
-    "title": [
-      "円運動と加速度について",
-      "Circular motion and acceleration"
-    ],
-    "observation": [
-      "糸の先の物体を同じ速さで回しても、進行方向は瞬間ごとに変わる。糸が切れればその瞬間の接線方向に進む。速度という矢印の向きが変わるのに注目する。",
-      "A rotating ball changes direction even with constant speed. If the string breaks it moves along the tangent. Focus on the turning velocity arrow."
-    ],
-    "representation": [
-      "円の半径r、短い間の弧の長さΔs、回転角Δθ、始めと終わりの速度ベクトルを図示する。2つの速度ベクトルの差を求める。",
-      "Draw radius r, a short arc Δs, angle Δθ, and two velocity arrows. Compare their vector difference."
-    ],
-    "prior": [
-      "加速度は速度ベクトルの時間変化率。小さい角度ではΔs≈rΔθとなり、速度ベクトルの回る角度は半径が回る角度と等しい。",
-      "Acceleration is change of vector velocity per time. For a small angle Δs≈rΔθ, and the tangent velocity turns through that same angle."
-    ],
-    "steps": [
-      {
-        "question": [
-          "速度ベクトルの向きは何度変化したか",
-          "How far did the velocity vector turn?"
-        ],
-        "tex": "\\Delta\\theta\\approx\\frac{\\Delta s}{r}",
-        "why": [
-          "半径と接線は直交しており、円周を進むにつれ両方とも同じ角度だけ回る。",
-          "The radius and its tangent turn by the same small angle along the circle."
-        ]
-      },
-      {
-        "question": [
-          "速度ベクトルの差を三角形で考える",
-          "Use the triangle of velocity vectors"
-        ],
-        "tex": "|\\Delta\\boldsymbol v|=2v\\sin(\\Delta\\theta/2)\\approx v\\Delta\\theta",
-        "why": [
-          "長さvの2つの矢印の差は弦になる。角度が小さいとsin(Δθ/2)≈Δθ/2。",
-          "The vector difference is a chord between two equal-length arrows; use the small-angle approximation."
-        ]
-      },
-      {
-        "question": [
-          "短い時間に進む距離を表す",
-          "Relate arc length to elapsed time"
-        ],
-        "tex": "\\Delta s\\approx v\\Delta t",
-        "why": [
-          "速さが一定なら、距離は速さ×時間で計算できる。",
-          "At constant speed, distance travelled is speed multiplied by time."
-        ]
-      },
-      {
-        "question": [
-          "差を時間で割って極限を考える",
-          "Divide by time and consider a shrinking interval"
-        ],
-        "tex": "a=\\lim_{\\Delta t\\to0}\\frac{|\\Delta\\boldsymbol v|}{\\Delta t}=\\frac{v^2}{r}",
-        "why": [
-          "上の関係をつなぐとv²/rが現れる。差の向きは短い間隔で中心方向に近づく。",
-          "Combining the relations yields v²/r; the vector difference approaches the inward direction in the limit."
-        ]
-      },
-      {
-        "question": [
-          "どの実際の力が必要かを考える",
-          "Ask which real forces can produce this acceleration"
-        ],
-        "tex": "\\sum F_{\\rm inward}=m\\frac{v^2}{r}",
-        "why": [
-          "糸の張力や重力などの中心向き合力が必要。『向心力』を別の新しい力として足さない。",
-          "Tension, gravity, or other real forces must supply the inward net force; centripetal force is not an extra force to add."
-        ]
-      }
-    ],
-    "meaning": [
-      "v²/rは、まず円運動という軌道の幾何学と速度の定義から生まれる。何がこの加速度を生むのかという力の問題は、その後に考える。",
-      "The v²/r relation first emerges from geometry and the definition of velocity change; identifying which interaction supplies it is a separate dynamical question."
-    ],
-    "bounds": [
-      "半径も速さも一定の円運動を扱う。速さが変化すると接線方向の加速度も存在する。",
-      "This describes uniform circular motion. Changing speed introduces tangential acceleration too."
-    ],
-    "connection": [
-      "円軌道の衛星では重力が必要な中心向き加速度を生む。幾何学と万有引力の法則が結び付く。",
-      "Gravity provides the inward acceleration of a circular satellite orbit, connecting geometry and gravitation."
-    ]
-  }
+  "title": [
+    "円運動と加速度について",
+    "Circular motion and acceleration"
+  ],
+  "observation": [
+    "糸の先の物体が一定の速さで円を描いているとき、瞬間ごとに進む向きが変わっています。速さが変わらなくても、速度は向きをもつ量なので変化しています。糸が切れた直後は、その瞬間の接線方向へ進み始めます。",
+    "A ball on a string moves at constant speed, yet the direction of its motion changes from moment to moment. Velocity is a vector, so its change is not zero. Immediately after the string breaks, it moves in the direction tangent to the circle."
+  ],
+  "representation": [
+    "円周上のA点とB点では、速度はそれぞれの接線方向を向きます。二つの速度の長さは等しく、向きだけが違います。速度の矢印を平行移動して始点をそろえると、先端を結ぶ矢印が速度の変化を表します。",
+    "At two points A and B on the circle, velocities are tangent to the path. They have equal lengths but different directions. Translate the arrows without rotating them so their tails coincide; the arrow from the first tip to the second shows the change in velocity."
+  ],
+  "prior": [
+    "半径と接線はいつも直角なので、物体が中心のまわりに角度 Δθ だけ進むと、速度の向きも同じ Δθ だけ回転します。円弧の長さは、角度をラジアンで表せば Δs=rΔθ です。",
+    "Because the radius and tangent are perpendicular, turning through an angle Δθ around the center also turns the velocity direction through Δθ. With Δθ in radians, the exact arc length is Δs=rΔθ."
+  ],
+  "steps": [
+    {
+      "question": [
+        "速度ベクトルの向きは何度変化したか",
+        "How far did the velocity vector turn?"
+      ],
+      "tex": "\\Delta\\theta=\\frac{\\Delta s}{r}",
+      "why": [
+        "これは円弧長の定義から成り立つ等式です。角度が小さいことは必要ありません。",
+        "This is exact for arc length and angle measured in radians; no small-angle approximation is needed."
+      ]
+    },
+    {
+      "question": [
+        "速度ベクトルの差を三角形で考える",
+        "Use the triangle of velocity vectors"
+      ],
+      "tex": "|\\Delta\\boldsymbol v|=2v\\sin(\\Delta\\theta/2)\\approx v\\Delta\\theta",
+      "why": [
+        "長さvの2つの矢印の差は弦になる。角度が小さいとsin(Δθ/2)≈Δθ/2。",
+        "The vector difference is a chord between two equal-length arrows; use the small-angle approximation."
+      ]
+    },
+    {
+      "question": [
+        "短い時間に進む距離を表す",
+        "Relate arc length to elapsed time"
+      ],
+      "tex": "\\Delta s=v\\Delta t",
+      "why": [
+        "速さが一定のため、円弧に沿った移動距離は速さに経過時間を掛けたものです。",
+        "With constant speed, distance traveled along the circular arc equals speed times elapsed time."
+      ]
+    },
+    {
+      "question": [
+        "差を時間で割って極限を考える",
+        "Divide by time and consider a shrinking interval"
+      ],
+      "tex": "a=\\lim_{\\Delta t\\to0}\\frac{|\\Delta\\boldsymbol v|}{\\Delta t}=\\frac{v^2}{r}",
+      "why": [
+        "上の関係をつなぐとv²/rが現れる。差の向きは短い間隔で中心方向に近づく。",
+        "Combining the relations yields v²/r; the vector difference approaches the inward direction in the limit."
+      ]
+    },
+    {
+      "question": [
+        "どの実際の力が必要かを考える",
+        "Ask which real forces can produce this acceleration"
+      ],
+      "tex": "\\sum F_{\\rm inward}=m\\frac{v^2}{r}",
+      "why": [
+        "糸の張力や重力などの中心向き合力が必要。『向心力』を別の新しい力として足さない。",
+        "Tension, gravity, or other real forces must supply the inward net force; centripetal force is not an extra force to add."
+      ]
+    }
+  ],
+  "meaning": [
+    "v²/rは、まず円運動という軌道の幾何学と速度の定義から生まれる。何がこの加速度を生むのかという力の問題は、その後に考える。",
+    "The v²/r relation first emerges from geometry and the definition of velocity change; identifying which interaction supplies it is a separate dynamical question."
+  ],
+  "bounds": [
+    "半径も速さも一定の円運動を扱う。速さが変化すると接線方向の加速度も存在する。",
+    "This describes uniform circular motion. Changing speed introduces tangential acceleration too."
+  ],
+  "connection": [
+    "円軌道の衛星では重力が必要な中心向き加速度を生む。幾何学と万有引力の法則が結び付く。",
+    "Gravity provides the inward acceleration of a circular satellite orbit, connecting geometry and gravitation."
+  ]
+}
 };
