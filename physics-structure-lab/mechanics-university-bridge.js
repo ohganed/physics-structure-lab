@@ -100,9 +100,12 @@ export function mechanicsUniversityBridgeHtml(key,language='ja'){
  const lesson=universityBridgeLessons[key];if(!lesson)return '';
  const en=language==='en',v=x=>x[en?1:0];
  const math=eq=>'<div class="formula tex-display" data-tex="'+h(eq)+'">'+h(eq)+'</div>';
+ const prior=key==='lagrange'?[[5,['06 単振動・共振','06 Oscillations']],[2,['03 仕事・エネルギー','03 Energy']]]:[[5,['06 単振動・共振','06 Oscillations']],[9,['10 ラグランジュ力学','10 Lagrangian mechanics']]];
  return '<section class="mechanics-university-bridge" data-university-bridge="'+h(key)+'">'
   +'<div class="eyebrow">'+(en?'FROM SCHOOL PHYSICS TO UNIVERSITY PHYSICS':'高校物理から大学物理へ')+'</div>'
   +'<h3>'+h(v(lesson.title))+'</h3><p class="mechanics-university-lead">'+h(v(lesson.lead))+'</p>'
+  +'<nav class="mechanics-university-prior" aria-label="'+(en?'Revisit prerequisites':'必要なときに戻れる既習内容')+'"><span>'+(en?'Revisit earlier chapters: ':'前に学んだ内容へ戻る：')+'</span>'
+  +prior.map(([index,label])=>'<button type="button" data-mech-bridge-back="'+index+'">'+h(v(label))+'</button>').join('')+'</nav>'
   +lesson.stages.map((stage,i)=>'<section class="mechanics-university-stage" data-bridge-step="'+h(stage.kind)+'">'
    +'<h4>'+(i+1)+'. '+h(v(stage.title))+'</h4>'
    +'<p>'+h(v(stage.prose))+'</p>'
