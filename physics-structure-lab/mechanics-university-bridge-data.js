@@ -17,8 +17,8 @@ export const universityBridgeLessons={
           "From a real pendulum to a mathematical model"
         ],
         "prose": [
-          "実際の振り子では球にも大きさがあり、糸も重く、支点の摩擦や空気抵抗が働きます。まず『どの現象を説明するためのモデルなのか』を決めます。ここでは球を質点、糸を質量がなく伸びないもの、支点を摩擦のない点として、地表付近の一定重力gの下で一平面内を動く振り子を扱います。これは真実を言い換えたのではなく、運動の中心的な原因だけを残す近似です。観測された運動がこの近似で説明できるかは、後で実験や元の運動方程式と照合します。",
-          "A real pendulum has a finite-sized bob, a massive string, pivot friction and air drag. Before writing equations, decide what phenomenon is being modeled. Here the bob is a point mass, the string is massless and inextensible, the pivot is frictionless, gravity is uniform and the motion stays in one vertical plane. These are chosen approximations rather than exact statements about reality. We will check their predictions against known motion."
+          "実際の振り子では球にも大きさがあり、糸も重く、支点の摩擦や空気抵抗が働きます。まず『どの現象を説明するためのモデルなのか』を決めます。ここでは球を質点、糸を質量がなく伸びず常に張ったもの、支点を摩擦のない点として、地表付近の一定重力gの下で一平面内を動く振り子を扱います。これは真実を言い換えたのではなく、運動の中心的な原因だけを残す近似です。観測された運動がこの近似で説明できるかは、後で実験や元の運動方程式と照合します。",
+          "A real pendulum has a finite-sized bob, a massive string, pivot friction and air drag. Before writing equations, decide what phenomenon is being modeled. Here the bob is a point mass, the string is massless, inextensible and remains taut, the pivot is frictionless, gravity is uniform and the motion stays in one vertical plane. These are chosen approximations rather than exact statements about reality. We will check their predictions against known motion."
         ],
         "formula": [
           "m=\\mathrm{const},\\qquad \\ell=\\mathrm{const},\\qquad g=\\mathrm{const}",
@@ -47,8 +47,8 @@ export const universityBridgeLessons={
           ]
         ],
         "note": [
-          "球の大きさが長さに比べ無視できない、糸が伸びる、抵抗が大きい場合などには、このモデルは修正が必要です。",
-          "A large bob, extensible string or appreciable damping would require modifications to this model."
+          "球の大きさが長さに比べ無視できない、糸が伸びる・緩む、抵抗が大きい場合などには、このモデルは修正が必要です。",
+          "A large bob, extensible or slack string, or appreciable damping would require modifications to this model."
         ]
       },
       {
@@ -137,7 +137,8 @@ export const universityBridgeLessons={
         ],
         "formula": [
           "\\boldsymbol F_g=(0,-mg),\\qquad \\boldsymbol F_T=-T\\boldsymbol e_r",
-          "F_\\theta=(\\boldsymbol F_g+\\boldsymbol F_T)\\cdot\\boldsymbol e_\\theta=-mg\\sin\\theta",
+          "\\boldsymbol F_g\\cdot\\boldsymbol e_\\theta=(0,-mg)\\cdot(\\cos\\theta,\\sin\\theta)=-mg\\sin\\theta",
+          "\\boldsymbol F_T\\cdot\\boldsymbol e_\\theta=0,\\qquad F_\\theta=-mg\\sin\\theta",
           "m a_\\theta=F_\\theta\\quad\\Longrightarrow\\quad m\\ell\\ddot\\theta=-mg\\sin\\theta",
           "\\boxed{m\\ell^2\\ddot\\theta+mg\\ell\\sin\\theta=0}"
         ],
@@ -147,8 +148,12 @@ export const universityBridgeLessons={
             "Gravity points downward at every position; tension points to the pivot. Both force arrows originate at the bob."
           ],
           [
-            "θが正なら重力の接線成分はeθと逆向きです。張力はeθと直角なので内積が0になります。",
-            "For positive θ, gravity's tangential part opposes e_θ. Tension is perpendicular to e_θ and projects to zero."
+            "重力のベクトル成分と、角度が増加する接線方向の単位ベクトルの成分を掛けて足します。上向きがyの正なので、重力のy成分は−mgです。",
+            "Multiply and add the Cartesian components of gravity and the positive tangent direction. Gravity's y component is −mg because y points upward."
+          ],
+          [
+            "糸の張力は半径方向で接線と直角なので、その接線成分は0です。球の接線方向には重力成分だけが残ります。",
+            "Tension is radial and perpendicular to the tangent, so its tangential projection vanishes. Only gravity contributes tangentially."
           ],
           [
             "先ほど幾何から得たaθ=ℓθ̈をニュートンの法則の左辺へ、重力の接線成分を右辺へ代入します。",
