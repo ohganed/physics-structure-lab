@@ -4,6 +4,8 @@ import {electricityLessons3} from './electricity-textbook-part3.js';
 import {electricityFigure} from './electricity-situation-diagrams.js';
 import {electricityDerivationNotes} from './electricity-derivation-notes.js';
 import {electricityReasoningPart1} from './electricity-reasoning-part1.js';
+import {electricityReasoningPart2} from './electricity-reasoning-part2.js';
+import {electricityReasoningPart3} from './electricity-reasoning-part3.js';
 import {electricFieldExplorerHtml,installElectricFieldExplorer} from './electric-field-explorer.js';
 import {electricityDefinitionFigure} from './electricity-definition-diagrams.js';
 import {electricityWorkedExamples} from './electricity-worked-examples.js';
@@ -11,6 +13,7 @@ import {electricityExampleFigure} from './electricity-example-figures.js';
 import {coulombForce,resistorNetwork,rcResponse,chargedParticleB} from './electricity-models.js';
 import {getLanguage} from './language.js';
 export const electricityChapters=[...electricityLessons1,...electricityLessons2,...electricityLessons3];
+export const electricityReasoning={...electricityReasoningPart1,...electricityReasoningPart2,...electricityReasoningPart3};
 const escapeHTML=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const pair=(v,en)=>v[en?1:0];
 const math=eq=>'<div class="formula tex-display" data-tex="'+escapeHTML(eq)+'">'+escapeHTML(eq)+'</div>';
@@ -24,7 +27,7 @@ function chapterMarkup(chapter,index,en){
   +electricityFigure(section.id,pair(section.title,en),lang)
   +'<div class="electricity-derivation"><h4>'+(en?'Equations and their derivation':'関係式と導出')+'</h4>'
   +section.derivation.map((eq,j)=>{
-    const deep=electricityReasoningPart1[section.id]?.[j];
+    const deep=electricityReasoning[section.id]?.[j];
     const kinds={
      law:['基本法則','Fundamental law'],counting:['電荷の数え方','Counting charge'],
      empirical:['実験法則','Empirical law'],vector:['向きを含めた表現','Vector expression'],
@@ -32,7 +35,7 @@ function chapterMarkup(chapter,index,en){
      definition:['定義','Definition'],consequence:['定義からの帰結','Consequence of a definition'],
      derivation:['導出結果','Derived relation'],integral:['積分表示','Integral form'],
      work:['仕事の関係','Work relation'],material:['媒質のモデル','Material model'],
-     constraint:['実験条件の違い','Experimental constraints'],increment:['微小変化を考える','Incremental argument']
+     constraint:['実験条件の違い','Experimental constraints'],increment:['微小変化を考える','Incremental argument'],geometry:['形状と物性の関係','Geometry and material property'],conservation:['保存則からの帰結','Conservation-law consequence'],terminal:['電源の内部モデル','Source and terminal model'],balance:['回路の電圧収支','Circuit voltage balance'],differential:['時間変化の方程式','Time-evolution equation'],solution:['微分方程式の解','Differential-equation solution'], 'force-balance':['力の釣合い・向心力','Force and centripetal relation'],direction:['向きと符号の規則','Direction and sign convention'],laws:['素子の基本関係','Constitutive element relations']
     };
     return electricityDefinitionFigure(section.id,j,lang)
      +(deep?'<p class="electricity-formula-type"><strong>'+(en?'Type of relation: ':'この式の位置づけ：')+'</strong>'+escapeHTML(pair(kinds[deep.kind]||['物理的関係','Physical relation'],en))+'</p>':'')
