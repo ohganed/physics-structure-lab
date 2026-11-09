@@ -7,8 +7,8 @@ export const electricityDefinitionFigures={
         "Total charge conservation"
       ],
       "description": [
-        "2物体を一つの系として囲い、電子の移動前後の正味電荷を比較する。",
-        "Enclose both objects as one system and compare net charge before and after transfer."
+        "点線の枠は物体AとBを合わせた系。移動前は0+0=0、電子1個の移動後は(+e)+(−e)=0。各物体の電荷は変わっても、その合計は変わらない。",
+        "The dashed boundary encloses A and B. Before: 0+0=0. After one electron moves: (+e)+(−e)=0. Each body's charge changes, but their sum does not."
       ],
       "kind": "charge",
       "marks": [
