@@ -144,6 +144,7 @@ export function installMechanics(remarkMath){
   selectedChapterIndex=index;
   const c=chapters[index];box.innerHTML=chapterHtml(c,index);
   document.querySelectorAll('[data-mech-chapter]').forEach((b,i)=>{b.classList.toggle('active',i===index);b.classList.toggle('is-done',completed.includes(i));});
+  box.querySelectorAll('[data-mech-bridge-back]').forEach(button=>button.addEventListener('click',()=>{const target=Number(button.dataset.mechBridgeBack);if(Number.isInteger(target)&&chapters[target])show(target,true);}));
   if(typeof remarkMath==='function')remarkMath(box);
   if(c.key==='momentum')installMomentumOrigin(box,english?'en':'ja');
   if(c.key==='friction')installInclineTextbook(box,english?'en':'ja');
