@@ -4,6 +4,7 @@ import {electricityLessons3} from './electricity-textbook-part3.js';
 import {electricityFigure} from './electricity-situation-diagrams.js';
 import {electricityDerivationNotes} from './electricity-derivation-notes.js';
 import {electricityReasoningPart1} from './electricity-reasoning-part1.js';
+import {electricFieldExplorerHtml,installElectricFieldExplorer} from './electric-field-explorer.js';
 import {electricityDefinitionFigure} from './electricity-definition-diagrams.js';
 import {electricityWorkedExamples} from './electricity-worked-examples.js';
 import {electricityExampleFigure} from './electricity-example-figures.js';
@@ -39,7 +40,8 @@ function chapterMarkup(chapter,index,en){
      +(deep?'<div class="electricity-reasoning-expansion"><h5>'+(en?'Why this relation follows':'この関係を理解するまでの過程')+'</h5><ol>'+deep.steps.map(step=>'<li>'+escapeHTML(pair(step,en))+'</li>').join('')+'</ol></div>':'');
    }).join('')+'</div>'
   +'<p><strong>'+(en?'Physical meaning: ':'物理的意味：')+'</strong>'+escapeHTML(pair(section.meaning,en))+'</p>'
-  +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p></section>').join('')
+  +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p>'
+  +(section.id==='field-lines'?electricFieldExplorerHtml(lang):'')+'</section>').join('')
  +(electricityWorkedExamples[chapter.key]?(()=>{
   const example=electricityWorkedExamples[chapter.key];
   return '<section class="electricity-worked-example"><h3>'+(en?'Worked example with all intermediate steps':'例題：途中式と判断を確かめる')+'</h3><h4>'+escapeHTML(pair(example.title,en))+'</h4><p>'+escapeHTML(pair(example.problem,en))+'</p>'
@@ -75,11 +77,14 @@ export function installElectricity(renderMath){
  const box=document.querySelector('#electricity-detail');if(!box)return ()=>{};
  const en=getLanguage()==='en';
  const buttons=[...document.querySelectorAll('[data-electric-chapter]')];
+ let disposeField=installElectricFieldExplorer(document,en?'en':'ja');
  buttons.forEach(btn=>btn.addEventListener('click',()=>{
   const index=Number(btn.dataset.electricChapter);if(!Number.isInteger(index)||!electricityChapters[index])return;
+  disposeField();
   selected=index;box.innerHTML=chapterMarkup(electricityChapters[index],index,en);
   buttons.forEach(b=>b.classList.toggle('active',Number(b.dataset.electricChapter)===index));
   if(typeof renderMath==='function')renderMath(box);
+  disposeField=installElectricFieldExplorer(document,en?'en':'ja');
   if(window.matchMedia?.('(max-width: 800px)').matches)box.scrollIntoView({block:'start',behavior:'auto'});
  }));
  const $=name=>document.querySelector('#electric-'+name);
@@ -96,5 +101,5 @@ export function installElectricity(renderMath){
   show('mag','r = '+fmt(p.radius)+' m; T = '+fmt(p.period)+' s; |F| = '+fmt(p.forceMagnitude)+' N.');}}
  ];
  tasks.forEach(t=>{for(const key of t.inputs){const control=$(key);if(control)control.addEventListener(key.endsWith('mode')?'change':'input',t.update);}t.update();});
- return ()=>{};
+ return ()=>{disposeField();};
 }
