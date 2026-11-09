@@ -185,7 +185,7 @@ export const universityBridgeLessons={
         ],
         "formula": [
           "G(t):=\\frac{\\partial L}{\\partial\\theta}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}",
-          "\\int_{t_0}^{t_1}G(t)\\eta(t)\\,dt=0\\qquad\\text{（すべての許される }\\eta\\text{ について）}",
+          "\\int_{t_0}^{t_1}G(t)\\eta(t)\\,dt=0\\qquad(\\forall\\,\\eta:\\ \\eta(t_0)=\\eta(t_1)=0)",
           "G(t)=0\\quad\\Longrightarrow\\quad\\boxed{\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}-\\frac{\\partial L}{\\partial\\theta}=0}"
         ],
         "lineNotes": [
