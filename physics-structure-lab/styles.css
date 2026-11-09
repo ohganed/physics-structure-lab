@@ -640,3 +640,19 @@
 .electricity-algebra-bridges h6{font-size:.95rem;font-weight:700;margin:0 0 12px}
 .electricity-algebra-bridges .tex-display{max-width:100%;overflow-x:auto;margin:8px 0}
 .electricity-algebra-bridges p{margin:5px 0 14px;line-height:1.75;font-size:.94rem}
+
+/* A continuous bridge from Newton's school-level motion laws to analytical mechanics. */
+.mechanics-university-bridge{margin:16px 0 28px;padding:clamp(14px,2.5vw,25px);border:1px solid #c8ded5;background:#f8fcf9;border-radius:16px}
+.mechanics-university-bridge>.eyebrow{letter-spacing:.08em;color:#426e61}
+.mechanics-university-bridge h3{margin:8px 0 12px}
+.mechanics-university-lead{font-size:1.05rem;line-height:1.85}
+.mechanics-university-stage{margin:18px 0 0;padding:clamp(13px,2vw,20px);background:#fff;border:1px solid #d5e5dc;border-radius:13px}
+.mechanics-university-stage h4{font-size:1.08rem;margin:0 0 10px;color:#285c50}
+.mechanics-university-stage p{line-height:1.85}
+.mechanics-university-figure{width:100%;max-width:700px;margin:15px auto;background:#fbfdfb;border:1px solid #d6e6de;border-radius:11px;padding:8px}
+.mechanics-university-figure svg{display:block;width:100%;height:auto}
+.mechanics-university-figure figcaption{color:#546b61;font-size:.85rem;line-height:1.6;margin:7px 5px}
+.mechanics-university-stage .tex-display{max-width:100%;overflow-x:auto;margin:12px 0}
+.mechanics-university-stage-note{border-left:3px solid #78a698;padding:8px 12px;background:#f0f7f3;border-radius:0 8px 8px 0}
+.mechanics-university-end{margin:16px 0 0;font-weight:600;line-height:1.75}
+@media(max-width:650px){.mechanics-university-stage{padding:10px}.mechanics-university-figure{padding:3px}.mechanics-university-figure figcaption{font-size:.8rem}}
