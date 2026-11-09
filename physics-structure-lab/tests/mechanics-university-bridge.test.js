@@ -51,7 +51,7 @@ test('Lagrangian introduction uses constrained geometry, energy, stationary acti
  assert.match(stages[1].formula[1],/L=K-U/);
  assert.match(stages[2].formula[1],/\\delta S=0/);
  assert.match(stages[3].formula.at(-1),/\\ddot\\theta/);
- assert.match(stages[2].note[1],/not necessarily/i);
+ assert.match(stages[2].note[1],/need not mean minimal/i);
 });
 
 test('Hamiltonian introduction starts from original spring force, then state, canonical momentum and H',()=>{
