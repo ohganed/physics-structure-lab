@@ -1,4 +1,4 @@
-/* Motivation-first bridge: geometric constraints, action, step-by-step variation, sign checks. */
+/* Complete physical modeling and variation bridge from observed pendulum to analytical mechanics. */
 export const universityBridgeLessons={
   "lagrange": {
     "title": [
@@ -6,10 +6,51 @@ export const universityBridgeLessons={
       "From the school pendulum to Lagrangian mechanics"
     ],
     "lead": [
-      "高校物理では、振り子に働く重力を接線方向へ分解して運動方程式を求めました。大学では、糸の張力を毎回計算しなくても運動を扱える方法を考えます。ただし、新しい式を突然導入するのではなく、すでに知っている振り子の運動から、その方法の意味を確かめていきます。",
-      "In school mechanics, we resolved gravity along the pendulum tangent to derive its equation of motion. We now explore a method that handles the constraint without explicitly solving for string tension. Rather than introducing a mysterious new formula, we test the new formulation against the pendulum motion we already know."
+      "振り子を数式で扱うには、まず現象から何を残し、何を無視するかを決めます。次に位置、速度、加速度、働く力を同じ座標系で表し、ニュートンの運動方程式をつくります。その答えを基準に、エネルギー・作用・ラグランジアンという大学の方法へ進みます。",
+      "To model a pendulum, first decide which features of the real system matter and which can be neglected. Next express position, velocity, acceleration and forces in one consistent coordinate system to construct Newton's equation. We use that equation as our reference before exploring energy, action and the Lagrangian formulation."
     ],
     "stages": [
+      {
+        "kind": "model-observation",
+        "title": [
+          "実物の振り子から、扱う物理モデルを決める",
+          "From a real pendulum to a mathematical model"
+        ],
+        "prose": [
+          "実際の振り子では球にも大きさがあり、糸も重く、支点の摩擦や空気抵抗が働きます。まず『どの現象を説明するためのモデルなのか』を決めます。ここでは球を質点、糸を質量がなく伸びないもの、支点を摩擦のない点として、地表付近の一定重力gの下で一平面内を動く振り子を扱います。これは真実を言い換えたのではなく、運動の中心的な原因だけを残す近似です。観測された運動がこの近似で説明できるかは、後で実験や元の運動方程式と照合します。",
+          "A real pendulum has a finite-sized bob, a massive string, pivot friction and air drag. Before writing equations, decide what phenomenon is being modeled. Here the bob is a point mass, the string is massless and inextensible, the pivot is frictionless, gravity is uniform and the motion stays in one vertical plane. These are chosen approximations rather than exact statements about reality. We will check their predictions against known motion."
+        ],
+        "formula": [
+          "m=\\mathrm{const},\\qquad \\ell=\\mathrm{const},\\qquad g=\\mathrm{const}",
+          "|\\boldsymbol r(t)|=\\ell"
+        ],
+        "lineNotes": [
+          [
+            "質量m、糸の長さℓ、重力加速度gを、この運動を記述する定数として採用します。抵抗力を無視できない現象ではモデルを拡張します。",
+            "Treat m, ℓ and g as constants in the ideal model. Significant damping requires an extended model."
+          ],
+          [
+            "球の位置ベクトルrは支点から測ります。糸が伸びないので、その長さはいつもℓです。これが拘束条件です。",
+            "Measure r from the pivot. Inextensibility keeps its magnitude equal to ℓ: this is the constraint."
+          ]
+        ],
+        "mapping": [
+          [
+            "観察：球は支点を中心に弧を描く",
+            "モデル化：支点は固定、糸は伸びない",
+            "数式：|r|=ℓ"
+          ],
+          [
+            "Observation: the bob follows a circular arc",
+            "Model: fixed pivot and inextensible string",
+            "Equation: |r|=ℓ"
+          ]
+        ],
+        "note": [
+          "球の大きさが長さに比べ無視できない、糸が伸びる、抵抗が大きい場合などには、このモデルは修正が必要です。",
+          "A large bob, extensible string or appreciable damping would require modifications to this model."
+        ]
+      },
       {
         "kind": "constraint",
         "title": [
@@ -26,6 +67,113 @@ export const universityBridgeLessons={
         "note": [
           "θは鉛直下向きから、yは鉛直上向きを正として測ります。座標を減らしたことだけでは、新しい運動法則はまだ得られません。",
           "θ is measured from downward vertical, with upward-positive y. Reducing the coordinate count does not itself produce a new law of motion."
+        ]
+      },
+      {
+        "kind": "model-kinematics",
+        "title": [
+          "位置の変化を速度と加速度に翻訳する",
+          "Translate changing position into velocity and acceleration"
+        ],
+        "prose": [
+          "円弧を動く球は、同じ半径の位置でも時々刻々その向きが変わります。位置ベクトルを時間で微分すると速度、もう一度微分すると加速度です。ただし円運動の加速度には、速度の大きさに関わる中心向きの成分と、速度の大きさを変える接線方向の成分が含まれます。いま必要なのは接線方向の運動です。球の位置をθで表し、時間微分によって接線方向の加速度がℓθ̈となることを確かめます。",
+          "The bob moves around a circle: its position direction changes even when its distance from the pivot does not. Differentiating the position vector with respect to time gives velocity; differentiating again gives acceleration. The latter contains an inward radial component as well as a tangential component. For its swing we examine the tangential acceleration and derive ℓθ-double-dot from the geometry."
+        ],
+        "formula": [
+          "\\boldsymbol r=(\\ell\\sin\\theta,-\\ell\\cos\\theta)",
+          "\\dot{\\boldsymbol r}=\\ell\\dot\\theta(\\cos\\theta,\\sin\\theta),\\qquad v=\\ell|\\dot\\theta|",
+          "\\boldsymbol e_r=(\\sin\\theta,-\\cos\\theta),\\qquad \\boldsymbol e_\\theta=(\\cos\\theta,\\sin\\theta)",
+          "\\ddot{\\boldsymbol r}=-\\ell\\dot\\theta^{\\,2}\\boldsymbol e_r+\\ell\\ddot\\theta\\,\\boldsymbol e_\\theta",
+          "a_\\theta=\\ddot{\\boldsymbol r}\\cdot\\boldsymbol e_\\theta=\\ell\\ddot\\theta"
+        ],
+        "lineNotes": [
+          [
+            "支点を原点として水平をxの正、上向きをyの正とします。角度θは鉛直下向きから右方向を正として測ります。",
+            "Take the pivot as origin, x positive right and y positive upward. θ is positive from downward vertical toward the right."
+          ],
+          [
+            "ℓは一定なので、位置を微分するとθの時間微分だけが残ります。θ̇の符号は運動方向を、絶対値は速さを表します。",
+            "Because ℓ is constant, the time derivative comes from θ. The sign of θ̇ fixes direction, and its magnitude fixes speed."
+          ],
+          [
+            "e_rは支点から球への半径方向、e_θはθが増加する方向の単位ベクトルです。互いに直角です。",
+            "e_r points radially outward; e_θ points in the direction of increasing θ. The two unit vectors are perpendicular."
+          ],
+          [
+            "微分をもう一度行うと、−ℓθ̇²の半径方向成分とℓθ̈の接線方向成分に分かれます。円運動でおなじみの向心加速度もここに含まれます。",
+            "Differentiating again gives a radial term −ℓθ̇² and a tangential term ℓθ̈; the familiar centripetal acceleration appears explicitly."
+          ],
+          [
+            "接線方向の単位ベクトルとの内積をとると、半径方向の項は消え、aθ=ℓθ̈が残ります。",
+            "Projecting onto e_θ removes the perpendicular radial term, giving tangential acceleration aθ=ℓθ̈."
+          ]
+        ],
+        "mapping": [
+          [
+            "観察：球は円弧に沿って速さも向きも変える",
+            "モデル化：位置をθ(t)で表示し、方向ごとに加速度を分ける",
+            "数式：aθ=ℓθ̈"
+          ],
+          [
+            "Observation: speed and direction change along an arc",
+            "Model: express position by θ(t) and resolve acceleration",
+            "Equation: aθ=ℓθ̈"
+          ]
+        ],
+        "note": [
+          "θ̈が負なら接線方向の加速度はθを減らす向きです。加速度の向きと速度の向きは必ずしも同じではありません。",
+          "A negative θ-double-dot means tangential acceleration toward decreasing θ. Velocity and acceleration need not point in the same direction."
+        ]
+      },
+      {
+        "kind": "model-forces",
+        "title": [
+          "実際に働く力を特定し、接線方向に投影する",
+          "Identify the physical forces and project along the tangent"
+        ],
+        "prose": [
+          "球だけを取り出して力を描くと、鉛直下向きの重力mgと、糸に沿って支点へ向かう張力Tがあります。力の矢印は必ず球の中心から出します。張力は半径方向なので接線方向の加速度には直接寄与しません。一方、重力の接線方向の成分は、θが正のときθを減らす向きなので−mg sinθです。そこで接線方向にニュートンの法則ma=Fを適用し、現象から運動方程式を組み立てます。",
+          "Isolate the bob and draw the forces originating at its center: gravity mg vertically downward and tension T along the string toward the pivot. Tension has no tangential component. Gravity contributes −mg sinθ along the positive tangent when θ is positive: it acts to reduce θ. Apply Newton's law along that tangent to build an equation from the physical forces."
+        ],
+        "formula": [
+          "\\boldsymbol F_g=(0,-mg),\\qquad \\boldsymbol F_T=-T\\boldsymbol e_r",
+          "F_\\theta=(\\boldsymbol F_g+\\boldsymbol F_T)\\cdot\\boldsymbol e_\\theta=-mg\\sin\\theta",
+          "m a_\\theta=F_\\theta\\quad\\Longrightarrow\\quad m\\ell\\ddot\\theta=-mg\\sin\\theta",
+          "\\boxed{m\\ell^2\\ddot\\theta+mg\\ell\\sin\\theta=0}"
+        ],
+        "lineNotes": [
+          [
+            "重力の向きはどの位置でも下向き、張力の向きは支点へ向かう糸の方向です。力の始点は球の中心です。",
+            "Gravity points downward at every position; tension points to the pivot. Both force arrows originate at the bob."
+          ],
+          [
+            "θが正なら重力の接線成分はeθと逆向きです。張力はeθと直角なので内積が0になります。",
+            "For positive θ, gravity's tangential part opposes e_θ. Tension is perpendicular to e_θ and projects to zero."
+          ],
+          [
+            "先ほど幾何から得たaθ=ℓθ̈をニュートンの法則の左辺へ、重力の接線成分を右辺へ代入します。",
+            "Substitute the geometry-derived aθ=ℓθ̈ on the left of Newton's law and tangential gravity on the right."
+          ],
+          [
+            "両辺にℓを掛けて整理すると、後でラグランジュ力学からも導く式と完全に一致する形になります。",
+            "Multiply through by ℓ to obtain the form we will later recover using the Lagrangian formulation."
+          ]
+        ],
+        "mapping": [
+          [
+            "観察：重力が球を戻し、糸が球を支える",
+            "モデル化：球だけを取り出し、力を接線方向へ投影",
+            "数式：mℓθ̈=−mg sinθ"
+          ],
+          [
+            "Observation: gravity restores the bob; tension constrains it",
+            "Model: isolate the bob and project forces tangentially",
+            "Equation: mℓθ̈=−mg sinθ"
+          ]
+        ],
+        "note": [
+          "この段階で得た式はニュートン力学による基準の答えです。次にエネルギーを表し、ラグランジュ力学で同じ答えに到達できるかを検証します。",
+          "This is the Newtonian reference equation. The next step expresses energy, allowing us to test whether Lagrangian mechanics recovers the same motion."
         ]
       },
       {
