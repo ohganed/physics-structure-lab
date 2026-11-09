@@ -1,4 +1,4 @@
-/* Motivation-first bridge: coordinate choice, energy, action, variation, sign test and Newtonian check. */
+/* Motivation-first bridge: geometric constraints, action, step-by-step variation, sign checks. */
 export const universityBridgeLessons={
   "lagrange": {
     "title": [
@@ -67,23 +67,144 @@ export const universityBridgeLessons={
         ]
       },
       {
-        "kind": "variation",
+        "kind": "variation-setup",
         "title": [
-          "作用の停留から、運動を決める式の形を得る",
-          "How stationary action produces an equation of motion"
+          "変分とは、経路の『少し違う形』を比べる操作",
+          "A variation compares slightly different paths"
         ],
         "prose": [
-          "経路をθ(t)+εη(t)へ少しだけ変えます。ηは出発点と到着点で0です。作用Sをεで微分し、速度に関係する項を部分積分します。端点の項はη=0で消えるため、どんな小さなηについても一次変化が0なら、オイラー・ラグランジュ方程式が成立します。ここまでで得られたのは『Lが決まれば運動を求める方法』です。",
-          "Perturb a path to θ(t)+εη(t), where η vanishes at both endpoints. Differentiate the action with respect to ε and integrate the velocity-dependent term by parts. The endpoint term vanishes, so stationarity for every small η gives the Euler–Lagrange equation. We now have a rule that determines the motion once L is chosen."
+          "まず正しい運動がまだわからないとして、一つの候補経路θ(t)を考えます。途中の時刻だけ角度を少し変える関数η(t)を用意し、その大きさをεで調節します。こうしてθ_ε(t)=θ(t)+εη(t)という候補を作ります。出発点と到着点は変えないため、η(t₀)=η(t₁)=0とします。ここでεは時間ではなく、候補経路をどれほど変えるかを表す数です。",
+          "Begin with a trial path θ(t), without yet knowing the physical one. Choose a smooth shape η(t) describing a small change along the path, and use a parameter ε to adjust its size. This produces θ_ε(t)=θ(t)+εη(t). The starting and ending angles are fixed, so η(t₀)=η(t₁)=0. The parameter ε is not time: it measures the size of a path change."
         ],
         "formula": [
-          "\\delta S=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}\\eta+\\frac{\\partial L}{\\partial\\dot\\theta}\\dot\\eta\\right)\\,dt",
-          "\\delta S=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}\\right)\\eta\\,dt",
-          "\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}-\\frac{\\partial L}{\\partial\\theta}=0"
+          "\\theta_\\varepsilon(t)=\\theta(t)+\\varepsilon\\eta(t)",
+          "\\eta(t_0)=\\eta(t_1)=0",
+          "\\dot\\theta_\\varepsilon(t)=\\dot\\theta(t)+\\varepsilon\\dot\\eta(t)"
+        ],
+        "lineNotes": [
+          [
+            "元の経路に小さな形の違いεηを重ねます。ηは時刻ごとに変わる関数です。",
+            "Add the small change εη to the original path. η varies with time."
+          ],
+          [
+            "図で二つの線が両端で交わるのは、ここを固定するという条件を表しています。",
+            "The two paths meet at their endpoints because those points are held fixed."
+          ],
+          [
+            "εを一定として時間で微分します。経路の角度が変われば、角速度も変わります。",
+            "Differentiate with respect to time while holding ε constant; changing a path also changes its angular velocity."
+          ]
         ],
         "note": [
-          "『経路を少し変える』という操作を変分と呼びます。通常の時間微分と変分は異なります。",
-          "A small change of the entire trial path is called a variation, distinct from an ordinary time derivative."
+          "『変分』は微小な時間が経つことではなく、同じ時刻で比べる別の運動経路への変更です。まず二本の経路の図でこの違いを確かめます。",
+          "A variation is not waiting a short time; it changes the proposed trajectory at the same times. Compare the two curves in the figure."
+        ]
+      },
+      {
+        "kind": "variation-chain",
+        "title": [
+          "作用をεで微分する――二変数の微分を使う",
+          "Differentiate the action using the multivariable chain rule"
+        ],
+        "prose": [
+          "作用は経路全体に対応する数です。そこで候補経路θ_εを代入した作用S(ε)を考え、ε=0の近くでの増減を調べます。Lは角度θと角速度θ̇の両方に依存するため、εで微分すると二つの寄与が生じます。ここで使うのは高校で学ぶ合成関数の微分の多変数版です。",
+          "The action assigns a number to each full path. Substitute θ_ε into S and ask how S changes as ε varies near zero. Because L depends on both θ and θ̇, the chain rule gives two contributions. This is the multivariable extension of the derivative of a composite function."
+        ],
+        "formula": [
+          "S(\\varepsilon)=\\int_{t_0}^{t_1}L(\\theta_\\varepsilon,\\dot\\theta_\\varepsilon,t)\\,dt",
+          "\\left.\\frac{dS}{d\\varepsilon}\\right|_{\\varepsilon=0}=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}\\eta+\\frac{\\partial L}{\\partial\\dot\\theta}\\dot\\eta\\right)\\,dt",
+          "\\delta S:=\\left.\\frac{dS}{d\\varepsilon}\\right|_{\\varepsilon=0},\\qquad\\delta S=0"
+        ],
+        "lineNotes": [
+          [
+            "候補経路が違えば、一般に積分の値も違います。積分区間の両端の時刻は固定です。",
+            "Different trial paths generally give different integral values. The time endpoints remain fixed."
+          ],
+          [
+            "角度側ではdθ_ε/dε=η、角速度側ではdθ̇_ε/dε=η̇を使い、それぞれに偏微分を掛けます。偏微分は残りの変数を固定して変化を測る操作です。",
+            "The chain rule uses dθ_ε/dε=η and dθ̇_ε/dε=η̇, multiplying each by the corresponding partial derivative of L."
+          ],
+          [
+            "ε=0での作用の一次変化をδSと書きます。停留原理は、この値が許されるどのηについても0であることを求めます。",
+            "Write the first-order change at ε=0 as δS. Stationarity requires it to vanish for every admissible η."
+          ]
+        ],
+        "note": [
+          "角度と角速度は経路の上で結び付いていますが、Lを関数として偏微分するときは一方を固定して他方を変えます。",
+          "Although θ and θ̇ are linked along a path, their partial derivatives in L treat one variable as fixed while differentiating the other."
+        ]
+      },
+      {
+        "kind": "variation-parts",
+        "title": [
+          "なぜ部分積分するのか――η̇をηにそろえる",
+          "Why integration by parts transfers the derivative"
+        ],
+        "prose": [
+          "いまの積分にはηとη̇が混在しています。ηを自由に選ぶ条件から式を判断するには、両方をηだけにそろえたいのです。そこでA(t)=∂L/∂θ̇とおいて積の微分d(Aη)/dt=Ȧη+Aη̇を使います。これを積分したものが部分積分です。端点に生じる[Aη]は、η(t₀)=η(t₁)=0なので消えます。",
+          "The integral contains both η and its derivative η̇. To use the arbitrariness of η, rewrite everything as a coefficient multiplying η alone. Let A(t)=∂L/∂θ̇ and use the product rule d(Aη)/dt=Ȧη+Aη̇. Its integrated form is integration by parts. The boundary contribution [Aη] vanishes because η is zero at both endpoints."
+        ],
+        "formula": [
+          "A(t):=\\frac{\\partial L}{\\partial\\dot\\theta},\\qquad \\frac{d}{dt}(A\\eta)=\\dot A\\eta+A\\dot\\eta",
+          "\\int_{t_0}^{t_1}A\\dot\\eta\\,dt=\\left[A\\eta\\right]_{t_0}^{t_1}-\\int_{t_0}^{t_1}\\dot A\\eta\\,dt",
+          "\\left[A\\eta\\right]_{t_0}^{t_1}=A(t_1)\\eta(t_1)-A(t_0)\\eta(t_0)=0",
+          "\\delta S=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}\\right)\\eta\\,dt"
+        ],
+        "lineNotes": [
+          [
+            "一度Aという短い記号に置き換えると、普通の積の微分と同じ操作であることが見えます。",
+            "The temporary symbol A makes the ordinary product rule visible."
+          ],
+          [
+            "η̇に付いていた時間微分をA側へ移し替えた代わりに、積分の両端で評価する項が現れます。",
+            "The derivative moves from η onto A, at the cost of a boundary term."
+          ],
+          [
+            "図の端点ではη=0です。Aが有限なら両端の積は0になります。この条件を省略してはいけません。",
+            "At the endpoints η=0. Provided A is finite there, both products vanish. This condition matters."
+          ],
+          [
+            "これで、どの時刻でもηに掛かる部分が一つの括弧にまとまりました。",
+            "Everything multiplying η is now collected into a single coefficient."
+          ]
+        ],
+        "note": [
+          "部分積分は式を難しくするためではなく、任意に選べるηに掛かる量を一つにまとめるために行います。",
+          "Integration by parts is used to collect the coefficient of the arbitrary function η, not simply to manipulate symbols."
+        ]
+      },
+      {
+        "kind": "variation-local",
+        "title": [
+          "最後の一歩――なぜ括弧の中が0とわかるのか",
+          "The final step: why must the coefficient itself vanish?"
+        ],
+        "prose": [
+          "G(t)=∂L/∂θ−d/dt(∂L/∂θ̇)と書くと、停留条件は∫G(t)η(t)dt=0です。ある一つのηに対して積分が0でも、G=0とは限りません。正負が打ち消し合う可能性があるからです。しかし、停留原理は端点で0になる滑らかなηを『どれでも』選べると要求します。もしGがある短い区間で正なら、その区間だけが正になる山型のηを選べば積分は正になってしまいます。負の場合も同様です。Gが連続で、すべてのそのようなηに対して積分が0であるなら、各時刻でG=0です。これが変分法の基本補題による結論です。",
+          "Let G(t)=∂L/∂θ−d/dt(∂L/∂θ̇). Stationarity means ∫Gη dt=0. A zero integral for one η does not imply G=0: positive and negative contributions could cancel. But the condition applies to every smooth η vanishing at the endpoints. If continuous G were positive over some short interval, we could choose a positive bump η only there, making the integral positive. The same argument works if G is negative. Hence G must vanish at every interior time. This is the fundamental lemma of the calculus of variations."
+        ],
+        "formula": [
+          "G(t):=\\frac{\\partial L}{\\partial\\theta}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}",
+          "\\int_{t_0}^{t_1}G(t)\\eta(t)\\,dt=0\\qquad\\text{（すべての許される }\\eta\\text{ について）}",
+          "G(t)=0\\quad\\Longrightarrow\\quad\\boxed{\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}-\\frac{\\partial L}{\\partial\\theta}=0}"
+        ],
+        "lineNotes": [
+          [
+            "先ほどの括弧の中身をGと呼び、積分が0という条件を読みやすくします。",
+            "Name the coefficient G to make the remaining integral condition easier to examine."
+          ],
+          [
+            "ここで重要なのは『すべての許されるηについて』という条件です。一つの経路の変化だけでは結論を出せません。",
+            "The phrase 'for every admissible η' is essential. One particular variation is not enough."
+          ],
+          [
+            "Gがどこかで0以外なら、その場所だけを調べるηを作れて積分条件に矛盾します。したがってG=0、すなわちオイラー・ラグランジュ方程式です。",
+            "A local nonzero G permits a localized η contradicting the integral condition, so G=0: the Euler–Lagrange equation."
+          ]
+        ],
+        "note": [
+          "ここでは十分滑らかな経路と関数Lを仮定しています。端点以外の時刻で式が成立するという結論で、作用が最小になるとまでは主張していません。",
+          "This argument assumes sufficient smoothness. It establishes the equation on interior times; it does not claim the action is necessarily minimal."
         ]
       },
       {
