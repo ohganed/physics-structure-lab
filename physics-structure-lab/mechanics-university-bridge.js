@@ -19,7 +19,7 @@ function pendulum(kind,en){
     +ln(ox,by,bx,by,'#a9bdb3',1,'4 4')+t(170,263,'q = θ');
  }else if(kind==='energy'){
   s+=circ(ox,floor,8,'none')+ln(bx+47,by,bx+47,floor,'#8ca69c',2)
-   +arrow(bx+48,by,bx+48,floor,'#b65f48')+t(bx+60,(by+floor)/2,'h','#b65f48')
+   +arrow(bx+48,floor,bx+48,by,'#b65f48')+t(bx+60,(by+floor)/2,'h','#b65f48')
    +arrow(bx,by,bx+57,by-42,'#397d9d')+t(bx+61,by-48,'v','#397d9d')
    +t(92,268,'K = ½mv²')+t(310,268,'U = mgh');
  }else{
@@ -28,6 +28,61 @@ function pendulum(kind,en){
     +arrow(bx,by,bx-39,by-51,'#8559a9')+t(bx-19,by-55,'T','#8559a9');
  }
  return s;
+}
+
+/* Physical modeling sequence: observe -> idealize -> choose coordinates -> derive
+   kinematics -> isolate the bob and resolve its *actual* forces. */
+function pendulumModel(kind,en){
+ const ox=243,oy=45,L=163,theta=.62;
+ const bx=ox+L*Math.sin(theta),by=oy+L*Math.cos(theta);
+ const sx=Math.sin(theta),sy=Math.cos(theta);
+ let d='';
+ for(let i=0;i<=70;i++){
+  const th=-.72+i*(1.44/70),x=ox+L*Math.sin(th),y=oy+L*Math.cos(th);
+  d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)+' ';
+ }
+ let scene=curve(d,'#b7c9c2',1.4)+ln(ox,oy,ox,oy+L+32,'#9cb9ad',1,'5 4')
+  +circ(ox,oy,6,'#4c7569')+ln(ox,oy,bx,by,'#477b70',3)
+  +circ(bx,by,15,'#dcebe4')
+  +t(ox-39,29,en?'pivot':'支点')
+  +t(ox+33,117,'ℓ')+t(bx+16,by-10,'m')
+  +curve('M'+ox+' '+(oy+44)+' Q'+(ox+16)+' '+(oy+42)+' '+(ox+26)+' '+(oy+36),'#b66247',2)
+  +t(ox+34,oy+60,'θ','#b66247');
+ if(kind==='model-observation'){
+  scene+=t(65,52,en?'Fixed point':'固定した支点','#477b70',14)
+   +ln(173,50,225,47,'#8da69c',1,'3 4')
+   +t(58,211,en?'circular trajectory':'円弧の軌跡','#397e9d',14)
+   +t(90,264,en?'ideal: no air resistance or pivot friction':'理想化：空気抵抗と支点摩擦なし',undefined,14)
+   +t(366,91,en?'inextensible':'伸びない糸','#477b70',14);
+  return scene;
+ }
+ if(kind==='model-kinematics'){
+  // Mathematical basis: e_theta=(cosθ,sinθ) in (right,up) coordinates.
+  // Screen coordinates point downward, so positive e_theta is right/up.
+  scene+=arrow(bx,by,bx+54*sy,by-54*sx,'#397e9d')
+   +t(bx+58,by-44,'v, eθ','#397e9d')
+   +arrow(bx,by,bx+48*sx,by+48*sy,'#477b70')
+   +t(bx+32,by+50,'eᵣ','#477b70')
+   +arrow(bx,by,bx-49*sx,by-49*sy,'#855ca6')
+   +t(bx-117,by-62,'aᵣ','#855ca6')
+   +t(85,266,en?'tangent: aθ = ℓθ̈':'接線方向：aθ = ℓθ̈','#397e9d',15);
+  return scene;
+ }
+ if(kind==='model-forces'){
+  // Every *force* arrow originates at the bob, not at the pivot, axes or grid.
+  // Tension is directed toward the pivot; gravity is vertically downward.
+  // Tangential gravity projects opposite to positive e_theta for theta>0.
+  scene+=arrow(bx,by,bx,by+66,'#b35e45')
+   +t(bx+12,by+66,'mg','#b35e45')
+   +arrow(bx,by,bx-44*sx,by-44*sy,'#855ca6')
+   +t(bx-63,by-53,'T','#855ca6')
+   +arrow(bx,by,bx-62*sy,by+62*sx,'#397e9d')
+   +t(bx-150,by+53,'Fθ','#397e9d')
+   +t(86,265,en?'Fθ = −mg sinθ':'Fθ = −mg sinθ','#397e9d',15)
+   +t(370,89,en?'bob free-body forces':'球に作用する力',undefined,13);
+  return scene;
+ }
+ return scene;
 }
 function springCart(y,vSign,en){
  let s=box(51,y-37,13,72,'#8eab9f')+ln(65,y+29,500,y+29,'#91aca1',2)
@@ -177,10 +232,11 @@ function energy(en){
   +t(124,49,'K','#35765e')+t(216,49,'U','#ae6547')
   +arrow(278,43,338,43,'#825da2')+t(350,49,'H = K + U','#825da2');
 }
-export const universityBridgeKinds=Object.freeze(['constraint','energy','paths','variation-setup','variation-chain','variation-parts','variation-local','sign-compare','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
+export const universityBridgeKinds=Object.freeze(['model-observation','constraint','model-kinematics','model-forces','energy','paths','variation-setup','variation-chain','variation-parts','variation-local','sign-compare','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
 export function universityBridgeFigure(kind,title,lang='ja'){
  const en=lang==='en';let drawing='';
- if(['constraint','energy','result'].includes(kind))drawing=pendulum(kind,en);
+ if(['model-observation','model-kinematics','model-forces'].includes(kind))drawing=pendulumModel(kind,en);
+ elseif(['constraint','energy','result'].includes(kind))drawing=pendulum(kind,en);
  else if(kind==='paths')drawing=actionPaths(en);
  else if(kind==='variation-setup')drawing=variationScene(en);
  else if(kind==='variation-chain')drawing=variationChain(en);
@@ -211,6 +267,9 @@ export function mechanicsUniversityBridgeHtml(key,language='ja'){
    +'<h4>'+(i+1)+'. '+h(v(stage.title))+'</h4>'
    +'<p>'+h(v(stage.prose))+'</p>'
    +universityBridgeFigure(stage.kind,v(stage.title),language)
+   +(stage.mapping?'<div class="mechanics-model-mapping" role="group" aria-label="'+(en?'Observation to equation':'観察から数式まで')+'">'
+    +stage.mapping[en?1:0].map((line,i)=>'<div class="mechanics-model-mapping-step"><span>'+(i+1)+'</span>'+h(line)+'</div>').join('')
+    +'</div>':'')
    +stage.formula.map((eq,index)=>math(eq)+(stage.lineNotes?.[index]?'<p class="mechanics-university-formula-note">'+h(v(stage.lineNotes[index]))+'</p>':'')).join('')
    +'<p class="mechanics-university-stage-note">'+h(v(stage.note))+'</p>'
    +'</section>').join('')
