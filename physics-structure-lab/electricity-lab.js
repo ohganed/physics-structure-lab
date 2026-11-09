@@ -6,6 +6,7 @@ import {electricityDerivationNotes} from './electricity-derivation-notes.js';
 import {electricityReasoningPart1} from './electricity-reasoning-part1.js';
 import {electricityReasoningPart2} from './electricity-reasoning-part2.js';
 import {electricityReasoningPart3} from './electricity-reasoning-part3.js';
+import {electricityAlgebraBridges} from './electricity-algebra-bridges.js';
 import {electricFieldExplorerHtml,installElectricFieldExplorer} from './electric-field-explorer.js';
 import {electricityDefinitionFigure} from './electricity-definition-diagrams.js';
 import {electricityWorkedExamples} from './electricity-worked-examples.js';
@@ -40,7 +41,7 @@ function chapterMarkup(chapter,index,en){
     return electricityDefinitionFigure(section.id,j,lang)
      +(deep?'<p class="electricity-formula-type"><strong>'+(en?'Type of relation: ':'この式の位置づけ：')+'</strong>'+escapeHTML(pair(kinds[deep.kind]||['物理的関係','Physical relation'],en))+'</p>':'')
      +math(eq)+'<p class="electricity-equation-explanation">'+escapeHTML(electricityDerivationNotes[section.id]?.[j]?.[en?1:0]||'')+'</p>'
-     +(deep?'<div class="electricity-reasoning-expansion"><h5>'+(en?'Why this relation follows':'この関係を理解するまでの過程')+'</h5><ol>'+deep.steps.map(step=>'<li>'+escapeHTML(pair(step,en))+'</li>').join('')+'</ol></div>':'');
+     +(deep?'<div class="electricity-reasoning-expansion"><h5>'+(en?'Why this relation follows':'この関係を理解するまでの過程')+'</h5><ol>'+deep.steps.map(step=>'<li>'+escapeHTML(pair(step,en))+'</li>').join('')+'</ol>'+(electricityAlgebraBridges[section.id]?.[j]?.length?'<div class="electricity-algebra-bridges"><h6>'+(en?'Intermediate equations':'途中の式変形')+'</h6>'+electricityAlgebraBridges[section.id][j].map(item=>math(item.tex)+'<p>'+escapeHTML(pair(item.explanation,en))+'</p>').join('')+'</div>':'')+'</div>':'');
    }).join('')+'</div>'
   +'<p><strong>'+(en?'Physical meaning: ':'物理的意味：')+'</strong>'+escapeHTML(pair(section.meaning,en))+'</p>'
   +'<p class="muted"><strong>'+(en?'Validity and limits: ':'成立条件と限界：')+'</strong>'+escapeHTML(pair(section.limits,en))+'</p>'
