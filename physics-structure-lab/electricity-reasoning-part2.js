@@ -210,7 +210,7 @@ export const electricityReasoningPart2={
           "The same current passes through external R and internal r, so add their drops."
         ],
         [
-          "起電力は合計電圧降下に等しい。総抵抗で割ると電流が求まる。",
+          "電池が一周の間に単位電荷へ与える起電力は、内部と外部の抵抗で生じる合計の電圧降下に等しい。したがって総抵抗で割ると電流が求まる。",
           "Set emf equal to total voltage drops, then divide by total resistance."
         ],
         [
