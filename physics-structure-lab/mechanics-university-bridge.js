@@ -32,8 +32,8 @@ function pendulum(kind,en){
 function springCart(y,vSign,en){
  let s=box(51,y-37,13,72,'#8eab9f')+ln(65,y+29,500,y+29,'#91aca1',2)
   +spring(66,y,230)+box(230,y-29,82,58)+ln(214,y-49,214,y+42,'#b4c8be',1,'5 5')
-  +arrow(272,y,272+75*vSign,y-17,'#367c9e')
-  +arrow(272,y,188,y+19,'#b35f48')
+  +arrow(272,y,272+75*vSign,y,'#367c9e')
+  +arrow(272,y,188,y,'#b35f48')
   +t(367,y-33,vSign>0?'v > 0':'v < 0','#367c9e')+t(140,y+52,en?'same q':'同じ位置 q');
  return s;
 }
