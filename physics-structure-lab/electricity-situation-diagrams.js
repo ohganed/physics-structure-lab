@@ -65,7 +65,15 @@ function coil(x=260,y=149){let s='';for(let j=0;j<5;j++)s+=circle(x-72+j*36,y,25
 function scene(id,lang){
  const en=lang==='en',t=(ja,enText)=>en?enText:ja;
  switch(id){
- case 'charged-bodies':return charges(true)+arrow(242,132,295,132,'#387eaa')+text(220,107,'e−','#387eaa')+text(112,208,t('電子の移動','Electron transfer'));
+ case 'charged-bodies':return '<rect x="23" y="9" width="514" height="267" rx="16" fill="none" stroke="#477c70" stroke-width="2" stroke-dasharray="8 5"/>'
+  +text(37,32,t('移動前：二つとも中性','Before: both neutral'))
+  +circle(151,73,28,'#e4f0eb')+circle(400,73,28,'#e4f0eb')+text(145,79,'0')+text(394,79,'0')
+  +text(222,80,'0 + 0 = 0')
+  +arrow(276,112,276,150,'#387eaa')+text(289,137,t('電子がAからBへ','electron A → B'),'#387eaa')
+  +text(37,174,t('移動後','After'))
+  +circle(151,206,28,'#f7e3dc')+circle(400,206,28,'#dfedf6')+text(137,212,'+e')+text(386,212,'−e')
+  +arrow(184,206,365,206,'#387eaa')+text(248,196,'e−','#387eaa')
+  +text(191,255,'(+e) + (−e) = 0');
  case 'coulomb':return charges(true)+arrow(180,148,248,148)+arrow(364,148,296,148,'#387eaa')+text(267,183,'r')+text(196,84,lang==='en'?'Attraction':'引力');
  case 'superposition':return circle(173,208,20,'#f4dfd5')+circle(366,208,20,'#f4dfd5')+circle(270,73,17,'#f4dfd5')+text(265,78,'+')+arrow(270,73,320,11)+arrow(270,73,220,11)+text(160,247,'+')+text(354,247,'+');
  case 'field-definition':return circleField(270,146,true)+circle(416,146,14,'#dae9f2')+text(412,152,'+')+arrow(436,146,479,146,'#b45d40');
