@@ -635,3 +635,8 @@
 .electricity-field-explorer p[aria-live]{overflow-wrap:anywhere;font-variant-numeric:tabular-nums;line-height:1.75}
 @media(max-width:780px){.electricity-field-explorer-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:410px){.electricity-field-explorer-controls{grid-template-columns:minmax(0,1fr)}}
+
+.electricity-algebra-bridges{margin:17px 0 3px;padding:12px 14px;background:#fff;border:1px solid #dce8e1;border-radius:10px}
+.electricity-algebra-bridges h6{font-size:.95rem;font-weight:700;margin:0 0 12px}
+.electricity-algebra-bridges .tex-display{max-width:100%;overflow-x:auto;margin:8px 0}
+.electricity-algebra-bridges p{margin:5px 0 14px;line-height:1.75;font-size:.94rem}
