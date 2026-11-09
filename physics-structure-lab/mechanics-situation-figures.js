@@ -84,7 +84,7 @@ function worked(key,lang){
  case 'rotation':{const ramp=path('M95 239 L471 96 L471 239 Z','#728d81',2,'#eff5f2');return ramp+circ(233,155.5,29,'#d4e7df')+circ(326,119.8,29,'#e7e1c9')+circ(326,119.8,19,'#eff5f2')+circ(233,155.5,4)+circ(326,119.8,4)+txt(174,140,L('円盤','disk',lang))+txt(353,115,L('輪','hoop',lang));}
  case 'noninertial':{const p=pendulum(253,52,-27,131);return rect(95,24,357,212,'#eef3f0')+p.art+ar(470,149,522,149,'#356fa2')+txt(478,136,'a','#356fa2')+ar(p.bx,p.by,p.bx-51,p.by,'#8052a6')+txt(112,167,L('慣性力','fictitious force',lang),'#8052a6');}
  case 'lagrange':return circ(270,81,33,'#fff')+ln(270,48,270,30,'#62897b',3)+ln(237,81,237,178,'#547e75',3)+ln(303,81,303,209,'#547e75',3)+rect(212,178,49,40)+rect(278,209,49,39)+ar(238,174,238,251)+ar(303,206,303,266)+txt(175,200,'m₁')+txt(331,229,'m₂')+txt(352,133,L('滑車','pulley',lang));
- case 'hamilton':return ln(75,209,492,209,'#779389',3)+spring(77,269,180)+rect(269,151,88,58)+ar(315,115,393,115,'#356fa2')+txt(335,98,'p')+txt(274,246,'q')+txt(122,53,L('位置と運動量','Position & momentum',lang));
+ case 'hamilton':return ln(75,209,492,209,'#779389',3)+spring(77,269,180)+rect(269,151,88,58)+ar(313,180,404,180,'#356fa2')+txt(380,163,'p','#356fa2')+ln(228,148,228,251,'#a4b9b0',1,'5 5')+ar(228,244,313,244,'#8a59a3')+txt(265,266,'q','#8a59a3')+txt(196,148,'q=0')+txt(122,53,L('位置と運動量','Position & momentum',lang));
  case 'coupled':return ln(58,194,507,194,'#7b998f',2)+ln(62,128,62,199,'#7b998f',5)+ln(494,128,494,199,'#7b998f',5)+spring(65,183,169)+rect(183,144,61,50)+spring(244,329,169)+rect(329,144,61,50)+spring(390,491,169)+ar(215,117,251,117,'#af573f')+ar(360,117,322,117,'#356fa2')+txt(170,99,L('逆位相の例','Opposite-phase example',lang));
  }
  return '';
