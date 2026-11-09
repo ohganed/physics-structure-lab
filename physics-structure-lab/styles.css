@@ -656,3 +656,8 @@
 .mechanics-university-stage-note{border-left:3px solid #78a698;padding:8px 12px;background:#f0f7f3;border-radius:0 8px 8px 0}
 .mechanics-university-end{margin:16px 0 0;font-weight:600;line-height:1.75}
 @media(max-width:650px){.mechanics-university-stage{padding:10px}.mechanics-university-figure{padding:3px}.mechanics-university-figure figcaption{font-size:.8rem}}
+
+.mechanics-university-prior{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:15px 0 20px}
+.mechanics-university-prior span{font-size:.9rem;color:#526a60;font-weight:600}
+.mechanics-university-prior button{border:1px solid #a3c5b6;background:#fff;color:#245b4e;font-weight:600;border-radius:999px;padding:7px 12px;font-size:.86rem;line-height:1.4}
+.mechanics-university-prior button:hover,.mechanics-university-prior button:focus-visible{background:#e8f4ec;outline-offset:2px}
