@@ -617,3 +617,21 @@
 .electricity-definition-panel svg{width:100%;height:auto;display:block;color:var(--ink)}
 .electricity-definition-figure figcaption{font-size:.92rem;line-height:1.75;color:var(--ink);margin:10px 2px 0}
 @media(max-width:780px){.electricity-definition-grid{grid-template-columns:minmax(0,1fr)}.electricity-definition-panel{padding:7px}.electricity-definition-panel:nth-child(2){max-width:480px}.electricity-definition-figure{margin:13px 0 10px}}
+
+/* Electrostatics: derivations maintain the chain of physical assumptions and measurable quantities. */
+.electricity-formula-type{font-size:.94rem;line-height:1.55;margin:13px 0 8px;color:var(--green)}
+.electricity-reasoning-expansion{margin:10px 0 24px;padding:clamp(12px,2.6vw,20px);border-left:3px solid #6ca49a;background:#f7faf8;border-radius:0 10px 10px 0}
+.electricity-reasoning-expansion h5{font-size:1rem;margin:0 0 10px;font-weight:700}
+.electricity-reasoning-expansion ol{padding-left:1.5rem;margin:0}
+.electricity-reasoning-expansion li{line-height:1.83;margin:7px 0}
+.electricity-field-explorer{margin:22px 0;padding:clamp(11px,3vw,20px);border:1px solid var(--line);background:#f8fbf9;border-radius:14px}
+.electricity-field-explorer h4{margin:0 0 10px}
+.electricity-field-explorer-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px;align-items:start}
+.electricity-field-explorer-grid>div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;min-width:0}
+.electricity-field-explorer-grid svg{display:block;width:100%;height:auto;color:var(--ink)}
+.electricity-field-explorer-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);column-gap:10px;row-gap:9px;align-items:center;margin:13px 0}
+.electricity-field-explorer-controls label{font-size:.9rem;font-weight:600}
+.electricity-field-explorer-controls input[type=range]{width:100%;min-width:0;touch-action:pan-y}
+.electricity-field-explorer p[aria-live]{overflow-wrap:anywhere;font-variant-numeric:tabular-nums;line-height:1.75}
+@media(max-width:780px){.electricity-field-explorer-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:410px){.electricity-field-explorer-controls{grid-template-columns:minmax(0,1fr)}}
