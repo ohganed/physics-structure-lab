@@ -182,7 +182,7 @@ export const electricityReasoningPart1={
           "Never add values at different positions or simply count drawn field lines."
         ],
         [
-          "この重ね合わせは電場の定義とクーロン力の重ね合わせから従う。",
+          "この電場の重ね合わせは、各力を同じ試験電荷で割るという電場の定義と、クーロン力のベクトル和から導かれる。",
           "Field superposition follows from the field definition and Coulomb-force superposition."
         ]
       ]
@@ -277,7 +277,7 @@ export const electricityReasoningPart1={
           "Constant force doing work along its direction gives qEd, identical to the voltage-based work."
         ],
         [
-          "qを除いた関係は電荷が受ける力と無関係な場の性質を表す。",
+          "試験電荷qを約分して得られる関係は、電荷の大きさに依存せず、極板間の距離と電位差だけで決まる一様電場の性質を表す。",
           "Canceling q identifies a property of the field geometry rather than the probe."
         ]
       ]
