@@ -60,11 +60,11 @@ function pendulumModel(kind,en){
   // Mathematical basis: e_theta=(cosθ,sinθ) in (right,up) coordinates.
   // Screen coordinates point downward, so positive e_theta is right/up.
   scene+=arrow(bx,by,bx+54*sy,by-54*sx,'#397e9d')
-   +t(bx+58,by-44,'v, eθ','#397e9d')
+   +t(bx+58,by-44,'v (θ̇>0), eθ','#397e9d',13)
    +arrow(bx,by,bx+48*sx,by+48*sy,'#477b70')
    +t(bx+32,by+50,'eᵣ','#477b70')
    +arrow(bx,by,bx-49*sx,by-49*sy,'#855ca6')
-   +t(bx-117,by-62,'aᵣ','#855ca6')
+   +t(bx-136,by-62,'−ℓθ̇² eᵣ','#855ca6',14)
    +t(85,266,en?'tangent: aθ = ℓθ̈':'接線方向：aθ = ℓθ̈','#397e9d',15);
   return scene;
  }
