@@ -77,6 +77,15 @@ test('point-charge attraction arrows start at the physical charge centers',()=>{
  assert.match(html,/x1="180" y1="148"/);
  assert.match(html,/x1="364" y1="148"/);
 });
+test('charge conservation separates before and after and sums both bodies',()=>{
+ const scene=electricityFigure('charged-bodies','電荷保存','ja');
+ const definition=electricityDefinitionFigure('charged-bodies',0,'ja');
+ assert.match(scene,/0 \+ 0 = 0/);
+ assert.match(scene,/\(\+e\) \+ \(−e\) = 0/);
+ assert.match(definition,/BEFORE/);
+ assert.match(definition,/AFTER/);
+ assert.doesNotMatch(definition,/Qbefore<\/text>/);
+});
 test('RC drawing has true capacitor break and separate plates rather than a bypass wire',()=>{
  const html=electricityFigure('charging','RC回路','ja');
  assert.match(html,/y1="140" x2="470" y2="140"/);
