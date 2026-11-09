@@ -30,7 +30,7 @@ function pendulum(kind,en){
  return s;
 }
 function springCart(y,vSign,en){
- let s=box(51,y-37,13,72,'#8eab9f')+ln(65,y+35,500,y+35,'#91aca1',2)
+ let s=box(51,y-37,13,72,'#8eab9f')+ln(65,y+29,500,y+29,'#91aca1',2)
   +spring(66,y,230)+box(230,y-29,82,58)+ln(214,y-49,214,y+42,'#b4c8be',1,'5 5')
   +arrow(272,y,272+75*vSign,y-17,'#367c9e')
   +arrow(272,y,188,y+19,'#b35f48')
