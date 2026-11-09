@@ -236,7 +236,7 @@ export const universityBridgeKinds=Object.freeze(['model-observation','constrain
 export function universityBridgeFigure(kind,title,lang='ja'){
  const en=lang==='en';let drawing='';
  if(['model-observation','model-kinematics','model-forces'].includes(kind))drawing=pendulumModel(kind,en);
- elseif(['constraint','energy','result'].includes(kind))drawing=pendulum(kind,en);
+ else if(['constraint','energy','result'].includes(kind))drawing=pendulum(kind,en);
  else if(kind==='paths')drawing=actionPaths(en);
  else if(kind==='variation-setup')drawing=variationScene(en);
  else if(kind==='variation-chain')drawing=variationChain(en);
