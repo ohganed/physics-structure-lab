@@ -56,6 +56,42 @@ function actionPaths(en){
   +t(78,251,'t₀')+t(449,251,'t₁')
   +t(170,52,en?'nearby paths':'近くの経路')+t(225,268,en?'fixed endpoints':'端点は固定');
 }
+function variationScene(en){
+ // Two nearby trial paths with the same fixed endpoints; eta=0 at endpoints.
+ return ln(70,233,498,233)+ln(70,233,70,28)+t(502,252,'t')+t(40,34,'θ')
+  +curve('M94 180 C165 119 311 123 457 166','#367f99',3)
+  +curve('M94 180 C165 73 311 81 457 166','#b1674a',2)
+  +circ(94,180,5,'#477a6e')+circ(457,166,5,'#477a6e')
+  +ln(262,108,262,99,'#8c64a8',2,'4 4')
+  +arrow(262,127,262,101,'#8c64a8')
+  +t(275,113,'εη(t)','#8c64a8')
+  +t(86,251,'t₀')+t(444,251,'t₁')
+  +t(119,37,en?'fixed endpoint values':'両端は同じ位置')
+  +t(297,267,'η(t₀) = η(t₁) = 0');
+}
+function signCompare(en){
+ // Positive theta at right of vertical. Restoring angular acceleration reduces theta,
+ // while L=K+U would produce the incorrect opposite acceleration.
+ let s='';
+ for(const [index,cx] of [140,394].entries()){
+  const cy=55,r=117,theta=.53,bx=cx+r*Math.sin(theta),by=cy+r*Math.cos(theta);
+  s+=circ(cx,cy,5,'#477a6e')+ln(cx,cy,cx,cy+r+11,'#a6bcb2',1,'4 5')
+    +ln(cx,cy,bx,by,'#547a70',3)+circ(bx,by,13)
+    +curve('M'+cx+' '+(cy+40)+' Q'+(cx+10)+' '+(cy+44)+' '+(cx+21)+' '+(cy+35),'#986145',2)
+    +t(cx+26,cy+58,'θ');
+  if(index===0){
+   s+=arrow(bx,by,bx-45,by+27,'#247d62')+t(bx-88,by+40,'aₜ','#247d62')
+     +t(cx-70,31,en?'L = K − U ✓':'L = K − U ✓','#247d62')
+     +t(cx-82,251,en?'restoring direction':'実際の復元方向','#247d62');
+  }else{
+   s+=arrow(bx,by,bx+38,by-24,'#b45d47')+t(bx+22,by-32,'aₜ','#b45d47')
+     +t(cx-55,31,en?'L = K + U ×':'L = K + U ×','#b45d47')
+     +t(cx-61,251,en?'wrong direction':'現象と逆向き','#b45d47');
+  }
+ }
+ s+=ln(273,28,273,267,'#bccbc3',1,'4 5');
+ return s;
+}
 function stateSpring(en){
  return box(47,107,15,67,'#8eab9f')+ln(62,174,501,174,'#95aba3',2)
   +spring(64,141,254)+box(254,110,81,64)
@@ -81,11 +117,13 @@ function energy(en){
   +t(124,49,'K','#35765e')+t(216,49,'U','#ae6547')
   +arrow(278,43,338,43,'#825da2')+t(350,49,'H = K + U','#825da2');
 }
-export const universityBridgeKinds=Object.freeze(['constraint','energy','paths','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
+export const universityBridgeKinds=Object.freeze(['constraint','energy','paths','variation','sign-compare','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
 export function universityBridgeFigure(kind,title,lang='ja'){
  const en=lang==='en';let drawing='';
  if(['constraint','energy','result'].includes(kind))drawing=pendulum(kind,en);
  else if(kind==='paths')drawing=actionPaths(en);
+ else if(kind==='variation')drawing=variationScene(en);
+ else if(kind==='sign-compare')drawing=signCompare(en);
  else if(kind==='same-position')drawing=springCart(83,1,en)+springCart(207,-1,en);
  else if(kind==='newton-state')drawing=stateSpring(en);
  else if(kind==='conjugate')drawing=graphSlope(en);
