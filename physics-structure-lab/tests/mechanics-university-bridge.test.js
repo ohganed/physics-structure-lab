@@ -166,7 +166,7 @@ test('fundamental lemma diagram uses a local bump, while boundary-term diagram f
   assert.match(local,/G\(t\) &gt; 0|G\(t\) > 0/);
   assert.match(local,/∫G\(t\)η\(t\)dt &gt; 0|∫G\(t\)η\(t\)dt > 0/);
   assert.match(parts,/η\(t₀\) = η\(t₁\) = 0/);
-  assert.match(parts,/\\[Aη\\]/);
+  assert.match(parts,/\[Aη\]/);
   assert.match(chain,/data-bridge-figure="variation-chain"/);
  }
 });
