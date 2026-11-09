@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import {universityBridgeLessons} from '../mechanics-university-bridge-data.js';
 import {universityBridgeFigure,universityBridgeKinds,mechanicsUniversityBridgeHtml} from '../mechanics-university-bridge.js';
 
-test('both university transitions contain a visible motivation and 9 distinct concept diagrams',()=>{
- assert.equal(universityBridgeLessons.lagrange.stages.length,4);
+test('both university transitions contain a visible motivation and 11 distinct concept diagrams',()=>{
+ assert.equal(universityBridgeLessons.lagrange.stages.length,6);
  assert.equal(universityBridgeLessons.hamilton.stages.length,5);
- assert.equal(universityBridgeKinds.length,9);
+ assert.equal(universityBridgeKinds.length,11);
  for(const [key,lesson] of Object.entries(universityBridgeLessons)){
   assert.ok(lesson.lead[0].length>50&&lesson.lead[1].length>50);
   for(const stage of lesson.stages){
@@ -46,11 +46,14 @@ test('every new definition has a diagram before its first formula in each langua
 
 test('Lagrangian introduction uses constrained geometry, energy, stationary action, then Newtonian agreement',()=>{
  const stages=universityBridgeLessons.lagrange.stages;
- assert.deepEqual(stages.map(s=>s.kind),['constraint','energy','paths','result']);
+ assert.deepEqual(stages.map(s=>s.kind),['constraint','energy','paths','variation','sign-compare','result']);
  assert.match(stages[0].formula[0],/q=\\theta/);
- assert.match(stages[1].formula[1],/L=K-U/);
+ assert.match(stages[1].formula[1],/E_\{\\mathrm\{mech\}\}=K\+U/);
  assert.match(stages[2].formula[1],/\\delta S=0/);
- assert.match(stages[3].formula.at(-1),/\\ddot\\theta/);
+ assert.match(stages[3].formula.at(-1),/\\frac\{d\}\{dt\}/);
+ assert.match(stages[4].formula[0],/L_-=K-U/);
+ assert.match(stages[4].formula[1],/L_\+=K\+U/);
+ assert.match(stages[5].formula.at(-1),/\\ddot\\theta/);
  assert.match(stages[2].note[1],/need not mean minimal/i);
 });
 
@@ -92,5 +95,27 @@ test('same-position spring velocities and forces stay horizontal on their physic
    assert.ok(html.includes('x1="272" y1="'+y+'" x2="'+toX+'" y2="'+y+'"'),
     'spring vector at y='+y+' must be horizontal and originate at the block center');
   }
+ }
+});
+
+test('Lagrangian bridge does not introduce K−U before the stationary-action motivation',()=>{
+ const stages=universityBridgeLessons.lagrange.stages;
+ const energy=stages.find(s=>s.kind==='energy');
+ assert.ok(!energy.formula.some(formula=>formula.includes('L=K-U')));
+ const action=stages.find(s=>s.kind==='paths');
+ assert.match(action.formula[1],/\\delta S=0/);
+ const compare=stages.find(s=>s.kind==='sign-compare');
+ assert.match(compare.prose[0],/重力の接線成分/);
+ assert.match(compare.formula[0],/\\ddot\\theta\+mg/);
+ assert.match(compare.formula[1],/\\ddot\\theta-mg/);
+});
+test('action variation and physically opposite trial accelerations have their own diagrams',()=>{
+ for(const lang of ['ja','en']){
+  const variation=universityBridgeFigure('variation','Perturbed paths',lang);
+  const signs=universityBridgeFigure('sign-compare','Lagrangian sign comparison',lang);
+  assert.match(variation,/η\(t₀\) = η\(t₁\) = 0/);
+  assert.match(signs,/L = K − U/);
+  assert.match(signs,/L = K \+ U/);
+  assert.match(signs,/data-bridge-figure="sign-compare"/);
  }
 });
