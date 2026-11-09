@@ -1,4 +1,4 @@
-/* High-school to analytical mechanics teaching bridge: phenomenon, motivation, and definitions. */
+/* Motivation-first bridge: coordinate choice, energy, action, variation, sign test and Newtonian check. */
 export const universityBridgeLessons={
   "lagrange": {
     "title": [
@@ -6,83 +6,124 @@ export const universityBridgeLessons={
       "From the school pendulum to Lagrangian mechanics"
     ],
     "lead": [
-      "高校では振り子の重力を接線方向に分解して運動方程式を求めました。糸の長さが一定という条件を生かすと、位置を角度ひとつで表せます。この単純化から新しい考え方へ進みます。",
-      "At school we resolve the weight along the pendulum's tangent. Its fixed length means that a single angle is sufficient to specify the bob's position. Start with this simplification."
+      "高校物理では、振り子に働く重力を接線方向へ分解して運動方程式を求めました。大学では、糸の張力を毎回計算しなくても運動を扱える方法を考えます。ただし、新しい式を突然導入するのではなく、すでに知っている振り子の運動から、その方法の意味を確かめていきます。",
+      "In school mechanics, we resolved gravity along the pendulum tangent to derive its equation of motion. We now explore a method that handles the constraint without explicitly solving for string tension. Rather than introducing a mysterious new formula, we test the new formulation against the pendulum motion we already know."
     ],
     "stages": [
       {
         "kind": "constraint",
         "title": [
           "振り子の位置は角度ひとつで指定できる",
-          "One angle determines the pendulum position"
+          "One angle is enough to specify the pendulum position"
         ],
         "prose": [
-          "支点を原点として水平xと鉛直yを考えると、糸の長さが固定された球は円周上だけを動きます。xとyは独立ではありません。ひとつの角度θで球の位置を指定でき、これを一般化座標qと呼びます。",
-          "With the pivot as the origin, the bob is restricted to a circle. Its horizontal and vertical coordinates are not independent. One angle theta identifies its position and acts as a generalized coordinate q."
+          "支点を原点にとり、水平x・鉛直yで球の位置を表します。ところが糸の長さℓは一定なので、xとyは独立には動けません。角度θだけを指定すれば球の位置は決まります。このように運動の自由さに合わせて選ぶ座標を一般化座標qといいます。",
+          "Measure x and y from the pivot. Since the string length ℓ is fixed, x and y cannot vary independently. One angle θ determines the bob position. A coordinate chosen to describe this independent freedom is a generalized coordinate q."
         ],
         "formula": [
           "q=\\theta,\\qquad x=\\ell\\sin\\theta,\\qquad y=-\\ell\\cos\\theta"
         ],
         "note": [
-          "鉛直上向きをyの正方向とし、θは鉛直下向きから測ります。図と式の座標を一致させます。",
-          "Positive y points up, and theta is measured from vertically downward. The geometry and equations agree."
+          "θは鉛直下向きから、yは鉛直上向きを正として測ります。座標を減らしたことだけでは、新しい運動法則はまだ得られません。",
+          "θ is measured from downward vertical, with upward-positive y. Reducing the coordinate count does not itself produce a new law of motion."
         ]
       },
       {
         "kind": "energy",
         "title": [
-          "すでに知っている二種類のエネルギーを使う",
-          "Build from two familiar kinds of energy"
+          "高校で学んだエネルギーを、角度で表す",
+          "Express familiar mechanical energy using the angle"
         ],
         "prose": [
-          "円弧に沿う速度はv=ℓθ̇です。最下点からの高さをh=ℓ(1−cosθ)とすると、運動エネルギーKと位置エネルギーUを角度で表せます。そこで標準的な保存力系に対して、差L=K−Uをラグランジアンとして使います。",
-          "The tangential speed is v=l theta-dot, and the bob rises by h=l(1−cos theta). Express kinetic and potential energy using theta. For the standard conservative system, define its Lagrangian as L=K−U."
+          "最下点を位置エネルギー0とすると、高さはℓ(1−cosθ)、速さはℓ|θ̇|です。したがってKとUを角度で表せます。高校物理で使った保存量はK+Uです。ただ、これだけを見ても『どの量を時間積分すれば運動経路を選べるのか』はわかりません。ここでK−Uと決めつけず、次にその新しい考え方を確認します。",
+          "Taking potential energy as zero at the lowest point gives height ℓ(1−cosθ) and speed ℓ|θ̇|. Thus both K and U can be written in terms of θ. The familiar conserved mechanical energy is K+U. But this does not by itself tell us which quantity, when integrated over time, can characterize the motion path. We therefore do not simply announce K−U here."
         ],
         "formula": [
-          "K=\\frac12m\\ell^2\\dot\\theta^2,\\quad U=mg\\ell(1-\\cos\\theta)",
-          "L=K-U"
+          "K=\\frac12m\\ell^2\\dot\\theta^2,\\qquad U=mg\\ell(1-\\cos\\theta)",
+          "E_{\\mathrm{mech}}=K+U"
         ],
         "note": [
-          "K+Uは力学的エネルギー、L=K−Uは運動の経路を扱うための別の関数です。",
-          "K+U is mechanical energy, whereas L=K−U is a different function used in the action formulation."
+          "エネルギー保存と、運動経路を求める原理は区別して考えます。",
+          "Keep energy conservation distinct from a principle used to determine motion paths."
         ]
       },
       {
         "kind": "paths",
         "title": [
-          "一瞬の値から、時間を通じた経路の比較へ",
-          "From one instant to comparing entire paths"
+          "瞬間ごとの力から、運動経路全体を見る考えへ",
+          "From forces at each instant to an entire candidate path"
         ],
         "prose": [
-          "出発時刻と到着時刻の位置を固定し、その間の角度の変化をわずかに変えた候補を比べます。各候補についてLを時間積分した作用Sを考えます。実際の経路では、近くの経路への微小な変更によるSの一次変化が0になります。",
-          "Fix the endpoints in time and position, then compare slightly different candidate paths between them. Integrating L along each path gives the action S. The actual path makes its first-order variation vanish."
+          "出発と到着の時刻・位置を同じにして、その間の角度θ(t)が少しだけ異なる経路をいくつも考えます。各経路に数値を対応させるため、位置と速度などから作る関数Lを時間積分し、作用Sを定義します。実際の運動を表す経路では、近くの経路へわずかに変更しても、作用の一次の変化が0になるとするのが『作用の停留原理』です。では肝心のLには何を選ぶべきでしょうか。",
+          "Consider many slightly different paths θ(t) with the same initial and final positions and times. To assign a value to a whole path, integrate a function L of position, velocity and possibly time: this defines the action S. The stationary-action principle states that the actual path has zero first-order change in S under small endpoint-fixed variations. But what function L should we choose?"
         ],
         "formula": [
-          "S[q]=\\int_{t_0}^{t_1}L(q,\\dot q,t)\\,dt",
+          "S[\\theta]=\\int_{t_0}^{t_1}L(\\theta,\\dot\\theta,t)\\,dt",
           "\\delta S=0"
         ],
         "note": [
-          "停留とは必ず最小になることではありません。また作用の停留は新たな基本原理であり、単なる式の置換ではありません。",
-          "Stationary need not mean minimal. Stationary action is a foundational principle, not a mere change of symbols."
+          "この段階でLの具体的な形はまだ決めていません。作用の停留は新しい定式化の原理であり、エネルギー保存から直ちに導かれるものではありません。停留は必ずしも最小を意味しません。",
+          "The precise form of L is not yet selected. Stationary action is a formulation principle, not a direct deduction from energy conservation; stationary need not mean minimal."
+        ]
+      },
+      {
+        "kind": "variation",
+        "title": [
+          "作用の停留から、運動を決める式の形を得る",
+          "How stationary action produces an equation of motion"
+        ],
+        "prose": [
+          "経路をθ(t)+εη(t)へ少しだけ変えます。ηは出発点と到着点で0です。作用Sをεで微分し、速度に関係する項を部分積分します。端点の項はη=0で消えるため、どんな小さなηについても一次変化が0なら、オイラー・ラグランジュ方程式が成立します。ここまでで得られたのは『Lが決まれば運動を求める方法』です。",
+          "Perturb a path to θ(t)+εη(t), where η vanishes at both endpoints. Differentiate the action with respect to ε and integrate the velocity-dependent term by parts. The endpoint term vanishes, so stationarity for every small η gives the Euler–Lagrange equation. We now have a rule that determines the motion once L is chosen."
+        ],
+        "formula": [
+          "\\delta S=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}\\eta+\\frac{\\partial L}{\\partial\\dot\\theta}\\dot\\eta\\right)\\,dt",
+          "\\delta S=\\int_{t_0}^{t_1}\\left(\\frac{\\partial L}{\\partial\\theta}-\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}\\right)\\eta\\,dt",
+          "\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}-\\frac{\\partial L}{\\partial\\theta}=0"
+        ],
+        "note": [
+          "『経路を少し変える』という操作を変分と呼びます。通常の時間微分と変分は異なります。",
+          "A small change of the entire trial path is called a variation, distinct from an ordinary time derivative."
+        ]
+      },
+      {
+        "kind": "sign-compare",
+        "title": [
+          "なぜ K＋U ではなく K−U なのだろう",
+          "Why does K−U work, rather than K+U?"
+        ],
+        "prose": [
+          "ここで高校物理に戻ります。θが正（球が右側）なら、重力の接線成分はθを小さくする向きです。もしL=K+Uを停留原理に入れると、重力による角加速度の符号が逆になり、振り子が平衡位置から遠ざかる式になります。一方、L=K−Uなら既知の復元力と同じ向きになります。この比較を通して、標準的な保存力系のラグランジアンとしてL=K−Uを採用する理由が見えます。",
+          "Return to the familiar pendulum: when θ is positive, gravity's tangential component reduces θ. Inserting L=K+U into the stationary-action equation yields the opposite acceleration sign—motion away from equilibrium. Inserting L=K−U yields the known restoring direction. This comparison motivates the conventional L=K−U choice for this standard conservative mechanical system."
+        ],
+        "formula": [
+          "L_-=K-U\\quad\\Longrightarrow\\quad m\\ell^2\\ddot\\theta+mg\\ell\\sin\\theta=0",
+          "L_+=K+U\\quad\\Longrightarrow\\quad m\\ell^2\\ddot\\theta-mg\\ell\\sin\\theta=0",
+          "\\boxed{L=K-U\\quad\\text{（この保存力系での標準形）}}"
+        ],
+        "note": [
+          "L=K−Uは座標変換から自動的に出てきた式ではありません。また、同じ運動を与えるLは全時間微分の追加などで異なる形にもできます。ここでは最も扱いやすい標準形を使います。",
+          "L=K−U did not follow automatically from changing coordinates. Lagrangians are also not unique: adding a total time derivative leaves the equations of motion unchanged. We use the standard convenient form here."
         ]
       },
       {
         "kind": "result",
         "title": [
-          "高校で求めた振り子の式へ戻れるか",
-          "Recover the familiar pendulum equation"
+          "振り子の運動方程式が再び現れる",
+          "Recover the original pendulum equation"
         ],
         "prose": [
-          "経路の変化を表すδθを使って作用の変化を調べ、部分積分するとオイラー・ラグランジュ方程式が得られます。先ほどのLに代入すると、重力の接線成分からニュートンの法則で求めた式に戻ります。",
-          "Vary the trajectory by delta-theta and integrate by parts to obtain the Euler–Lagrange equation. Substituting the pendulum L recovers the same equation as the tangential Newtonian force balance."
+          "採用したLの速度微分と角度微分を別々に計算します。速度微分を時間で微分すると慣性の項になり、角度微分には重力の復元作用が現れます。オイラー・ラグランジュ方程式へ入れると、高校で重力を接線方向に分解して得た式に一致します。張力を個別に求めなくても、同じ物理現象を記述できました。",
+          "Differentiate the chosen L with respect to angular velocity and angle separately. The time derivative of the first gives the inertial term; the second contains gravitational restoring action. Substitution into Euler–Lagrange reproduces the tangential Newtonian equation without separately solving the string tension."
         ],
         "formula": [
-          "\\frac{d}{dt}\\frac{\\partial L}{\\partial\\dot\\theta}-\\frac{\\partial L}{\\partial\\theta}=0",
-          "m\\ell^2\\ddot\\theta+mg\\ell\\sin\\theta=0"
+          "\\frac{\\partial L}{\\partial\\dot\\theta}=m\\ell^2\\dot\\theta,\\qquad\\frac{\\partial L}{\\partial\\theta}=-mg\\ell\\sin\\theta",
+          "m\\ell^2\\ddot\\theta+mg\\ell\\sin\\theta=0",
+          "\\ddot\\theta+\\frac g\\ell\\sin\\theta=0"
         ],
         "note": [
-          "変数を適切に選び、拘束力を個別に計算せずに同じ運動を得られることが利点です。",
-          "Choosing a suitable coordinate avoids explicitly solving the constraint force while recovering the same motion."
+          "これは小角近似を使わない振り子の式です。近似sinθ≈θは周期を求める段階で別途導入します。",
+          "This pendulum equation does not yet use the small-angle approximation; sinθ≈θ enters later when approximating the period."
         ]
       }
     ]
