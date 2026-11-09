@@ -21,6 +21,14 @@ const zig=(x,y)=>path('M'+x+' '+y+' h16 l8 -14 l13 28 l13 -28 l13 28 l13 -28 l8 
 const helix=(x,y)=>Array.from({length:5},(_,i)=>'<ellipse cx="'+(x+28*i)+'" cy="'+y+'" rx="15" ry="24" fill="none" stroke="'+C.green+'" stroke-width="2"/>').join('');
 function mini(kind,id,index,m){
  const [a,b]=m;
+ if(kind==='charge'&&id==='charged-bodies'&&index===0){
+  return '<rect x="13" y="13" width="244" height="194" rx="12" fill="none" stroke="'+C.green+'" stroke-dasharray="5 4"/>'
+   +text(22,35,'BEFORE',C.green,13)+circ(79,66,20)+circ(191,66,20)+text(73,72,'0')+text(185,72,'0')
+   +text(22,103,'0 + 0 = 0',C.green,17)+arr(135,109,135,134,C.blue)
+   +text(22,151,'AFTER',C.green,13)+circ(79,171,20,'#f7e3dc')+circ(191,171,20,'#dfedf6')
+   +text(69,177,'+e',C.red,14)+text(181,177,'−e',C.blue,14)
+   +text(22,201,'(+e) + (−e) = 0',C.green,15);
+ }
  switch(kind){
  case 'charge':return circ(62,103,25,'#f7e3dc')+text(55,109,'+')+circ(201,103,25,'#dfedf6')+text(195,109,'−')+arr(88,102,170,102,C.blue)+text(109,84,'e−',C.blue)+text(57,164,a)+text(181,164,b);
  case 'pair':return circ(43,109,21,'#f7e3dc')+text(38,115,'+')+circ(219,109,21,'#dfedf6')+text(213,115,'−')+arr(219,109,142,109,C.red)+lin(43,160,219,160,C.line,1.5)+lin(43,151,43,169,C.line,1)+lin(219,151,219,169,C.line,1)+text(124,154,'r')+text(29,61,a)+text(215,61,b);
