@@ -151,10 +151,10 @@ test('Euler–Lagrange bridge derives the result without skipping boundary condi
  assert.match(derivation[3].prose[0],/変分法の基本補題/);
 });
 
-test('each of the 13 displayed Euler–Lagrange reasoning notes follows its own mathematical step',()=>{
+test('each of the 24 displayed physical-model and Euler–Lagrange notes follows its own mathematical step',()=>{
  for(const lang of ['ja','en']){
   const html=mechanicsUniversityBridgeHtml('lagrange',lang);
-  assert.equal((html.match(/class="mechanics-university-formula-note"/g)||[]).length,13);
+  assert.equal((html.match(/class="mechanics-university-formula-note"/g)||[]).length,24);
   for(const kind of ['variation-setup','variation-chain','variation-parts','variation-local']){
    const stage=universityBridgeLessons.lagrange.stages.find(s=>s.kind===kind);
    const start=html.indexOf('data-bridge-step="'+kind+'"');
