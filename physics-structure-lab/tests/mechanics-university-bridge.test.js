@@ -88,7 +88,7 @@ test('chapter return navigation provides real prerequisite indices',()=>{
 test('same-position spring velocities and forces stay horizontal on their physical application points',()=>{
  const html=universityBridgeFigure('same-position','Same position','ja');
  for(const y of [83,207]){
-  for(const toX of [272+75,272-75,188]){
+  for(const toX of [y===83?347:197,188]){
    assert.ok(html.includes('x1="272" y1="'+y+'" x2="'+toX+'" y2="'+y+'"'),
     'spring vector at y='+y+' must be horizontal and originate at the block center');
   }
