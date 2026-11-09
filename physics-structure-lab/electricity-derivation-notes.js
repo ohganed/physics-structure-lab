@@ -2,8 +2,8 @@
 export const electricityDerivationNotes={
   "charged-bodies": [
     [
-      "電荷が出入りしない系を設定する。二物体を合わせれば移動前後の正味電荷が同じである。",
-      "Choose an isolated system encompassing both bodies. Its total net charge does not change."
+      "まず二物体A・Bを一つの系として囲う。移動前に両方が中性なら合計は0+0=0。電子1個（電荷−e）がAからBへ移ると、Aは+e、Bは−eとなる。移動後の合計も(+e)+(−e)=0。したがってQ_before=Q_after。これは各物体の電荷が一定という意味ではない。",
+      "Enclose both A and B. Initially, their total is 0+0=0. Moving one electron (−e) from A to B leaves A with +e and B with −e, so the total is still (+e)+(−e)=0. Thus Q_before=Q_after; the charge of each body need not stay constant."
     ],
     [
       "正と負の素電荷の個数差を数える。電子だけが移動する場合には、移動した電子数にeを掛けた大きさの電荷が二物体間で反対符号に現れる。",
