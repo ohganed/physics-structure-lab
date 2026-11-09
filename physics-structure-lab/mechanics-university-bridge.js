@@ -69,6 +69,66 @@ function variationScene(en){
   +t(119,37,en?'fixed endpoint values':'両端は同じ位置')
   +t(297,267,'η(t₀) = η(t₁) = 0');
 }
+function variationChain(en){
+ // Construct two smooth paths with identical endpoints and different local slopes.
+ const left=88,right=472,mid=.36;
+ const base=z=>184-77*Math.sin(Math.PI*z)+9*z;
+ const pert=z=>base(z)-24*Math.sin(Math.PI*z)*Math.sin(2*Math.PI*z);
+ const baseDer=z=>-77*Math.PI*Math.cos(Math.PI*z)+9;
+ const pertDer=z=>baseDer(z)-24*Math.PI*(Math.cos(Math.PI*z)*Math.sin(2*Math.PI*z)+2*Math.sin(Math.PI*z)*Math.cos(2*Math.PI*z));
+ let d0='',d1='';
+ for(let i=0;i<=100;i++){
+  const z=i/100,x=left+(right-left)*z;
+  d0+=(i?'L':'M')+x.toFixed(2)+' '+base(z).toFixed(2)+' ';
+  d1+=(i?'L':'M')+x.toFixed(2)+' '+pert(z).toFixed(2)+' ';
+ }
+ const xm=left+(right-left)*mid, y0=base(mid),y1=pert(mid);
+ const slope0=baseDer(mid)/(right-left),slope1=pertDer(mid)/(right-left),dx=31;
+ let svg=ln(75,239,501,239)+ln(75,239,75,29)+t(503,253,'t')+t(41,32,'θ')
+  +curve(d0,'#367e9f',3)+curve(d1,'#b65f48',3)
+  +ln(xm-dx,y0-dx*slope0,xm+dx,y0+dx*slope0,'#367e9f',2)
+  +ln(xm-dx,y1-dx*slope1,xm+dx,y1+dx*slope1,'#b65f48',2)
+  +circ(xm,y0,4,'#367e9f')+circ(xm,y1,4,'#b65f48')
+  +ln(xm+43,y0,xm+43,y1,'#9265a7',2,'4 4')
+  +t(284,45,'θ(t)','#367e9f')+t(378,45,'θᵋ(t)','#b65f48')
+  +t(292,267,en?'different slopes = different velocities':'傾きの違い＝角速度の違い');
+ return svg;
+}
+function variationParts(en){
+ // A variation vanishes at both endpoints, making [A eta] zero there.
+ let d='';
+ const left=88,right=466;
+ for(let i=0;i<=100;i++){
+  const z=i/100,x=left+(right-left)*z,yy=224-81*Math.sin(Math.PI*z)**2;
+  d+=(i?'L':'M')+x.toFixed(1)+' '+yy.toFixed(1)+' ';
+ }
+ return ln(71,225,503,225)+ln(71,230,71,99)
+  +curve(d,'#367e9f',3)
+  +circ(left,224,5,'#367e9f')+circ(right,224,5,'#367e9f')
+  +t(57,245,'t₀')+t(455,245,'t₁')+t(41,93,'η')
+  +t(144,104,en?'arbitrary shape inside':'途中だけ自由に変える')
+  +t(114,60,'[Aη] = A(t₁)η(t₁) − A(t₀)η(t₀)')
+  +t(174,82,'η(t₀) = η(t₁) = 0')
+  +t(202,278,en?'endpoint term = 0':'端点の項は0','#247c64');
+}
+function variationLocal(en){
+ // If G(t) is positive on an interval, choose a positive bump eta supported there.
+ const left=70,right=490,start=204,end=354,yTop=96,yBottom=229;
+ let g='M70 94 C135 90 205 65 280 61 C352 57 419 78 490 93';
+ let bump='M70 '+yBottom+' L'+start+' '+yBottom;
+ for(let i=0;i<=60;i++){
+  const z=i/60,x=start+(end-start)*z,yy=yBottom-61*Math.sin(Math.PI*z)**2;
+  bump+=' L'+x.toFixed(1)+' '+yy.toFixed(1);
+ }
+ bump+=' L490 '+yBottom;
+ return ln(left,yTop,right,yTop,'#a1b5ab',1)+ln(left,yBottom,right,yBottom,'#a1b5ab',1)
+  +ln(start,32,start,247,'#bdc9c1',1,'5 5')+ln(end,32,end,247,'#bdc9c1',1,'5 5')
+  +curve(g,'#367e9f',3)+curve(bump,'#b65f48',3)
+  +t(75,33,'G(t) > 0','#367e9f')+t(78,183,'η(t) ≥ 0','#b65f48')
+  +t(197,271,'∫G(t)η(t)dt > 0','#855ba3')
+  +t(355,33,en?'chosen interval':'選んだ区間')
+  +t(18,97,'0')+t(19,231,'0');
+}
 function signCompare(en){
  // Positive theta at right of vertical. Restoring angular acceleration reduces theta,
  // while L=K+U would produce the incorrect opposite acceleration.
@@ -117,12 +177,15 @@ function energy(en){
   +t(124,49,'K','#35765e')+t(216,49,'U','#ae6547')
   +arrow(278,43,338,43,'#825da2')+t(350,49,'H = K + U','#825da2');
 }
-export const universityBridgeKinds=Object.freeze(['constraint','energy','paths','variation','sign-compare','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
+export const universityBridgeKinds=Object.freeze(['constraint','energy','paths','variation-setup','variation-chain','variation-parts','variation-local','sign-compare','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
 export function universityBridgeFigure(kind,title,lang='ja'){
  const en=lang==='en';let drawing='';
  if(['constraint','energy','result'].includes(kind))drawing=pendulum(kind,en);
  else if(kind==='paths')drawing=actionPaths(en);
- else if(kind==='variation')drawing=variationScene(en);
+ else if(kind==='variation-setup')drawing=variationScene(en);
+ else if(kind==='variation-chain')drawing=variationChain(en);
+ else if(kind==='variation-parts')drawing=variationParts(en);
+ else if(kind==='variation-local')drawing=variationLocal(en);
  else if(kind==='sign-compare')drawing=signCompare(en);
  else if(kind==='same-position')drawing=springCart(83,1,en)+springCart(207,-1,en);
  else if(kind==='newton-state')drawing=stateSpring(en);
@@ -148,7 +211,7 @@ export function mechanicsUniversityBridgeHtml(key,language='ja'){
    +'<h4>'+(i+1)+'. '+h(v(stage.title))+'</h4>'
    +'<p>'+h(v(stage.prose))+'</p>'
    +universityBridgeFigure(stage.kind,v(stage.title),language)
-   +stage.formula.map(math).join('')
+   +stage.formula.map((eq,index)=>math(eq)+(stage.lineNotes?.[index]?'<p class="mechanics-university-formula-note">'+h(v(stage.lineNotes[index]))+'</p>':'')).join('')
    +'<p class="mechanics-university-stage-note">'+h(v(stage.note))+'</p>'
    +'</section>').join('')
   +'<p class="mechanics-university-end">'+(en?'The full derivation and worked examples follow.':'以下では同じ現象について、厳密な導出と例題を詳しく学びます。')+'</p></section>';
