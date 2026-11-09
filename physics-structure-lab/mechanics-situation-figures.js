@@ -54,7 +54,21 @@ function origin(key,lang){
  case 'rotation':return ln(110,188,110,72,'#567f73',6)+rect(113,109,327,32)+circ(113,125,9)+circ(412,125,6,'#b46a4a')+ar(412,125,412,35)+txt(423,52,'F')+txt(251,160,'r')+txt(73,211,L('蝶番','Hinge',lang));
  case 'noninertial':return ln(65,207,484,207,'#7c9990',2)+rect(112,111,310,91,'#e0eae6')+rect(267,156,58,51)+ar(447,169,501,169)+txt(455,153,'a')+ar(295,181,246,181,'#8052a6')+txt(190,136,L('見かけの力','inertial force',lang),'#8052a6');
  case 'lagrange':{const p=pendulum(270,46,34,151);return p.art+txt(280,73,'θ')+txt(345,188,'m')+path('M270 197 Q315 211 357 184','#6e8a80',1.5)+txt(174,254,L('糸の長さ ℓ が一定','Fixed length ℓ',lang));}
- case 'hamilton':return fieldAxes()+path('M125 139 C139 45 419 45 432 139 C447 235 142 263 125 139','#377f89',3)+circ(432,139,5,'#bf774b')+txt(461,226,'q')+txt(92,61,'p')+txt(225,54,L('一定の H','constant H',lang));
+ case 'hamilton':{
+  // For H=p²/(2m)+kq²/2=constant, the phase ellipse MUST be centered on (q,p)=(0,0).
+  // On the upper-right quadrant, q increases and p decreases: tangent points right/down.
+  const cx=280,cy=146,rx=148,ry=91;
+  const theta=Math.PI/4,px=cx+rx*Math.cos(theta),py=cy-ry*Math.sin(theta);
+  return ln(74,cy,490,cy,'#7d9890',2)+ln(cx,261,cx,25,'#7d9890',2)
+   +ar(466,cy,491,cy,'#7d9890')+ar(cx,48,cx,24,'#7d9890')
+   +'<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="none" stroke="#377f89" stroke-width="3"/>'
+   +circ(px,py,5,'#bf774b')
+   +ar(px,py,px+27,py+16,'#bf774b')
+   +txt(498,cy+6,'q')+txt(cx+10,19,'p')
+   +txt(cx-12,cy+19,'0')
+   +txt(116,38,L('同じ H の状態','States at constant H',lang))
+   +txt(405,72,L('運動の向き','Time evolution',lang),'#bf774b',13);
+ }
  case 'coupled':return ln(55,196,515,196,'#78958d',2)+ln(62,123,62,201,'#78958d',5)+ln(492,123,492,201,'#78958d',5)+spring(67,177,169)+rect(177,141,63,55)+spring(240,327,169)+rect(327,141,63,55)+spring(390,490,169)+ar(206,119,237,119,'#af573f')+ar(358,119,389,119,'#356fa2')+txt(196,109,'x₁')+txt(354,109,'x₂');
  }
  return '';
