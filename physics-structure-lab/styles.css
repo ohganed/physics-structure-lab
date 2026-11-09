@@ -675,3 +675,37 @@
 .mechanics-university-stage .mechanics-university-formula-note + .tex-display{
   margin-top:20px;
 }
+
+/* Explain the full modeling path from observable reality to assumptions and equations. */
+.mechanics-model-mapping{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:8px;
+ margin:14px 0 18px;
+}
+.mechanics-model-mapping-step{
+ min-width:0;
+ display:flex;
+ gap:9px;
+ align-items:flex-start;
+ border:1px solid #bddbd0;
+ border-radius:10px;
+ padding:10px 11px;
+ color:#295a4e;
+ background:#f0f7f3;
+ font-size:.91rem;
+ line-height:1.65;
+ overflow-wrap:anywhere;
+}
+.mechanics-model-mapping-step span{
+ display:inline-flex;
+ flex:none;
+ align-items:center;
+ justify-content:center;
+ font-weight:700;
+ background:#def0e8;
+ width:22px;
+ height:22px;
+ border-radius:50%;
+}
+@media(max-width:850px){.mechanics-model-mapping{grid-template-columns:minmax(0,1fr)}}
