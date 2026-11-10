@@ -207,6 +207,32 @@ function signCompare(en){
  s+=ln(273,28,273,267,'#bccbc3',1,'4 5');
  return s;
 }
+function generalizedWork(en){
+ const ox=245,oy=45,L=156,th=.57,bx=ox+L*Math.sin(th),by=oy+L*Math.cos(th);
+ return curve('M160 175 Q245 273 350 187','#b0c9bf',2)
+  +ln(ox,oy,ox,oy+L+28,'#b0c1b8',1,'4 5')
+  +ln(ox,oy,bx,by,'#4b7a6d',3)+circ(ox,oy,5)+circ(bx,by,13)
+  +arrow(bx,by,bx-62*Math.cos(th),by+62*Math.sin(th),'#347d9e')
+  +arrow(bx,by,bx,by+66,'#ad5f47')
+  +arrow(bx,by,bx-36*Math.sin(th),by-36*Math.cos(th),'#835ca2')
+  +t(bx-155,by+46,'Fθ = −mg sinθ','#347d9e',15)
+  +t(bx+11,by+64,'mg','#ad5f47')
+  +t(bx-55,by-43,'T','#835ca2')
+  +t(70,62,en?'allowed tangent displacement':'許される接線変位','#347d9e',14)
+  +t(92,260,'δs = ℓδθ')
+  +t(315,267,'δW = Qθ δθ');
+}
+function equivalentLagrangians(en){
+ return ln(67,229,501,229)+ln(67,229,67,30)+t(503,247,'t')+t(39,34,'θ')
+  +curve('M91 188 C155 55 278 78 460 148','#397e9d',3)
+  +curve('M91 188 C164 113 308 120 460 148','#b9664c',2)
+  +circ(91,188,5)+circ(460,148,5)
+  +t(78,249,'t₀')+t(452,249,'t₁')
+  +t(112,47,en?'same fixed endpoints':'両端は固定','#477b70',15)
+  +box(173,175,243,33,'#e2efe7')
+  +t(182,197,"S′ − S = F₁ − F₀",'#31584c',18)
+  +t(170,269,en?'endpoint difference is path-independent':'端点の差は途中の経路によらない','#31584c',14);
+}
 function stateSpring(en){
  return box(47,107,15,67,'#8eab9f')+ln(62,174,501,174,'#95aba3',2)
   +spring(64,141,254)+box(254,110,81,64)
@@ -232,7 +258,7 @@ function energy(en){
   +t(124,49,'K','#35765e')+t(216,49,'U','#ae6547')
   +arrow(278,43,338,43,'#825da2')+t(350,49,'H = K + U','#825da2');
 }
-export const universityBridgeKinds=Object.freeze(['model-observation','constraint','model-kinematics','model-forces','energy','paths','variation-setup','variation-chain','variation-parts','variation-local','sign-compare','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
+export const universityBridgeKinds=Object.freeze(['model-observation','constraint','model-kinematics','model-forces','generalized-work','energy','paths','variation-setup','variation-chain','variation-parts','variation-local','sign-compare','equivalent-lagrangians','result','same-position','newton-state','conjugate','hamilton-energy','phase']);
 export function universityBridgeFigure(kind,title,lang='ja'){
  const en=lang==='en';let drawing='';
  if(['model-observation','model-kinematics','model-forces'].includes(kind))drawing=pendulumModel(kind,en);
@@ -243,6 +269,8 @@ export function universityBridgeFigure(kind,title,lang='ja'){
  else if(kind==='variation-parts')drawing=variationParts(en);
  else if(kind==='variation-local')drawing=variationLocal(en);
  else if(kind==='sign-compare')drawing=signCompare(en);
+ else if(kind==='generalized-work')drawing=generalizedWork(en);
+ else if(kind==='equivalent-lagrangians')drawing=equivalentLagrangians(en);
  else if(kind==='same-position')drawing=springCart(83,1,en)+springCart(207,-1,en);
  else if(kind==='newton-state')drawing=stateSpring(en);
  else if(kind==='conjugate')drawing=graphSlope(en);

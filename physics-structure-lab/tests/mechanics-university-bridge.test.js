@@ -4,9 +4,9 @@ import {universityBridgeLessons} from '../mechanics-university-bridge-data.js';
 import {universityBridgeFigure,universityBridgeKinds,mechanicsUniversityBridgeHtml} from '../mechanics-university-bridge.js';
 
 test('both university transitions contain a visible motivation and 17 distinct concept diagrams',()=>{
- assert.equal(universityBridgeLessons.lagrange.stages.length,12);
+ assert.equal(universityBridgeLessons.lagrange.stages.length,14);
  assert.equal(universityBridgeLessons.hamilton.stages.length,5);
- assert.equal(universityBridgeKinds.length,17);
+ assert.equal(universityBridgeKinds.length,19);
  for(const [key,lesson] of Object.entries(universityBridgeLessons)){
   assert.ok(lesson.lead[0].length>50&&lesson.lead[1].length>50);
   for(const stage of lesson.stages){
@@ -47,15 +47,16 @@ test('every new definition has a diagram before its first formula in each langua
 test('Lagrangian chapter starts with observation, assumptions, geometry, motion and forces before abstract action',()=>{
  const stages=universityBridgeLessons.lagrange.stages;
  assert.deepEqual(stages.map(s=>s.kind),[
-  'model-observation','constraint','model-kinematics','model-forces',
+  'model-observation','constraint','model-kinematics','model-forces','generalized-work',
   'energy','paths','variation-setup','variation-chain','variation-parts',
-  'variation-local','sign-compare','result'
+  'variation-local','sign-compare','equivalent-lagrangians','result'
  ]);
  const byKind=kind=>stages.find(s=>s.kind===kind);
  assert.match(byKind('model-observation').formula[1],/\\boldsymbol r/);
  assert.match(byKind('constraint').formula[0],/q=\\theta/);
  assert.match(byKind('model-kinematics').formula.at(-1),/a_\\theta/);
  assert.match(byKind('model-forces').formula.at(-1),/\\ddot\\theta/);
+ assert.match(byKind('generalized-work').formula.at(-1),/Q_\\theta/);
  assert.match(byKind('energy').formula[1],/E_\{\\mathrm\{mech\}\}=K\+U/);
  assert.match(byKind('paths').formula[1],/\\delta S=0/);
  assert.match(byKind('variation-setup').formula[0],/\\theta_\\varepsilon/);
@@ -64,6 +65,7 @@ test('Lagrangian chapter starts with observation, assumptions, geometry, motion 
  assert.match(byKind('variation-local').formula.at(-1),/\\frac\{d\}\{dt\}/);
  assert.match(byKind('sign-compare').formula[0],/L_-=K-U/);
  assert.match(byKind('sign-compare').formula[1],/L_\+=K\+U/);
+ assert.match(byKind('equivalent-lagrangians').formula.at(-1),/\\delta S'/);
  assert.match(byKind('result').formula.at(-1),/\\ddot\\theta/);
  assert.match(byKind('paths').note[1],/need not mean minimal/i);
 });
@@ -151,10 +153,10 @@ test('Euler–Lagrange bridge derives the result without skipping boundary condi
  assert.match(derivation[3].prose[0],/変分法の基本補題/);
 });
 
-test('each of the 25 displayed physical-model and Euler–Lagrange notes follows its own mathematical step',()=>{
+test('each of the 31 displayed physical-model and Euler–Lagrange notes follows its own mathematical step',()=>{
  for(const lang of ['ja','en']){
   const html=mechanicsUniversityBridgeHtml('lagrange',lang);
-  assert.equal((html.match(/class="mechanics-university-formula-note"/g)||[]).length,25);
+  assert.equal((html.match(/class="mechanics-university-formula-note"/g)||[]).length,31);
   for(const kind of ['variation-setup','variation-chain','variation-parts','variation-local']){
    const stage=universityBridgeLessons.lagrange.stages.find(s=>s.kind===kind);
    const start=html.indexOf('data-bridge-step="'+kind+'"');

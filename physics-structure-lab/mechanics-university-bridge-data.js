@@ -182,6 +182,17 @@ export const universityBridgeLessons={
         ]
       },
       {
+        "kind": "generalized-work",
+        "title": ["力を角度の言葉に翻訳する――一般化力", "Translate force into the angle coordinate: generalized force"],
+        "prose": [
+          "ここで『角度を座標にしたら力はどう表すのか』という疑問が生じます。球を糸に沿って動かすことはできず、許される微小変位は接線方向だけです。角度をδθだけ変えると弧に沿った微小変位はℓδθ。重力の接線成分−mg sinθが行う仕事は−mgℓ sinθ δθです。その係数を一般化力Qθと呼びます。単位はNではなくN mであり、角度を変える作用、すなわち支点まわりのトルクに一致します。張力は変位と直角なので仕事をしません。ここに拘束条件を組み込んだ座標を選ぶ利点があります。",
+          "An angle coordinate changes how force is represented. The allowed virtual displacement is tangent to the circular path: δs=ℓδθ. Tangential gravity −mg sinθ therefore performs virtual work δW=−mgℓ sinθ δθ. Its coefficient is the generalized force Qθ, with units N m rather than N; here it equals torque about the pivot. Tension is perpendicular to the allowed displacement and does no virtual work. This is why coordinates adapted to the constraint simplify the problem."
+        ],
+        "formula": ["\\delta s=\\ell\\,\\delta\\theta", "\\delta W=F_\\theta\\delta s=(-mg\\sin\\theta)(\\ell\\delta\\theta)", "\\delta W=Q_\\theta\\delta\\theta,\\qquad Q_\\theta=-mg\\ell\\sin\\theta"],
+        "lineNotes": [["δθは実際に時間が進んだときの角度変化ではなく、同じ時刻に許される位置を仮想的に比べる変化です。", "δθ compares allowed positions at the same instant; it is not a time evolution."], ["接線成分と接線変位の積だけが仕事になります。", "Only the tangential component contributes work along the permitted displacement."], ["Qθはθに対応する一般化力です。直線座標xなら通常の力Fx、角度θならトルクに対応します。", "Qθ is conjugate to θ: for a linear coordinate it is force, for an angle it is torque."]],
+        "note": ["『一般化力は必ずトルク』ではありません。選んだ一般化座標の単位に応じて次元が変わります。", "Generalized force is not always torque; its dimensions depend on the chosen coordinate."]
+      },
+      {
         "kind": "energy",
         "title": [
           "高校で学んだエネルギーを、角度で表す",
@@ -379,6 +390,17 @@ export const universityBridgeLessons={
           "L=K−Uは座標変換から自動的に出てきた式ではありません。また、同じ運動を与えるLは全時間微分の追加などで異なる形にもできます。ここでは最も扱いやすい標準形を使います。",
           "L=K−U did not follow automatically from changing coordinates. Lagrangians are also not unique: adding a total time derivative leaves the equations of motion unchanged. We use the standard convenient form here."
         ]
+      },
+      {
+        "kind": "equivalent-lagrangians",
+        "title": ["なぜ同じ運動を表すLが複数あるのか", "Why several Lagrangians can describe the same motion"],
+        "prose": [
+          "L=K−Uは標準形ですが、唯一の形ではありません。任意の滑らかな関数F(θ,t)の全時間微分を足しても、作用Sの増分は端点でのFの差にすぎません。両端のθと時刻を固定して経路だけ変えると、この差は変わらないため、δSも運動方程式も同じです。つまり『Lそのものの数値』ではなく『経路を少し変えたときの作用の変化』が運動を決めます。これは好きな項を何でも足してよいという意味ではありません。",
+          "L=K−U is a standard choice, not the only possible one. Adding the total time derivative of any smooth F(θ,t) changes the action only by the endpoint difference F(θ₁,t₁)−F(θ₀,t₀). Since endpoint values are fixed under variation, that term does not change δS or the equation of motion. It is the first-order response of the action to a path change, not the numerical value of L itself, that determines motion. This does not permit adding an arbitrary term."
+        ],
+        "formula": ["L'=L+\\frac{dF(\\theta,t)}{dt}", "S'=S+F(\\theta(t_1),t_1)-F(\\theta(t_0),t_0)", "\\delta S'=\\delta S\\quad(\\delta\\theta(t_0)=\\delta\\theta(t_1)=0)"],
+        "lineNotes": [["全時間微分は∂F/∂θ·θ̇+∂F/∂tです。", "The total derivative is (∂F/∂θ)θ̇+∂F/∂t."], ["積分の基本定理によって途中の経路への依存が端点の差に変わります。", "The fundamental theorem of calculus turns the added integral into endpoint values."], ["変分では端点の位置・時刻を固定するため追加項の変化は0です。", "Because both endpoints are fixed, the variation of the added term is zero."]],
+        "note": ["この同値性は固定端点の作用原理についての主張です。外力・摩擦・速度依存ポテンシャルなどでは、適切なLや一般化力を改めて構成します。", "This equivalence concerns the fixed-endpoint action principle. Nonconservative forces or velocity-dependent interactions require a suitable extended formulation."]
       },
       {
         "kind": "result",
