@@ -15,6 +15,7 @@ import { analyticalLabPage, installAnalyticalLab } from './analytical-lab.js';
 import { kinematicsLabPage, installKinematicsLab } from './kinematics-lab.js';
 import { getLanguage, setLanguage, translateNavigation, filterNavigation } from './language.js';
 import { englishOverview, englishPhenomenon } from './english-pages.js';
+import { meaningLabPage, installMeaningLab } from './meaning-lab.js';
 
 const content = document.querySelector('#app-content');
 const nav = document.querySelector('#nav');
@@ -183,7 +184,7 @@ function historyPage() {
   </div>`;
 }
 
-const pages = { practice: mechanicsPracticePage, inquiry: inquiryPage, transfer: transferPage, journeys: journeysPage, connections: connectionsPage, overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, electricity: electricityPage, forcelab: forceLabPage, conservation: conservationLabPage, advanced: advancedMechanicsPage, analytical: analyticalLabPage, kinematics: kinematicsLabPage, derivation, lab, exam, reflection, history: historyPage };
+const pages = { practice: mechanicsPracticePage, inquiry: inquiryPage, transfer: transferPage, journeys: journeysPage, connections: connectionsPage, overview, phenomenon, acceleration: accelerationLabHtml, mechanics: mechanicsPage, electricity: electricityPage, forcelab: forceLabPage, conservation: conservationLabPage, advanced: advancedMechanicsPage, analytical: analyticalLabPage, kinematics: kinematicsLabPage, derivation, lab, exam, reflection, meaning: meaningLabPage, history: historyPage };
 function navigate(page, push = true) {
   if (!pages[page]) page = 'overview';
   stopAnimation(); stopAnimation = () => {};
@@ -216,6 +217,7 @@ function navigate(page, push = true) {
   if (page === 'lab') stopAnimation = installLab();
   if (page === 'exam') installExam();
   if (page === 'reflection') installNotes();
+  if (page === 'meaning') stopAnimation = installMeaningLab();
   renderPhysicsMath();
   translateNavigation();
 }
