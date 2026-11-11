@@ -9,14 +9,14 @@ const ar=(x,y,X,Y,c='#bb5e40')=>{const dx=X-x,dy=Y-y,d=Math.hypot(dx,dy),a=dx/d,
 const block=(x,y)=>'<rect x="'+x+'" y="'+y+'" width="62" height="43" rx="5" fill="#cee6dc" stroke="#38776c" stroke-width="2"/>';
 function scene(k,step,en){
  let s='',o='#387b95',r='#b35e40';
- if(k==='force'){s=l(26,206,506,206)+block(228,163)+ar(290,182,375,182,r)+ar(228,183,175,183,o)+ar(258,163,258,113,o)+ar(258,206,258,254,r)+txt(377,174,'F',r)+txt(164,178,'f',o)+txt(271,115,'N',o)+txt(270,252,'mg',r);}
+ if(k==='force'){s=l(26,206,506,206)+block(228,163)+ar(259,184,375,184,r)+ar(259,184,175,184,o)+ar(259,184,259,113,o)+ar(259,184,259,254,r)+txt(377,174,'F',r)+txt(164,178,'f',o)+txt(271,115,'N',o)+txt(270,252,'mg',r);}
  if(k==='friction'){s='<polygon points="72,221 464,221 464,66" fill="#dbe7e2" stroke="#8da8a1" stroke-width="2"/>'+ '<g transform="translate(288 146) rotate(-21.6)">'+block(-31,-43)+ar(0,-22,0,-92,o)+ar(0,-22,-63,-22,r)+'</g>'+ar(288,124,288,205,r)+txt(306,204,'mg',r)+txt(300,35,'N / f',o)+txt(92,241,'θ');}
  if(k==='energy'||k==='momentum'){const bars=k==='energy'?[76,92,108,124,140,156,172,188]:[72,72,72,72,72,72,72,72];s=l(48,214,510,214)+l(48,214,48,30)+txt(18,29,k==='energy'?'F':'F')+txt(500,239,k==='energy'?'x':'t');bars.forEach((h,i)=>{s+='<rect x="'+(65+i*51)+'" y="'+(214-h)+'" width="51" height="'+h+'" fill="#75b9be" fill-opacity=".3" stroke="#36889c" stroke-width="1"/>';});s+=txt(140,254,step===2?(k==='energy'?'Σ Fᵢ Δxᵢ':'Σ Fᵢ Δtᵢ'):'Signed area / 符号付き面積',o);}
  if(k==='circular'){s='<circle cx="255" cy="145" r="94" fill="none" stroke="#9bb8ae" stroke-width="2"/>'+l(255,145,349,145,o,'4 4')+l(255,145,255,51,o,'4 4')+'<circle cx="349" cy="145" r="9" fill="#cfe4da"/><circle cx="255" cy="51" r="9" fill="#cfe4da"/>'+ar(349,145,349,60,r)+ar(255,51,340,51,r)+ar(349,145,288,145,o)+txt(358,97,'v₁',r)+txt(316,41,'v₂',r)+txt(265,135,'r',o);}
- if(k==='oscillation'){s=l(37,192,510,192)+l(266,52,266,235,'#9bb8ae','4 4')+block(350,149)+ar(350,169,275,169,r)+txt(279,139,'−kx',r)+txt(258,255,'0');}
+ if(k==='oscillation'){s=l(37,192,510,192)+l(266,52,266,235,'#9bb8ae','4 4')+block(350,149)+ar(381,170,291,170,r)+txt(279,139,'−kx',r)+txt(258,255,'0');}
  if(k==='gravitation'){s='<circle cx="227" cy="151" r="85" fill="#d5e6ec" stroke="#51839b" stroke-width="2"/><circle cx="440" cy="91" r="9" fill="#cce5db"/>'+l(227,151,440,91,'#9db9ae','5 4')+ar(440,91,385,106,r)+ar(440,91,455,144,o)+txt(391,82,'F',r)+txt(463,143,'v',o)+txt(312,132,'r');}
  if(k==='rotation'){s='<rect x="155" y="66" width="240" height="151" fill="#d8e8df" stroke="#6b9883" stroke-width="2"/>'+'<circle cx="155" cy="140" r="7" fill="#3b7069"/>'+ar(370,140,370,52,r)+l(155,140,370,140,o,'4 4')+txt(232,132,'r',o)+txt(382,55,'F',r)+txt(50,142,en?'hinge':'蝶番');}
- if(k==='noninertial'){s='<rect x="70" y="87" width="400" height="112" rx="10" fill="#e0ecea" stroke="#648c89" stroke-width="2"/>'+l(25,217,520,217)+block(240,141)+ar(410,221,480,221,r)+ar(240,163,165,163,o)+txt(418,246,'A →',r)+txt(103,154,en?'relative shift':'相対移動',o);}
+ if(k==='noninertial'){s='<rect x="70" y="87" width="400" height="112" rx="10" fill="#e0ecea" stroke="#648c89" stroke-width="2"/>'+l(25,217,520,217)+block(240,141)+ar(410,221,480,221,r)+ar(271,162,165,162,o)+txt(418,246,'A →',r)+txt(103,154,en?'relative shift':'相対移動',o);}
  if(step===0)s+=txt(40,278,en?'1. Observe the change':'① 何が変化しているか観察する');
  if(step===1)s+=txt(40,278,en?'2. Identify constraints, axes and forces':'② 仮定・座標・作用点を確定する');
  if(step===2)s+=txt(40,278,en?'3. Read the relation from the figure':'③ 図から関係式を読み取る');
