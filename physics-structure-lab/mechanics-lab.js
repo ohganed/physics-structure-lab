@@ -1,4 +1,5 @@
 import { mechanicsChapters } from './mechanics-data.js';
+import { modelingBridgeHtml } from './mechanics-modeling-foundation.js';
 import { mechanicsEnglish } from './mechanics-en.js';
 import {inquiryScenarios} from './inquiry-core.js';
 import { transferCases } from './transfer-cases.js';
@@ -112,6 +113,7 @@ function chapterHtml(c,index){
     +deepIntroHtml(c.key,en?'en':'ja');
  const insights='<div class="mechanics-perspectives"><section><h3>'+word("出題者の思考","Problem designer's perspective")+'</h3><p>'+esc(c.setter)+'</p></section><section><h3>'+word("解答者の思考","Problem solver's perspective")+'</h3><p>'+esc(c.solver)+'</p></section><section><h3>'+word("自分の思考を観察する","Monitor your reasoning")+'</h3><p>'+esc(c.self)+'</p></section></div>';
  return '<div class="card mechanics-topic"><div class="eyebrow">CHAPTER '+String(index+1).padStart(2,'0')+' / 12</div><h2>'+esc(c.name)+'</h2><span class="tag">'+esc(c.level)+'</span>'
+  +modelingBridgeHtml(c.key,en?'en':'ja')
   +mechanicsUniversityBridgeHtml(c.key,en?'en':'ja')
   +phenomenonIntro
   +(c.key==='rotation'?torqueDoorHtml(en?'en':'ja'):'')
