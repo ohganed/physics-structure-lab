@@ -709,3 +709,28 @@
  border-radius:50%;
 }
 @media(max-width:850px){.mechanics-model-mapping{grid-template-columns:minmax(0,1fr)}}
+
+
+/* Mobile sidebar: allow every menu item and footer to be reached on short screens.
+   Scroll the drawer itself, not the page hidden behind it. */
+.sidebar{
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+}
+@media(max-width:760px){
+  .sidebar{
+    height:100vh; /* fallback for older iOS browsers */
+    height:100dvh;
+    max-height:100dvh;
+    padding-bottom:max(24px, env(safe-area-inset-bottom));
+    touch-action:pan-y;
+  }
+  .sidebar .brand,
+  .sidebar .nav-search,
+  .sidebar .sidebar-label,
+  .sidebar .nav,
+  .sidebar .sidebar-foot{flex-shrink:0}
+  .sidebar .sidebar-foot{margin-top:20px}
+}
